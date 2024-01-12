@@ -23,6 +23,7 @@ import { FormSectionPage } from "./components/homepage/formSection/page";
 import Login from "./login/page";
 import Provider from "./Provider";
 import { useRouter } from "next/navigation";
+import MapPage from "./components/homepage/map/page";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -112,7 +113,12 @@ export default function Home() {
 
       <FormSectionPage />
       <Login />
+
       <button onClick={() => signOut()}>Sign Out</button>
+      <div style={{ paddingLeft: '24px', paddingRight: '24px' }}>
+        <MapPage />
+      </div>
+
     </div>
 
   );
