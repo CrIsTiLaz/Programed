@@ -54,7 +54,7 @@ const Header = () => {
                 </div>
             </div>
             <div className="hidden sm:flex justify-end gap-2 md:gap-8">
-                <Link href="/blog">
+                <Link href="/login">
                     <  AccountCircleIcon style={{ fontSize: 40 }} />
                 </Link>
             </div>

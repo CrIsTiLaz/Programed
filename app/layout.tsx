@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import Link from 'next/link';
 import Logout from './logout';
 import '../styles/global.css'
+import Provider from './Provider';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,7 +32,9 @@ export default async function RootLayout({
             </Link>
           }
         </nav> */}
-        {children}
+        <Provider>
+          {children}
+        </Provider>
       </body>
     </html>
   )

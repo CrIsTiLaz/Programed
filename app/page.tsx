@@ -1,6 +1,6 @@
 'use client'
 import GoogleButton from "react-google-button";
-import { signIn } from "next-auth/react";
+import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -20,8 +20,18 @@ import LoginPage from "./components/login/page";
 import HomePage from "./components/homepage/page";
 import HeaderPage from "./components/header/page";
 import { FormSectionPage } from "./components/homepage/formSection/page";
+import Login from "./login/page";
+import Provider from "./Provider";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const { data: session } = useSession();
+  const router = useRouter()
+  React.useEffect(() => {
+    if (!session?.user) {
+      router.push('/login')
+    }
+  }, [session])
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   //   event.preventDefault();
   //   const data = new FormData(event.currentTarget);
@@ -100,9 +110,10 @@ export default function Home() {
         <hr style={{ width: '100%', border: 'none', height: '1px', backgroundColor: '#ccc', margin: '0' }} />
       </div>
 
-
-
       <FormSectionPage />
+      <Login />
+      <button onClick={() => signOut()}>Sign Out</button>
     </div>
+
   );
 }
