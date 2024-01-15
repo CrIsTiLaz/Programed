@@ -1,13 +1,14 @@
+"use client"
 import { Popover, Transition } from "@headlessui/react";
 import { Bars3Icon } from "@heroicons/react/20/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import { Button } from "@mui/material";
+import { Button, Menu, MenuItem } from "@mui/material";
 import Link from "next/link";
-import { Fragment } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Image from 'next/image';
 import { BubblyLink } from "../bubbly/BubblyLink";
-
+import { signOut, useSession } from 'next-auth/react';
 const MyBubblyLink = ({ to = "", text = "", imageSrc = "" }) => (
     <BubblyLink
         to={to}
@@ -19,7 +20,25 @@ const MyBubblyLink = ({ to = "", text = "", imageSrc = "" }) => (
         {text}
     </BubblyLink>
 );
+
+
 const Header = () => {
+    const { data: session } = useSession();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const menuRef = useRef(null);
+
+    const handleMouseEnter = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMouseLeave = () => {
+        // Adaugă un mic delay înainte de a închide meniul
+        setTimeout(() => {
+            if (!menuRef.current?.contains(document.activeElement)) {
+                setAnchorEl(null);
+            }
+        }, 300); // 300 ms delay
+    };
     return (
         <Popover className="flex items-center border-b-2 px-6 py-2 h-24 w-full" style={{ backgroundColor: '#FFFF', position: 'sticky', top: 0, zIndex: 1000 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}> {/* Ajustează gap-ul după nevoie */}
@@ -54,9 +73,26 @@ const Header = () => {
                 </div>
             </div>
             <div className="hidden sm:flex justify-end gap-2 md:gap-8">
-                <Link href="/login">
-                    <  AccountCircleIcon style={{ fontSize: 40 }} />
-                </Link>
+                <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onMouseEnter={handleMouseEnter}
+                >
+                    {session?.user && session?.user.image
+                        ? <Image src={session?.user.image} alt="user" width={40} height={40} className='rounded-full' />
+                        : <AccountCircleIcon style={{ fontSize: 40 }} />}
+                </Button>
+                <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleMouseLeave}
+                    MenuListProps={{ onMouseLeave: handleMouseLeave }}
+                >
+                    <MenuItem onClick={handleMouseLeave}><button onClick={() => signOut()}>Sign Out</button></MenuItem>
+                    <MenuItem onClick={handleMouseLeave}>Opțiunea 2</MenuItem>
+                </Menu>
             </div>
 
             <Popover.Overlay className="fixed inset-0 bg-white opacity-100" />

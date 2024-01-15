@@ -24,6 +24,9 @@ import Login from "./login/page";
 import Provider from "./Provider";
 import { useRouter } from "next/navigation";
 import MapPage from "./components/homepage/map/page";
+import CategoryList from "./components/homepage/map/CategoryList";
+import RangeSelect from "./components/homepage/map/RangeSelect";
+import SelectRating from "./components/homepage/map/SelectRating";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -106,18 +109,30 @@ export default function Home() {
   // );
   return (
     <div>
-      <HeaderPage />
-      <div style={{ paddingLeft: '24px', paddingRight: '24px' }}>
+      {/* <HeaderPage /> */}
+      {/* <div style={{ paddingLeft: '24px', paddingRight: '24px' }}>
         <hr style={{ width: '100%', border: 'none', height: '1px', backgroundColor: '#ccc', margin: '0' }} />
-      </div>
+      </div> */}
 
       <FormSectionPage />
       <Login />
 
       <button onClick={() => signOut()}>Sign Out</button>
       <div style={{ paddingLeft: '24px', paddingRight: '24px' }}>
+
         <MapPage />
+        <div className="grid grid-cols-1 md:grid-cols-8 h-screen ">
+          <div className="p-3">
+            <CategoryList />
+            <RangeSelect />
+            <SelectRating />
+          </div>
+          <div className="col-span-7">
+            Second
+          </div>
+        </div>
       </div>
+
 
     </div>
 
