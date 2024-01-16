@@ -6,7 +6,7 @@ function CategoryList() {
     const [selectedCategory, setSelectedCategory] = useState();
     return (
         <div>
-            <h2 className='font-bold'>Select Food type</h2>
+            <h2 className='font-bold'>Selecteaza domeniul medical</h2>
             <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3' >
                 {categoryList.map((item, index) => (
                     <div key={item.id} className={`flex flex-col

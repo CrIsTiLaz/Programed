@@ -27,6 +27,7 @@ import MapPage from "./components/homepage/map/page";
 import CategoryList from "./components/homepage/map/CategoryList";
 import RangeSelect from "./components/homepage/map/RangeSelect";
 import SelectRating from "./components/homepage/map/SelectRating";
+import GoogleMapView from "./components/homepage/map/GoogleMapView";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -128,7 +129,7 @@ export default function Home() {
             <SelectRating />
           </div>
           <div className="col-span-7">
-            Second
+            <GoogleMapView />
           </div>
         </div>
       </div>

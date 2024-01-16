@@ -1,22 +1,22 @@
 const CategoryListData = [
     {
         id: 1,
-        name: 'Indian',
-        value: 'Indian restaurant',
-        icon: '/Masala-dosa.jpg'
+        name: 'Cardiologie',
+        value: 'Cardiology cabinet',
+        icon: '/cardiology.png'
     },
 
     {
         id: 2,
-        name: 'Italian',
-        value: 'Italian restaurant',
-        icon: '/pizza.png'
+        name: 'Diabet',
+        value: 'Diabet cabinet',
+        icon: '/sugar-blood-level.png'
     },
     {
         id: 3,
-        name: 'Mexican',
-        value: 'Mexican restaurant',
-        icon: '/taco.jpg'
+        name: 'Dentist',
+        value: 'Dentist restaurant',
+        icon: '/tooth.png'
     }
 ]
 
