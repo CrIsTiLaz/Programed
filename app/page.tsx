@@ -28,10 +28,20 @@ import CategoryList from "./components/homepage/map/CategoryList";
 import RangeSelect from "./components/homepage/map/RangeSelect";
 import SelectRating from "./components/homepage/map/SelectRating";
 import GoogleMapView from "./components/homepage/map/GoogleMapView";
+import GlobalApi from "@/Shared/GlobalApi";
+import { useContext, useState } from "react";
+import { UserLocationContext } from "./context/UserLocationContext";
+import BusinessList from "./components/homepage/map/BusinessList";
+import SkeltonLoading from "./components/homepage/map/SkeltonLoading";
 
 export default function Home() {
   const { data: session } = useSession();
   const router = useRouter()
+  const [category, setCategory] = React.useState();
+  const [radius, setRadius] = React.useState(2500);
+  const [businessList, setBusinessList] = React.useState([]);
+  const { userLocation, setUserLocation } = useContext(UserLocationContext);
+  const [loading, setLoading] = useState(false);
   React.useEffect(() => {
     if (!session?.user) {
       router.push('/login')
@@ -108,6 +118,18 @@ export default function Home() {
   //     </Box>
   //   </Container>
   // );
+  React.useEffect(() => {
+    getGooglePlace();
+  }, [category, radius])
+
+  const getGooglePlace = () => {
+    GlobalApi.getGooglePlace(category, radius, userLocation.lat, userLocation.lng).then(resp => {
+      // console.log(resp.data);
+      setBusinessList(resp.data.product.results)
+    })
+
+  }
+
   return (
     <div>
       {/* <HeaderPage /> */}
@@ -124,18 +146,26 @@ export default function Home() {
         <MapPage />
         <div className="grid grid-cols-1 md:grid-cols-8 h-screen ">
           <div className="p-3">
-            <CategoryList />
-            <RangeSelect />
+            <CategoryList onCategoryChange={(value) => setCategory(value)} />
+            <RangeSelect onRadiusChange={(value) => setRadius(value)} />
             <SelectRating />
           </div>
           <div className="col-span-7">
             <GoogleMapView />
+            <div className='md:absolute mx-2 w-[90%] md:w-[74%]
+           bottom-36 relative md:bottom-3'>
+              {!loading ? <BusinessList businessList={businessList} />
+                :
+                <div className='flex gap-3'>
+                  {[1, 2, 3, 4, 5].map((item, index) => (
+                    <SkeltonLoading key={index} />
+                  ))}
+                </div>
+              }
+            </div>
           </div>
         </div>
       </div>
-
-
     </div>
-
   );
 }
