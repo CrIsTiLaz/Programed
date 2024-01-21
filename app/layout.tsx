@@ -10,6 +10,7 @@ import MapPage from './components/homepage/map/page';
 import HeaderPage from './components/header/page';
 import { useEffect, useState } from 'react';
 import { UserLocationContext } from './context/UserLocationContext';
+import { SelectedBusinessContext } from './context/SelectedBusinessContext';
 
 const raleway = Raleway({ subsets: ['latin'] })
 
@@ -39,6 +40,7 @@ export default function RootLayout({
   }
 
   const [userLocation, setUserLocation] = useState([]);
+  const [selectedBusiness, setSelectedBusiness] = useState([]);
 
   //const session = await getServerSession();
   return (
@@ -55,10 +57,12 @@ export default function RootLayout({
           }
         </nav> */}
         <Provider>
-          <UserLocationContext.Provider value={{ userLocation, setUserLocation }}>
-            <HeaderPage />
-            {children}
-          </UserLocationContext.Provider>
+          <SelectedBusinessContext.Provider value={{ selectedBusiness, setSelectedBusiness }}>
+            <UserLocationContext.Provider value={{ userLocation, setUserLocation }}>
+              <HeaderPage />
+              {children}
+            </UserLocationContext.Provider>
+          </SelectedBusinessContext.Provider>
         </Provider>
       </body>
     </html>
