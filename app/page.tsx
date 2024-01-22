@@ -42,11 +42,11 @@ export default function Home() {
   const [businessList, setBusinessList] = React.useState([]);
   const { userLocation, setUserLocation } = useContext(UserLocationContext);
   const [loading, setLoading] = useState(false);
-  React.useEffect(() => {
-    if (!session?.user) {
-      router.push('/login')
-    }
-  }, [session])
+  // React.useEffect(() => {
+  //   if (!session?.user) {
+  //     router.push('/login')
+  //   }
+  // }, [session])
 
   React.useEffect(() => {
     getGooglePlace();
@@ -68,7 +68,6 @@ export default function Home() {
       </div> */}
 
       <FormSectionPage />
-      <Login />
 
       <button onClick={() => signOut()}>Sign Out</button>
       <div style={{ paddingLeft: '24px', paddingRight: '24px' }}>

@@ -90,8 +90,13 @@ const Header = () => {
                     onClose={handleMouseLeave}
                     MenuListProps={{ onMouseLeave: handleMouseLeave }}
                 >
-                    <MenuItem onClick={handleMouseLeave}><button onClick={() => signOut()}>Sign Out</button></MenuItem>
-                    <MenuItem onClick={handleMouseLeave}>Opțiunea 2</MenuItem>
+                    {session?.user
+                        ? <MenuItem onClick={handleMouseLeave}><button onClick={() => signOut()}>Sign Out</button></MenuItem>
+                        : <MenuItem onClick={handleMouseLeave}><Link href="/login" style={{ color: 'black', textDecoration: 'none', textAlign: 'right' }}>
+                            Login
+                        </Link></MenuItem>}
+                    {/* <MenuItem onClick={handleMouseLeave}><button onClick={() => signOut()}>Sign Out</button></MenuItem>
+                    <MenuItem onClick={handleMouseLeave}>Opțiunea 2</MenuItem> */}
                 </Menu>
             </div>
 
