@@ -17,7 +17,19 @@ const CategoryListData = [
         name: 'Dentist',
         value: 'Dentist restaurant',
         icon: '/tooth.png'
-    }
+    },
+    {
+        id: 4,
+        name: 'Dermatologie',
+        value: 'Dermatolog cabinet',
+        icon: '/dermatology.png'
+    },
+    {
+        id: 5,
+        name: 'Pshiatrie',
+        value: 'Psihiatru restaurant',
+        icon: '/psychiatry.png'
+    },
 ]
 
 const ratingList = [

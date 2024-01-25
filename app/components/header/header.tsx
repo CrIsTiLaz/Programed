@@ -55,7 +55,9 @@ const Header = () => {
             <div className="grow">
                 <div className="hidden sm:flex items-center justify-end gap-2 md:gap-8 pr-5">
                     <Button variant="contained" sx={{ boxShadow: 'none', '&:hover': { boxShadow: 'none' }, color: 'black', border: 1, borderColor: 'black' }}>
-                        <Link href="/home" style={{ color: 'black', textDecoration: 'none' }}>Exploreaza cabinetele</Link>
+                        <a href="#mapSection" style={{ color: 'black', textDecoration: 'none', textAlign: 'right' }}>
+                            Explorează cabinetele
+                        </a>
                     </Button>
                     <Button variant="contained" sx={{ boxShadow: 'none', '&:hover': { boxShadow: 'none' }, color: 'black', border: 1, borderColor: 'black' }}>
                         <Link href="/blog">Alaturati-va ca profesionist</Link>
@@ -128,9 +130,10 @@ const Header = () => {
                                         justifyContent: 'flex-start' // Aliniază conținutul butonului la dreapta
                                     }}
                                 >
-                                    <Link href="/home" style={{ color: 'black', textDecoration: 'none', textAlign: 'right' }}>
-                                        Exploreaza cabinetele
-                                    </Link>
+                                    <a href="#mapSection" style={{ color: 'black', textDecoration: 'none', textAlign: 'right' }}>
+                                        Explorează cabinetele
+                                    </a>
+
                                 </Button>
                                 <Button
                                     variant="contained"

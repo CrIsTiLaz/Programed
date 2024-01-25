@@ -48,7 +48,15 @@ function BusinessItem({ business, showDir = false }) {
 
     return (
         <div className='w-[180px] flex-shrink-0 p-2 rounded-lg bg-white'>
-            <Image src={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo_ref}&key=${GOOGLE_API_KEY}`} alt={business.name} width={180} height={80} className='rounded-lg object-cover h-[90px]' />
+            <Image
+                src={photo_ref
+                    ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo_ref}&key=${GOOGLE_API_KEY}`
+                    : '/placeholder.jpeg'}
+                alt={business.name}
+                width={180}
+                height={80}
+                className='rounded-lg object-cover h-[90px]' />
+
             <h2 className='text-[13px] font-bold mt-1 line-clamp-1'>{business.name}</h2>
             <h2 className='text-[10px] text-gray-400 
                 line-clamp-2'>{business.formatted_address}</h2>
@@ -62,11 +70,13 @@ function BusinessItem({ business, showDir = false }) {
             </div>
             {showDir ? <div className='border-t-[1px] p-1 mt-1'>
                 <h2 className='text-[#175DDC] flex justify-between items-center'>
-                    Dist: {distance} mile
-                    <span className='border-[1px] p-1 rounded-full border-blue-500 hover:text-white hover:bg-blue-500'
+                    Dist: {distance} kilometri
+                    <span className='border-[1px] px-1 py-1 rounded-full border-blue-500 hover:text-white hover:bg-blue-500 flex items-center justify-center whitespace-nowrap'
                         onClick={() => onDirectionClick()}>
-                        Get direction
+                        Obtine directia
                     </span>
+
+
                 </h2>
             </div> : null}
         </div>

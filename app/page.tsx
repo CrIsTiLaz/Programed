@@ -33,6 +33,7 @@ import { useContext, useState } from "react";
 import { UserLocationContext } from "./context/UserLocationContext";
 import BusinessList from "./components/homepage/map/BusinessList";
 import SkeltonLoading from "./components/homepage/map/SkeltonLoading";
+import Benefits from "./components/benefits/benefits";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -69,22 +70,20 @@ export default function Home() {
 
       <FormSectionPage />
 
-      <button onClick={() => signOut()}>Sign Out</button>
-      <div style={{ paddingLeft: '24px', paddingRight: '24px' }}>
-
-        <MapPage />
-        <div className="grid grid-cols-1 md:grid-cols-8 h-screen ">
+      {/* <button onClick={() => signOut()}>Sign Out</button> */}
+      <div style={{ paddingLeft: '24px' }}>
+        <div id="mapSection" className="grid grid-cols-1 md:grid-cols-8 h-screen ">
           <div className="p-3">
             <CategoryList onCategoryChange={(value) => setCategory(value)} />
             <RangeSelect onRadiusChange={(value) => setRadius(value)} />
-            <SelectRating />
           </div>
           <div className="col-span-7">
             <GoogleMapView businessList={businessList} />
-            <div className='md:absolute mx-2 w-[90%] md:w-[74%]
-           bottom-36 relative md:bottom-3'>
-              {!loading ? <BusinessList businessList={businessList} />
+            <div className='md:absolute mx-2 w-[90%] md:w-[82%] relative'>
+              {category && !loading ?
+                <BusinessList businessList={businessList} />
                 :
+                loading &&
                 <div className='flex gap-3'>
                   {[1, 2, 3, 4, 5].map((item, index) => (
                     <SkeltonLoading key={index} />
@@ -95,6 +94,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Benefits />
     </div>
   );
 }
