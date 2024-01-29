@@ -60,7 +60,28 @@ const ratingList = [
     },
 ]
 
+
+const benefitsData = [
+    {
+        title: 'Review-uri autentice',
+        description: 'Vezi recenzii de la pacienți reali',
+        iconPath: '/review.png', // Înlocuiește cu calea reală a iconiței
+    },
+    {
+        title: 'Programări online ușoare',
+        description: 'Programează-te în câteva minute',
+        iconPath: '/booking.png',
+    },
+    {
+        title: 'Economisește timp',
+        description: 'Programarea este rapidă și simplă',
+        iconPath: '/save-time.png',
+    },
+    // ... alte beneficii
+];
+
 export default {
     CategoryListData,
-    ratingList
+    ratingList,
+    benefitsData
 }

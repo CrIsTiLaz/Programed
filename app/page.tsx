@@ -1,32 +1,15 @@
 'use client'
-import GoogleButton from "react-google-button";
+
 import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import RegisterPage from "./components/register/page";
-import LoginPage from "./components/login/page";
-import HomePage from "./components/homepage/page";
-import HeaderPage from "./components/header/page";
+
 import { FormSectionPage } from "./components/homepage/formSection/page";
-import Login from "./login/page";
-import Provider from "./Provider";
+
 import { useRouter } from "next/navigation";
-import MapPage from "./components/homepage/map/page";
+
 import CategoryList from "./components/homepage/map/CategoryList";
 import RangeSelect from "./components/homepage/map/RangeSelect";
-import SelectRating from "./components/homepage/map/SelectRating";
+
 import GoogleMapView from "./components/homepage/map/GoogleMapView";
 import GlobalApi from "@/Shared/GlobalApi";
 import { useContext, useState } from "react";
@@ -34,6 +17,8 @@ import { UserLocationContext } from "./context/UserLocationContext";
 import BusinessList from "./components/homepage/map/BusinessList";
 import SkeltonLoading from "./components/homepage/map/SkeltonLoading";
 import Benefits from "./components/benefits/benefits";
+import BusinessSignUp from "./components/homepage/businessSignUp/BusinessSignUp";
+
 
 export default function Home() {
   const { data: session } = useSession();
@@ -43,11 +28,6 @@ export default function Home() {
   const [businessList, setBusinessList] = React.useState([]);
   const { userLocation, setUserLocation } = useContext(UserLocationContext);
   const [loading, setLoading] = useState(false);
-  // React.useEffect(() => {
-  //   if (!session?.user) {
-  //     router.push('/login')
-  //   }
-  // }, [session])
 
   React.useEffect(() => {
     getGooglePlace();
@@ -71,8 +51,8 @@ export default function Home() {
       <FormSectionPage />
 
       {/* <button onClick={() => signOut()}>Sign Out</button> */}
-      <div style={{ paddingLeft: '24px' }}>
-        <div id="mapSection" className="grid grid-cols-1 md:grid-cols-8 h-screen ">
+      <div style={{ paddingLeft: '24px', backgroundColor: "#FAFAFA" }}>
+        <div id="mapSection" className="grid grid-cols-1 md:grid-cols-8 " style={{ height: '850px' }}>
           <div className="p-3">
             <CategoryList onCategoryChange={(value) => setCategory(value)} />
             <RangeSelect onRadiusChange={(value) => setRadius(value)} />
@@ -92,9 +72,14 @@ export default function Home() {
               }
             </div>
           </div>
+
         </div>
+
       </div>
+
       <Benefits />
+      <BusinessSignUp />
+      {/* <Ben /> */}
     </div>
   );
 }

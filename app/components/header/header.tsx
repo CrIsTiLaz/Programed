@@ -60,9 +60,9 @@ const Header = () => {
                         </a>
                     </Button>
                     <Button variant="contained" sx={{ boxShadow: 'none', '&:hover': { boxShadow: 'none' }, color: 'black', border: 1, borderColor: 'black' }}>
-                        <Link href="/blog">Alaturati-va ca profesionist</Link>
-                        {/* <MyBubblyLink to="/">Alaturati-va ca profesionist</MyBubblyLink> */}
-                        {/* <MyBubblyLink to="/test" text="a" /> */}
+                        <Link href="/businessPage" >
+                            <p style={{ textDecoration: 'none', color: 'inherit' }}>Alaturati-va ca profesionist</p>
+                        </Link>
                     </Button>
                 </div>
 
