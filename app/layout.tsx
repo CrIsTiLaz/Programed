@@ -11,6 +11,7 @@ import HeaderPage from './components/header/page';
 import { useEffect, useState } from 'react';
 import { UserLocationContext } from './context/UserLocationContext';
 import { SelectedBusinessContext } from './context/SelectedBusinessContext';
+import Footer from './components/footer/Footer';
 
 const raleway = Raleway({ subsets: ['latin'] })
 
@@ -61,6 +62,7 @@ export default function RootLayout({
             <UserLocationContext.Provider value={{ userLocation, setUserLocation }}>
               <HeaderPage />
               {children}
+              <Footer />
             </UserLocationContext.Provider>
           </SelectedBusinessContext.Provider>
         </Provider>

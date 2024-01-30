@@ -60,7 +60,7 @@ const Header = () => {
                         </a>
                     </Button>
                     <Button variant="contained" sx={{ boxShadow: 'none', '&:hover': { boxShadow: 'none' }, color: 'black', border: 1, borderColor: 'black' }}>
-                        <Link href="/businessPage" >
+                        <Link href="/business" >
                             <p style={{ textDecoration: 'none', color: 'inherit' }}>Alaturati-va ca profesionist</p>
                         </Link>
                     </Button>
