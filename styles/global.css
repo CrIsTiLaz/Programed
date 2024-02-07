@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 html {
     scroll-behavior: smooth;
     font-family: 'Raleway', sans-serif;
@@ -10,3 +10,104 @@ html {
 canvas {
     height: 40vh !important
 }
+
+body {
+    font-family: 'Manrope', sans-serif;
+}
+
+@layer base{
+    section{
+        @apply py-[75px]
+    }
+}
+
+@layer components{
+    .container{
+        @apply max-w-full w-[1440px] px-5 mx-auto
+    }
+
+    .btn{
+        @apply bg-primaryColor py-[15px] px-[35px] rounded-[50px] text-white font-[600] mt-[38px]
+    }
+
+    .heading{
+        @apply text-[44px] leading-[54px] font-[700] text-headingColor
+    }
+
+    .text__para{
+        @apply text-[18px] leading-[30px] font-[400] text-textColor mt-[18px]
+    }
+
+    .header{
+        @apply bg-[url('/mask.png')] bg-no-repeat bg-center bg-cover w-full h-[100px] ;
+        }
+}
+
+@media only screen and (max-width:1024px){
+    .container{
+        @apply w-full
+    }
+
+    section{
+        @apply py-[35px]
+    }
+}
+
+
+
+.sticky__headers{
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    box-shadow: 3px 3px -8px 3px #ddd;
+  
+  }
+   
+  @media only screen and (max-width:768px){
+    .heading {
+        @apply text-[26px] leading-[36px];
+    }
+  
+    .text__para {
+        @apply text-[16px] leading-7 mt-3;
+    }
+
+    .navigation{
+        width: 100px; 
+        height: 100px; 
+        position: fixed;
+        top: 0;
+        z-index: 100;
+      
+        display: none;
+    }
+      
+    .navigation.show__menu {
+        display: block;
+        width: 100vw; 
+        height: 100vh;
+        position: fixed; 
+        top: 0;
+        left: 0; 
+        background: #00000084; 
+        z-index: 100;
+       
+    }
+
+      
+    .menu {
+        @apply w-60 h-screen; /* Aceasta este o alternativă la setarea manuală a lățimii și înălțimii */
+        @apply absolute top-0 right-0;
+        @apply bg-white;
+        @apply z-50; /* Asigurați-vă că acest z-index este suficient de mare pentru a fi deasupra celorlalte elemente */
+        @apply flex flex-col;
+        @apply justify-center items-center;
+        @apply overflow-auto;
+    }
+}
+
+  

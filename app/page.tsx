@@ -18,7 +18,7 @@ import BusinessList from "./components/homepage/map/BusinessList";
 import SkeltonLoading from "./components/homepage/map/SkeltonLoading";
 import Benefits from "./components/benefits/benefits";
 import BusinessSignUp from "./components/homepage/businessSignUp/BusinessSignUp";
-
+import "./page.module.css"
 
 export default function Home() {
   const { data: session } = useSession();

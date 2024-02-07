@@ -12,6 +12,9 @@ import { useEffect, useState } from 'react';
 import { UserLocationContext } from './context/UserLocationContext';
 import { SelectedBusinessContext } from './context/SelectedBusinessContext';
 import Footer from './components/footer/Footer';
+import '../styles/global.css'
+import Header from './components/header/header';
+import '../styles/global.css'; // Asumând că globals.css se află în directorul styles
 
 const raleway = Raleway({ subsets: ['latin'] })
 
@@ -60,7 +63,7 @@ export default function RootLayout({
         <Provider>
           <SelectedBusinessContext.Provider value={{ selectedBusiness, setSelectedBusiness }}>
             <UserLocationContext.Provider value={{ userLocation, setUserLocation }}>
-              <HeaderPage />
+              <Header />
               {children}
               <Footer />
             </UserLocationContext.Provider>
