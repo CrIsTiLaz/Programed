@@ -27,7 +27,9 @@ body {
     }
 
     .btn{
-        @apply bg-primaryColor py-[15px] px-[35px] rounded-[50px] text-white font-[600] mt-[38px]
+        @apply bg-primaryColor py-[15px] px-[35px] rounded-[50px] text-white font-[600] mt-[38px];
+        /* Adaugă regulile pentru hover aici */
+        @apply hover:scale-110 transition-transform duration-300 ease-in-out;
     }
 
     .heading{
@@ -41,6 +43,10 @@ body {
     .header{
         @apply bg-[url('/mask.png')] bg-no-repeat bg-center bg-cover w-full h-[100px] ;
         }
+
+    .hero__section{
+        @apply bg-[url('/hero-bg.png')] bg-no-repeat bg-center bg-cover;
+    }
 }
 
 @media only screen and (max-width:1024px){
@@ -110,4 +116,48 @@ body {
     }
 }
 
-  
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(150px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slideIn {
+    animation: slideIn 2s ease forwards;
+    animation-delay: 4s; /* Adăugăm un delay de 1 secundă */
+}
+
+@keyframes slideInFromLeft {
+
+    0% {
+        opacity: 0;
+        transform: translateX(-100px); /* Începe de la 50px la stânga poziției inițiale */
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* Se termină la poziția inițială */
+    }
+}
+.animate-slideIn, .animate-slideInFromLeft {
+    opacity: 0; /* Setează elementele să fie inițial invizibile */
+}
+
+.animate-slideInFromLeft {
+    animation: slideInFromLeft 2s ease forwards;
+    animation-delay: 1s; /* Delay-ul este de 1 secundă */
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.invisible {
+    visibility: hidden;
+    opacity: 0;
+}

@@ -19,6 +19,8 @@ import SkeltonLoading from "./components/homepage/map/SkeltonLoading";
 import Benefits from "./components/benefits/benefits";
 import BusinessSignUp from "./components/homepage/businessSignUp/BusinessSignUp";
 import "./page.module.css"
+import Hero from "./components/homepage/hero/Hero";
+import PageWrapper from "./pageWrapper";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -43,10 +45,12 @@ export default function Home() {
 
   return (
     <div>
+      {/* < PageWrapper> */}
       {/* <HeaderPage /> */}
       {/* <div style={{ paddingLeft: '24px', paddingRight: '24px' }}>
         <hr style={{ width: '100%', border: 'none', height: '1px', backgroundColor: '#ccc', margin: '0' }} />
       </div> */}
+      <Hero />
 
       <FormSectionPage />
 
@@ -80,6 +84,7 @@ export default function Home() {
       <Benefits />
       <BusinessSignUp />
       {/* <Ben /> */}
+      {/* </PageWrapper> */}
     </div>
   );
 }
