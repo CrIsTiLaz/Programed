@@ -61,17 +61,21 @@ body {
 
 
 
-.sticky__headers{
+.sticky__header{
     width: 100%;
     height: 80px;
     line-height: 80px;
     position: sticky;
     top: 0;
+    background: white;
     left: 0;
     z-index: 999;
+    background-image: url('/mask.png'); /* Setează imaginea de fundal */
+    background-repeat: no-repeat; 
+    background-size: cover; 
     box-shadow: 3px 3px -8px 3px #ddd;
   
-  }
+}
    
   @media only screen and (max-width:768px){
     .heading {

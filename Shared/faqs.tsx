@@ -1,27 +1,22 @@
 export const faqs = [
     {
-        question: "What is your medical care?",
+        question: "Ce este îngrijirea medicală oferită de voi?",
         content:
-            "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+            "One Medical a fost fondată pe un model superior de îngrijire, conceput în jurul nevoilor pacienților, care oferă un nivel mai ridicat de calitate și servicii la un preț accesibil. Realizăm acest lucru prin design inovator, servicii excelente pentru clienți și utilizarea eficientă a tehnologiei.",
     },
     {
-        question: "What happens if I need to go a hospital?",
+        question: "Ce se întâmplă dacă trebuie să merg la spital?",
         content:
-            "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+            "One Medical a fost fondată pe un model superior de îngrijire, conceput în jurul nevoilor pacienților, care oferă un nivel mai ridicat de calitate și servicii la un preț accesibil. Realizăm acest lucru prin design inovator, servicii excelente pentru clienți și utilizarea eficientă a tehnologiei.",
     },
     {
-        question: "What happens if I need to go a hospital?",
+        question: "Pot să vizitez cabinetul vostru medical?",
         content:
-            "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+            "One Medical a fost fondată pe un model superior de îngrijire, conceput în jurul nevoilor pacienților, care oferă un nivel mai ridicat de calitate și servicii la un preț accesibil. Realizăm acest lucru prin design inovator, servicii excelente pentru clienți și utilizarea eficientă a tehnologiei.",
     },
     {
-        question: "Can I visit your medical office?",
+        question: "Oferiți servicii de îngrijire urgentă?",
         content:
-            "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
-    },
-    {
-        question: "Does you provide urgent care?",
-        content:
-            "One Medical was founded on a better model of care one designed around patients needs that provides a higher level of quality and service affordably. We do this through innovative design, excellent customer service, and the efficient use of technology.",
+            "One Medical a fost fondată pe un model superior de îngrijire, conceput în jurul nevoilor pacienților, care oferă un nivel mai ridicat de calitate și servicii la un preț accesibil. Realizăm acest lucru prin design inovator, servicii excelente pentru clienți și utilizarea eficientă a tehnologiei.",
     },
 ];

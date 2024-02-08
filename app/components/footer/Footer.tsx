@@ -4,14 +4,14 @@ import React from 'react';
 function Footer() {
     return (
         <div style={{ position: 'relative', width: '100%', height: '50vh', overflow: 'hidden' }}>
-            <Image
+            {/* <Image
                 src="/dental.png"
                 layout="fill"
                 objectFit="cover"
                 objectPosition="center"
                 alt="Background"
                 priority // Acest lucru asigură că imaginea se încarcă imediat
-            />
+            /> */}
             <div style={{
                 position: 'absolute',
                 top: '50%',
