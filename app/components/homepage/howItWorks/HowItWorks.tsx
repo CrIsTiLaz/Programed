@@ -67,10 +67,13 @@ function HowItWorks() {
                                 </h2>
                                 <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                     Sed tincidunt justo eget nunc dignissim lobortis.</p>
+                                <motion.div whileHover={{ scale: 1.1 }}>
+                                    <Link href="/schimbat" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
 
-                                <Link href="/schimbat" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
-                                    <BiRightArrowAlt className='group-hover:text-white w-6 h-5' />
-                                </Link>
+                                        <BiRightArrowAlt className='group-hover:text-white w-6 h-5' />
+
+                                    </Link>
+                                </motion.div>
                             </div>
 
                         </motion.div>
@@ -94,10 +97,11 @@ function HowItWorks() {
                                 </h2>
                                 <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                     Sed tincidunt justo eget nunc dignissim lobortis.</p>
-
-                                <Link href="/schimbat" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
-                                    <BiRightArrowAlt className='group-hover:text-white w-6 h-5' />
-                                </Link>
+                                <motion.div whileHover={{ scale: 1.1 }}>
+                                    <Link href="/schimbat" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
+                                        <BiRightArrowAlt className='group-hover:text-white w-6 h-5' />
+                                    </Link>
+                                </motion.div>
                             </div>
 
                         </motion.div>
@@ -121,10 +125,11 @@ function HowItWorks() {
                                 </h2>
                                 <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                     Sed tincidunt justo eget nunc dignissim lobortis.</p>
-
-                                <Link href="/schimbat" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
-                                    <BiRightArrowAlt className='group-hover:text-white w-6 h-5' />
-                                </Link>
+                                <motion.div whileHover={{ scale: 1.1 }}>
+                                    <Link href="/schimbat" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
+                                        <BiRightArrowAlt className='group-hover:text-white w-6 h-5' />
+                                    </Link>
+                                </motion.div>
                             </div>
 
                         </motion.div>

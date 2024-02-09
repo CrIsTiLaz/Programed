@@ -23,6 +23,7 @@ import Hero from "./components/homepage/hero/Hero";
 import PageWrapper from "./pageWrapper";
 import HowItWorks from "./components/homepage/howItWorks/HowItWorks";
 import FaqList from "./components/homepage/faq/FaqList";
+import Testimonial from "./components/homepage/testimonial/Testimonial";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -66,8 +67,16 @@ export default function Home() {
 
               <FaqList />
             </div>
-
           </div>
+        </div>
+      </section>
+      <section>
+        <div className="container">
+          <div className="xl:w-[470px] mx-auto">
+            <h2 className="heading text-center">Ce zic utlizatorii nostri</h2>
+            <p className="text__para text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt justo eget nunc dignissim lobortis.</p>
+          </div>
+          <Testimonial />
         </div>
       </section>
       <FormSectionPage />
