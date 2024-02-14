@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { BiRightArrow, BiRightArrowAlt, BiRightArrowCircle, BiSolidRightArrow } from 'react-icons/bi';
+import { BiRightArrowAlt } from 'react-icons/bi';
 
 function HowItWorks() {
     // State pentru controlul vizibilității animației

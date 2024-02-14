@@ -51,8 +51,8 @@ function Header() {
                                 </Link>
                             </motion.div>
                             <motion.div whileHover={{ scale: 1.1 }}>
-                                <Link href="/business" legacyBehavior>
-                                    <a className={` ${pathname === "/business" ? "font-bold" : ""} text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor `}>
+                                <Link href="/clinics" legacyBehavior>
+                                    <a className={` ${pathname === "/clinics" ? "font-bold" : ""} text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor `}>
                                         Cabinete
                                     </a>
                                 </Link>

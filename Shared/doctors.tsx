@@ -1,6 +1,5 @@
-import doctorImg01 from "../images/doctor-img01.png";
-import doctorImg02 from "../images/doctor-img02.png";
-import doctorImg03 from "../images/doctor-img03.png";
+import doctorImg01 from "../public/clinics/doctor-img01.png";
+
 
 export const doctors = [
     {
@@ -19,7 +18,7 @@ export const doctors = [
         specialty: "Neurologist",
         avgRating: 4.8,
         totalRating: 272,
-        photo: doctorImg02,
+        photo: doctorImg01,
         totalPatients: 1500,
         hospital: "Mount Adora Hospital, Sylhet.",
     },
@@ -29,7 +28,7 @@ export const doctors = [
         specialty: "Dermatologist",
         avgRating: 4.8,
         totalRating: 272,
-        photo: doctorImg03,
+        photo: doctorImg01,
         totalPatients: 1500,
         hospital: "Mount Adora Hospital, Sylhet.",
     },
