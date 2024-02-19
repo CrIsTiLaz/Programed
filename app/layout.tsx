@@ -6,15 +6,15 @@ import Link from 'next/link';
 import Logout from './logout';
 import '../styles/global.css'
 import Provider from './Provider';
-import MapPage from './components/homepage/map/page';
-import HeaderPage from './components/header/page';
+import MapPage from './(components)/(homepage)/map/page';
+import HeaderPage from './(components)/header/page';
 import { useEffect, useState } from 'react';
 import { UserLocationContext } from './context/UserLocationContext';
 import { SelectedBusinessContext } from './context/SelectedBusinessContext';
-import Footer from './components/footer/Footer';
+import Footer from './(components)/footer/Footer';
 import '../styles/global.css'
-import Header from './components/header/header';
 import '../styles/global.css'; // Asumând că globals.css se află în directorul styles
+import Header from './(components)/header/header';
 
 const raleway = Raleway({ subsets: ['latin'] })
 

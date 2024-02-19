@@ -1,6 +1,6 @@
 import { services } from '@/Shared/services'
 import React from 'react'
-import Clinics from '../components/clinics/Clinics'
+import Clinics from './Clinics'
 
 function page() {
     return (

@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import React from 'react'
 import { BiSearch } from 'react-icons/bi';
 import ClinicCard from './ClinicCard';
-import Testimonial from '../homepage/testimonial/Testimonial';
+import Testimonial from '../(homepage)/testimonial/Testimonial';
+
 
 function Clinics() {
     return (

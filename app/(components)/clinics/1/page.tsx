@@ -1,5 +1,5 @@
-import ClinicsDetails from '@/app/components/clinics/ClinicsDetails'
 import React from 'react'
+import ClinicsDetails from '../ClinicsDetails'
 
 function page() {
     return (

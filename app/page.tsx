@@ -3,27 +3,24 @@
 import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
 import * as React from "react";
 import Image from 'next/image';
-import { FormSectionPage } from "./components/homepage/formSection/page";
 
 import { useRouter } from "next/navigation";
 
-import CategoryList from "./components/homepage/map/CategoryList";
-import RangeSelect from "./components/homepage/map/RangeSelect";
+import CategoryList from "./(components)/(homepage)/map/CategoryList";
+import RangeSelect from "./(components)/(homepage)/map/RangeSelect";
 
-import GoogleMapView from "./components/homepage/map/GoogleMapView";
+import GoogleMapView from "./(components)/(homepage)/map/GoogleMapView";
 import GlobalApi from "@/Shared/GlobalApi";
 import { useContext, useState } from "react";
 import { UserLocationContext } from "./context/UserLocationContext";
-import BusinessList from "./components/homepage/map/BusinessList";
-import SkeltonLoading from "./components/homepage/map/SkeltonLoading";
-import Benefits from "./components/benefits/benefits";
-import BusinessSignUp from "./components/homepage/businessSignUp/BusinessSignUp";
+import BusinessList from "./(components)/(homepage)/map/BusinessList";
+import SkeltonLoading from "./(components)/(homepage)/map/SkeltonLoading";
 import "./page.module.css"
-import Hero from "./components/homepage/hero/Hero";
+import Hero from "./(components)/(homepage)/hero/Hero";
 import PageWrapper from "./pageWrapper";
-import HowItWorks from "./components/homepage/howItWorks/HowItWorks";
-import FaqList from "./components/homepage/faq/FaqList";
-import Testimonial from "./components/homepage/testimonial/Testimonial";
+import HowItWorks from "./(components)/(homepage)/howItWorks/HowItWorks";
+import FaqList from "./(components)/(homepage)/faq/FaqList";
+import Testimonial from "./(components)/(homepage)/testimonial/Testimonial";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -79,7 +76,6 @@ export default function Home() {
           <Testimonial />
         </div>
       </section>
-      <FormSectionPage />
 
       {/* <button onClick={() => signOut()}>Sign Out</button> */}
       <div style={{ paddingLeft: '24px', backgroundColor: "#FAFAFA" }}>
@@ -108,8 +104,6 @@ export default function Home() {
 
       </div>
 
-      <Benefits />
-      <BusinessSignUp />
       {/* <Ben /> */}
       {/* </PageWrapper> */}
     </div>
