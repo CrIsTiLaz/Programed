@@ -75,11 +75,11 @@ body {
     }
 
     .header{
-        @apply bg-[url('/mask.png')] bg-no-repeat bg-center bg-cover w-full h-[100px] ;
+        @apply bg-[url('/header/mask.png')] bg-no-repeat bg-center bg-cover w-full h-[100px] ;
         }
 
     .hero__section{
-        @apply bg-[url('/hero-bg.png')] bg-no-repeat bg-center bg-cover ;
+        @apply bg-[url('/header/hero-bg.png')] bg-no-repeat bg-center bg-cover ;
     }
 
     .form__label{
@@ -113,7 +113,7 @@ body {
     left: 0;
     z-index: 99999;
      background: white;
-    background-image: url('/mask.png'); /* Setează imaginea de fundal */
+    background-image: url('/header/mask.png'); /* Setează imaginea de fundal */
     background-repeat: no-repeat; 
     background-size: cover;  
     box-shadow: 3px 3px -8px 3px #ddd;

@@ -73,7 +73,7 @@ function Footer() {
             <div className="container">
                 <div className="flex justify-between flex-col md:flex-row flex-wrap gap-[30px]">
                     <div>
-                        <Image src="/logo2-removebg-preview.png" alt="Logo" width={90} height={90} />
+                        <Image src="/header/logo-removebg-preview.png" alt="Logo" width={90} height={90} />
                         <p className='text-[16px] leading-7 font-[400] text-textColor mt-4'>Copyright © {year} SmileSeek. Toate drepturile rezervate</p>
                         <div className='flex items-center gap-3 mt-4'>
                             {socialLinks.map((link, index) =>

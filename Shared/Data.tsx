@@ -3,32 +3,32 @@ const CategoryListData = [
         id: 1,
         name: 'Cardiologie',
         value: 'Cardiology cabinet',
-        icon: '/cardiology.png'
+        icon: '/map/cardiology.png'
     },
 
     {
         id: 2,
         name: 'Diabet',
         value: 'Diabet cabinet',
-        icon: '/sugar-blood-level.png'
+        icon: '/map/sugar-blood-level.png'
     },
     {
         id: 3,
         name: 'Dentist',
         value: 'Dentist restaurant',
-        icon: '/tooth.png'
+        icon: '/map/tooth.png'
     },
     {
         id: 4,
         name: 'Dermatologie',
         value: 'Dermatolog cabinet',
-        icon: '/dermatology.png'
+        icon: '/map/dermatology.png'
     },
     {
         id: 5,
         name: 'Pshiatrie',
         value: 'Psihiatru restaurant',
-        icon: '/psychiatry.png'
+        icon: '/map/psychiatry.png'
     },
 ]
 
@@ -61,27 +61,9 @@ const ratingList = [
 ]
 
 
-const benefitsData = [
-    {
-        title: 'Review-uri autentice',
-        description: 'Vezi recenzii de la pacienți reali',
-        iconPath: '/review.png', // Înlocuiește cu calea reală a iconiței
-    },
-    {
-        title: 'Programări online ușoare',
-        description: 'Programează-te în câteva minute',
-        iconPath: '/booking.png',
-    },
-    {
-        title: 'Economisește timp',
-        description: 'Programarea este rapidă și simplă',
-        iconPath: '/save-time.png',
-    },
-    // ... alte beneficii
-];
+
 
 export default {
     CategoryListData,
-    ratingList,
-    benefitsData
+    ratingList
 }

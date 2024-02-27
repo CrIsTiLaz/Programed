@@ -34,7 +34,7 @@ function Header() {
             <div className='container'>
                 <div className='flex items-center justify-between'>
                     <div>
-                        <Image src="/logo2-removebg-preview.png" alt="Logo" width={90} height={90} />
+                        <Image src="/header/logo-removebg-preview.png" alt="Logo" width={90} height={90} />
                     </div>
 
                     <div className='navigation' ref={menuRef} onClick={toggleMenu}>
