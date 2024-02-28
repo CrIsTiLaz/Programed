@@ -15,6 +15,8 @@ import Footer from './(components)/footer/Footer';
 import '../styles/global.css'
 import '../styles/global.css'; // Asumând că globals.css se află în directorul styles
 import Header from './(components)/header/header';
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 const raleway = Raleway({ subsets: ['latin'] })
 
@@ -61,8 +63,10 @@ export default function RootLayout({
           }
         </nav> */}
         <Provider>
+
           <SelectedBusinessContext.Provider value={{ selectedBusiness, setSelectedBusiness }}>
             <UserLocationContext.Provider value={{ userLocation, setUserLocation }}>
+              {/* <ToastContainer theme='dark' position="top-right" autoClose={3000} closeOnClick pauseOnHover={false} /> */}
               <Header />
               {children}
               <Footer />
