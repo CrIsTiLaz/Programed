@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useContext } from 'react'
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -7,6 +7,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { BiMenu } from 'react-icons/bi';
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation"
+import { authContext } from "../../context/AuthContext"
 import styles from "../../page.module.css"
 
 function Header() {
@@ -15,6 +16,8 @@ function Header() {
     const menuRef = useRef()
     const router = useRouter();
     const pathname = usePathname();
+
+    const { user, role, token } = useContext(authContext)
     // const handleStickyHeader = () => {
     //     window.addEventListener('scroll', () => {
     //         if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
@@ -68,23 +71,31 @@ function Header() {
                     </div>
 
                     <div className='flex items-center gap-4'>
-                        <div className='hidden'>
-                            <Link href="/">
-                                <figure className='w-[35px] h-[35px] rounded-full cursor-pointer'>
-                                    {session?.user && session?.user.image
-                                        ? <Image src={session?.user.image} alt="user" width={40} height={40} className='rounded-full' />
-                                        : <AccountCircleIcon style={{ fontSize: 40 }} />}
-                                </figure>
-                            </Link>
-                        </div>
-                        {/* <motion.div whileHover={{ scale: 1.1 }}> */}
-                        <div>
-                            <Link href="/login">
-                                <button className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex item-center
+
+                        {
+                            token && user ? <div >
+                                <Link href={`${role === 'doctor' ? '/doctors/profile/me' : '/users/profile/me'}`}>
+                                    <figure className='w-[35px] h-[35px] rounded-full cursor-pointer'>
+                                        <Image src={user?.photo} className='w-full rounded-full' alt=""></Image>
+                                    </figure>
+
+
+                                </Link>
+                            </div> : <div>
+                                <Link href="/login">
+                                    <button className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex item-center
                             justify-center rounded-[50px]'>Login</button>
-                            </Link>
-                            {/* </motion.div> */}
-                        </div>
+                                </Link>
+                                {/* </motion.div> */}
+                            </div>
+                        }
+
+
+                        {/* <motion.div whileHover={{ scale: 1.1 }}> */}
+
+
+
+
                         <span className='md:hidden' onClick={toggleMenu}>
                             <BiMenu className="w-6 h-6 cursor-pointer" />
                         </span>
