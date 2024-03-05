@@ -1,8 +1,11 @@
+import ProtectedRoute from '@/app/utils/ProtectedRoute'
 import React from 'react'
 
 function page() {
     return (
-        <div>page</div>
+        <ProtectedRoute allowedRoles={['doctor']}>
+            <div>page</div>
+        </ProtectedRoute>
     )
 }
 
