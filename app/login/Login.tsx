@@ -50,7 +50,7 @@ function Login() {
                 },
             });
 
-            console.log('login result', result)
+            // console.log('login result', result)
             setLoading(false);
             router.push('/');
         } catch (err) {

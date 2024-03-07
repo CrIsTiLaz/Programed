@@ -8,7 +8,7 @@ import '../styles/global.css'
 import Provider from './Provider';
 import MapPage from './(components)/(homepage)/map/page';
 import HeaderPage from './(components)/header/page';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { UserLocationContext } from './context/UserLocationContext';
 import { SelectedBusinessContext } from './context/SelectedBusinessContext';
 import Footer from './(components)/footer/Footer';
@@ -18,6 +18,7 @@ import Header from './(components)/header/header';
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { AuthContextProvider } from './context/AuthContext';
+
 
 
 const raleway = Raleway({ subsets: ['latin'] })
@@ -70,7 +71,9 @@ export default function RootLayout({
               <UserLocationContext.Provider value={{ userLocation, setUserLocation }}>
                 {/* <ToastContainer theme='dark' position="top-right" autoClose={3000} closeOnClick pauseOnHover={false} /> */}
                 <Header />
+
                 {children}
+
                 <Footer />
               </UserLocationContext.Provider>
             </SelectedBusinessContext.Provider>
