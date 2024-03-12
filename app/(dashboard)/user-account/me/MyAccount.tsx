@@ -8,6 +8,7 @@ import useFetchData from '../../../hooks/useFetchData'
 import { BASE_URL } from '@/app/config';
 import Loading from '@/app/loading';
 import Error from '@/app/error/Error';
+import dynamic from "next/dynamic";
 
 function MyAccount() {
 
@@ -35,10 +36,10 @@ function MyAccount() {
                     <div className='grid md:grid-cols-3 gap-10'>
                         <div className="pb-[50px] px-[30px] rounded-md">
                             <div className="flex items-center justify-center">
-                                <figure className='w-[100px] h-[100px] rounded-full border-2 border-solid border-primaryColor'>
+                                <div className='w-[100px] h-[100px] rounded-full border-2 border-solid border-primaryColor'>
                                     {/* <Image src="/hero/hero-img01.png" alt="" width={40} height={40} className='w-full h-full rounded-full' /> */}
                                     <Image src={userData.photo} alt="" width={50} height={50} className='w-full h-full rounded-full' />
-                                </figure>
+                                </div>
                             </div>
 
                             <div className='text-center mt-4'>
@@ -96,4 +97,5 @@ function MyAccount() {
     )
 }
 // D:\learn\nextJS\qb\query-builder-beta\public\hero\hero-img01.png
-export default MyAccount
+// export default MyAccount
+export default dynamic(() => Promise.resolve(MyAccount), { ssr: false })

@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from 'react'
 import { authContext } from '../context/AuthContext'
 import { useRouter } from 'next/navigation';
 import { Navigate } from 'react-router-dom'
+import dynamic from "next/dynamic";
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
 
@@ -26,4 +27,5 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
 // const accessibleRoute = token && isAllowed ? children : <Navigate to='/login' replace={true} />
 // return accessibleRoute
 
-export default ProtectedRoute
+// export default ProtectedRoute
+export default dynamic(() => Promise.resolve(ProtectedRoute), { ssr: false })

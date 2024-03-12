@@ -17,9 +17,9 @@ function Feedback() {
 
                 <div className="flex justify-between gap-10 mb-[30px]">
                     <div className='flex gap-3'>
-                        <figure className='rounded-full'>
+                        <div className='rounded-full'>
                             <Image src='\testimonial\undraw_pic_profile_re_7g2h.svg' alt='' width={40} height={40} />
-                        </figure>
+                        </div>
 
                         <div>
                             <h5 className='text-[16px] leading-6 text-primaryColor font-bold'>

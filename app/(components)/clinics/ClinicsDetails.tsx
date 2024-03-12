@@ -16,9 +16,9 @@ function ClinicsDetails() {
                 <div className='grid md:grid-cols-3 gap-[50px]'>
                     <div className='md:col-span-2'>
                         <div className="flex items-center gap-5">
-                            <figure className='max-w-[200px] max-h-[200px]'>
+                            <div className='max-w-[200px] max-h-[200px]'>
                                 <Image src='/clinics/doctor-img01.png' alt='' className='w-full' width={400} height={400} />
-                            </figure>
+                            </div>
 
                             <div>
                                 <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-6 lg:py-2 lg:px:6 text-[12px] leading-4
