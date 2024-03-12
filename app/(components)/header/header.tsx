@@ -22,7 +22,7 @@ function Header() {
     const { user, role, token } = useContext(authContext)
 
     const navigateToProfile = () => {
-        const profilePath = role === 'doctor' ? '/doctors/profile/me' : '/user-account/me';
+        const profilePath = role === 'doctor' ? '/doctor-account/me' : '/user-account/me';
         router.push(profilePath); // Folosește router.push pentru a naviga
     };
 
@@ -61,8 +61,8 @@ function Header() {
                         {
                             token && user && user.photo ? (
                                 <div className='w-[35px] h-[35px] rounded-full cursor-pointer' onClick={navigateToProfile}>
-                                    {/* <Image className='w-full rounded-full'  src={user.photo || '/testimonial/undraw_pic_profile_re_7g2h.svg'} width={35} height={35} alt="User profile photo" /> */}
-                                    <Image className='w-full rounded-full' src={userData.photo || '/testimonial/undraw_pic_profile_re_7g2h.svg'} width={35} height={35} alt="User profile photo" />
+                                    <Image className='w-full rounded-full' src={user?.photo} width={35} height={35} alt="User profile photo" />
+                                    {/* <Image className='w-full rounded-full' src={userData.photo} width={35} height={35} alt="User profile photo" /> */}
                                 </div>
                             ) : (
                                 <Link href="/login" className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]'>

@@ -38,7 +38,7 @@ function MyAccount() {
                             <div className="flex items-center justify-center">
                                 <div className='w-[100px] h-[100px] rounded-full border-2 border-solid border-primaryColor'>
                                     {/* <Image src="/hero/hero-img01.png" alt="" width={40} height={40} className='w-full h-full rounded-full' /> */}
-                                    <Image src={userData.photo} alt="" width={50} height={50} className='w-full h-full rounded-full' />
+                                    <Image src={userData?.photo} alt="" width={50} height={50} className='w-full h-full rounded-full' />
                                 </div>
                             </div>
 
