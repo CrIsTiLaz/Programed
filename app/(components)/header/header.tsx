@@ -60,10 +60,10 @@ function Header() {
                     <div className='flex items-center gap-4'>
                         {
                             token && user && user.photo ? (
-                                <div className='w-[35px] h-[35px] rounded-full cursor-pointer' onClick={navigateToProfile}>
-                                    <Image className='w-full rounded-full' src={user?.photo} width={35} height={35} alt="User profile photo" />
-                                    {/* <Image className='w-full rounded-full' src={userData.photo} width={35} height={35} alt="User profile photo" /> */}
+                                <div className={`${pathname === "/doctor-account/me" ? "border-2 border-black" : ""} w-[35px] h-[35px] rounded-full cursor-pointer`} onClick={navigateToProfile}>
+                                    <Image className='w-full rounded-full' src={user?.photo} width={40} height={40} alt="User profile photo" />
                                 </div>
+
                             ) : (
                                 <Link href="/login" className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]'>
                                     Login
