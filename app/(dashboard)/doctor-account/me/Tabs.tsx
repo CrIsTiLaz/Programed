@@ -1,55 +1,43 @@
-import React from 'react'
-import { BiMenu } from 'react-icons/bi'
-import { authContext } from '../../../context/AuthContext'
-import { useContext } from 'react'
-import { useRouter } from 'next/navigation';
+import React, { useContext, useRef } from 'react';
+import { BiMenu } from 'react-icons/bi';
+import { authContext } from '../../../context/AuthContext';
+import { useRouter } from 'next/navigation'; // Corectat la 'next/router'
 
 function Tabs({ tab, setTab }) {
-
+    const menuRef = useRef();
     const { dispatch } = useContext(authContext);
     const navigate = useRouter();
 
     const handleLogout = () => {
         dispatch({ type: 'LOGOUT' });
         navigate.push('/');
-    }
+    };
+
+    const toggleMenu = () => {
+        if (menuRef.current) {
+            menuRef.current.classList.toggle('show__menu');
+        }
+    };
 
     return (
         <div>
-
-            <span className='lg:hidden'>
+            {/* Trigger pentru meniu */}
+            <div className='lg:hidden' onClick={toggleMenu}>
                 <BiMenu className='w-6 h-6 cursor-pointer' />
-            </span>
-            <div className='hidden lg:flex flex-col p-[30px] bg-white shadow-panelShadow items-center h-max rounded-md'>
-                <button
-                    onClick={() => setTab('overview')}
-                    className={`${tab === 'overview'
-                        ? 'bg-indigo-100 text-primaryColor'
-                        : "bg-transparent text-headingColor"
-                        } w-full btn mt-0 rounded-md`}
-                >
+            </div>
+
+            {/* Meniul, cu clasa `navigation` adăugată */}
+            <div ref={menuRef} className='navigation hidden lg:flex flex-col p-[30px] bg-white shadow-panelShadow items-center h-max rounded-md'>
+                {/* Butoanele meniului */}
+                <button onClick={() => setTab('overview')} className={`${tab === 'overview' ? 'bg-indigo-100 text-primaryColor' : "bg-transparent text-headingColor"} w-full btn mt-0 rounded-md`}>
                     Overview
                 </button>
 
-                <button
-                    onClick={() => setTab('appointments')}
-
-                    className={`${tab === 'appointments'
-                        ? 'bg-indigo-100 text-primaryColor'
-                        : "bg-transparent text-headingColor"
-                        } w-full btn mt-0 rounded-md`}
-                >
+                <button onClick={() => setTab('appointments')} className={`${tab === 'appointments' ? 'bg-indigo-100 text-primaryColor' : "bg-transparent text-headingColor"} w-full btn mt-0 rounded-md`}>
                     Appointments
                 </button>
 
-                <button
-                    onClick={() => setTab('settings')}
-
-                    className={`${tab === 'settings'
-                        ? 'bg-indigo-100 text-primaryColor'
-                        : "bg-transparent text-headingColor"
-                        } w-full btn mt-0 rounded-md`}
-                >
+                <button onClick={() => setTab('settings')} className={`${tab === 'settings' ? 'bg-indigo-100 text-primaryColor' : "bg-transparent text-headingColor"} w-full btn mt-0 rounded-md`}>
                     Profile
                 </button>
 
@@ -64,7 +52,7 @@ function Tabs({ tab, setTab }) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Tabs
+export default Tabs;

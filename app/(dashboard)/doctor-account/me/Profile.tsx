@@ -1,41 +1,99 @@
 import React, { useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
 import Image from 'next/image';
+import uploadImageToCloudinary from '@/app/utils/uploadCloudinary';
+import { BASE_URL, token } from '@/app/config';
+import Swal from 'sweetalert2';
 
-function Profile() {
+function Profile({ doctorData }) {
 
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        password: '',
         phone: '',
         bio: '',
         gender: '',
         specialization: '',
         ticketPrice: 0,
-        // qualifications: [
-        //     { startingDate: '', endingDate: '', degree: '', university: '' },
-        // ],
         qualifications: [],
         experiences: [],
-        timeSlots: [
-            { day: '', startingTime: '', endingTime: '' },
-        ],
+        timeSlots: [],
         about: '',
         photo: null
+        // photo: '/clinics/doctor-img01.png'
     })
-
+    // D:\learn\nextJS\qb\query-builder-beta\public\clinics\doctor-img01.png
     const handleInputChange = e => {
 
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    const handleFileInputChange = e => {
+    const handleFileInputChange = async event => {
+
+        const file = event.target.files[0]
+        const data = await uploadImageToCloudinary(file);
+
+        // console.log('data', data)
+        setFormData({ ...formData, photo: data?.url })
 
     }
 
     const updateProfileHandler = async e => {
         e.preventDefault();
+
+        // Filtrăm formData pentru a exclude câmpurile care nu au fost completate
+        const filteredFormData = Object.entries(formData).reduce((acc, [key, value]) => {
+            // Verificăm dacă valoarea este un array și dacă este gol
+            const isEmptyArray = Array.isArray(value) && value.length === 0;
+
+            // Adăugăm în acc doar valorile care nu sunt null, șiruri goale, sau array-uri goale
+            // Ajustează condiția în funcție de nevoile tale
+            if (value !== null && value !== '' && !isEmptyArray) {
+                acc[key] = value;
+            } else if (Array.isArray(value)) {
+                // Dacă vrei să incluzi array-uri indiferent de conținutul lor, comentează linia de mai sus și decomentează această linie
+                acc[key] = value;
+            }
+            return acc;
+        }, {});
+
+        try {
+            const res = await fetch(`${BASE_URL}/doctors/${doctorData._id}`, {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(filteredFormData)
+            })
+
+            const result = await res.json()
+            if (!res.ok) {
+                throw Error(result.message)
+            }
+
+            //sweet alert de success
+            Swal.fire({
+                title: 'Succes!',
+                text: 'Profilul a fost actualizat cu succes.',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            })
+
+        } catch (err) {
+            //sweet alert de error
+            Swal.fire({
+                title: 'Eroare!',
+                text: err.message,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            })
+        }
     }
+
+
+
     //reusable function for adding item
     const addItem = (key, item) => {
         setFormData(prevFormData => ({ ...prevFormData, [key]: [...prevFormData[key], item] }))
@@ -95,6 +153,23 @@ function Profile() {
         e.preventDefault()
         deleteItem('experiences', index)
     }
+
+    const addTimeSlot = (e: { preventDefault: () => void; }) => {
+        e.preventDefault();
+
+        addItem('timeSlots', { day: 'Sunday', startingTime: '10:00', endingTime: '04:30' },)
+    }
+
+    const handleTimeSlotChange = (event: { target: { name: any; value: any; }; }, index: any) => {
+        handleReusableInputChangeFunc('timeSlots', index, event)
+    }
+
+    const deleteTimeSlot = (e: { preventDefault: () => void; }, index: any) => {
+        e.preventDefault()
+        deleteItem('timeSlots', index)
+    }
+    console.log('formData.photo', formData.photo)
+
 
     return (
         <div>
@@ -339,7 +414,12 @@ function Profile() {
                                 <div className='grid grid-cols-2 md:grid-cols-4 mb-[30px] gap-5'>
                                     <div>
                                         <p className='form__label'>Day*</p>
-                                        <select name='day' value={item.day} className='form__input py-3.5'>
+                                        <select
+                                            name='day'
+                                            value={item.day}
+                                            className='form__input py-3.5'
+                                            onChange={e => handleTimeSlotChange(e, index)}
+                                        >
                                             <option value="">Select</option>
                                             <option value="saturday">Saturday</option>
                                             <option value="sunday">Sunday</option>
@@ -358,7 +438,9 @@ function Profile() {
                                             type="time"
                                             name='startingTime'
                                             value={item.startingTime}
-                                            className='form__input' />
+                                            className='form__input'
+                                            onChange={e => handleTimeSlotChange(e, index)}
+                                        />
                                     </div>
 
                                     <div>
@@ -367,10 +449,12 @@ function Profile() {
                                             type="time"
                                             name='endingTime'
                                             value={item.endingTime}
-                                            className='form__input' />
+                                            className='form__input'
+                                            onChange={e => handleTimeSlotChange(e, index)}
+                                        />
                                     </div>
 
-                                    <div className='flex items-center'>
+                                    <div onClick={e => deleteTimeSlot(e, index)} className='flex items-center'>
                                         <button className='btn bg-red-600 p-2 rounded-full text-white text-[18px] cursor-pointer mt-6'>
                                             <AiOutlineDelete />
                                         </button>
@@ -380,7 +464,7 @@ function Profile() {
                         </div>
                     ))}
 
-                    <button className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>Add Time Slot</button>
+                    <button onClick={addTimeSlot} className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>Add Time Slot</button>
                 </div>
 
                 <div className="mb-5">
@@ -397,7 +481,8 @@ function Profile() {
 
                 <div className="mb-5 flex items-center gap-3">
                     {formData.photo && <figure className='w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center'>
-                        <Image src={formData.photo} alt={''} width={50} height={50} className='w-full rounded-full'></Image>
+                        {/* <Image src={formData.photo} alt={''} width={50} height={50} className='w-full rounded-full'></Image> */}
+                        {formData.photo ? <Image src={formData.photo} alt="" width={50} height={50} layout="responsive" /> : null}
                     </figure>
                     }
                     <div className='relative w-[130px] h-[50px]'>

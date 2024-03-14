@@ -62,6 +62,7 @@ function Header() {
                             token && user && user.photo ? (
                                 <div className={`${pathname === "/doctor-account/me" ? "border-2 border-black" : ""} w-[35px] h-[35px] rounded-full cursor-pointer`} onClick={navigateToProfile}>
                                     <Image className='w-full rounded-full' src={user?.photo} width={40} height={40} alt="User profile photo" />
+
                                 </div>
 
                             ) : (
