@@ -59,18 +59,21 @@ function Header() {
 
                     <div className='flex items-center gap-4'>
                         {
-                            token && user && user.photo ? (
+                            token && user ? (
                                 <div className={`${pathname === "/doctor-account/me" ? "border-2 border-black" : ""} w-[35px] h-[35px] rounded-full cursor-pointer`} onClick={navigateToProfile}>
-                                    <Image className='w-full rounded-full' src={user?.photo} width={40} height={40} alt="User profile photo" />
-
+                                    {user.photo ? (
+                                        <Image className='w-full rounded-full' src={user.photo} width={40} height={40} alt="User profile photo" />
+                                    ) : (
+                                        <Image className='w-full rounded-full' src="/header/user64.png" width={40} height={40} alt="Default profile photo" />
+                                    )}
                                 </div>
-
                             ) : (
                                 <Link href="/login" className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]'>
                                     Login
                                 </Link>
                             )
                         }
+
                         {/* <motion.div whileHover={{ scale: 1.1 }}> */}
                         <div className='md:hidden' onClick={toggleMenu}>
                             <BiMenu className="w-6 h-6 cursor-pointer" />

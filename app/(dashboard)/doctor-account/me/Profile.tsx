@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
 import Image from 'next/image';
 import uploadImageToCloudinary from '@/app/utils/uploadCloudinary';
@@ -23,7 +23,25 @@ function Profile({ doctorData }) {
         photo: null
         // photo: '/clinics/doctor-img01.png'
     })
-    // D:\learn\nextJS\qb\query-builder-beta\public\clinics\doctor-img01.png
+
+    useEffect(() => {
+        setFormData({
+            name: doctorData?.name,
+            email: doctorData?.email,
+            phone: doctorData?.phone,
+            bio: doctorData?.bio,
+            gender: doctorData?.gender,
+            specialization: doctorData?.specialization,
+            ticketPrice: doctorData?.ticketPrice,
+            qualifications: doctorData?.qualification || [],
+            experiences: doctorData?.experiences,
+            timeSlots: doctorData?.timeSlots,
+            about: doctorData?.about,
+            photo: doctorData?.photo,
+
+        })
+    }, [doctorData])
+
     const handleInputChange = e => {
 
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -81,6 +99,9 @@ function Profile({ doctorData }) {
                 confirmButtonText: 'Ok'
             })
 
+
+
+
         } catch (err) {
             //sweet alert de error
             Swal.fire({
@@ -95,7 +116,7 @@ function Profile({ doctorData }) {
 
 
     //reusable function for adding item
-    const addItem = (key, item) => {
+    const addItem = (key: string, item: { startingDate?: string; endingDate?: string; degree?: string; university?: string; position?: string; hospital?: string; day?: string; startingTime?: string; endingTime?: string; }) => {
         setFormData(prevFormData => ({ ...prevFormData, [key]: [...prevFormData[key], item] }))
     }
 
