@@ -1,65 +1,13 @@
-import { BASE_URL, token } from '@/app/config';
-import { useParams } from 'next/navigation';
 import React, { useState } from 'react'
 import { AiFillStar } from 'react-icons/ai'
-import HashLoader from 'react-spinners/HashLoader';
-import Swal from 'sweetalert2';
 
 function FeedbackForm() {
 
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviewText, setReviewText] = useState("");
-    const [loading, setLoading] = useState(false)
-
-    const params = useParams()
-    const id = params.doctorId
-
     const handleSubmitReview = async (e: { preventDefault: () => void; }) => {
         e.preventDefault()
-        setLoading(true)
-
-        try {
-            if (!rating || !reviewText) {
-                setLoading(false)
-                //sweet alert pentru eroare: Rating and reviews Fields are required
-                return Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Rating and reviews fields are required!',
-                })
-            }
-
-            const res = await fetch(`${BASE_URL}/doctors/${id}/reviews`, {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({ rating, reviewText })
-            })
-
-            const result = await res.json()
-
-            if (!res.ok) {
-                throw new Error(result.message)
-            }
-
-            setLoading(false)
-            Swal.fire(
-                'Good job!',
-                'Your review has been submitted successfully!',
-                'success'
-            )
-
-        } catch (err) {
-            setLoading(false)
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: err.message,
-            })
-        }
         //to do
     }
 
@@ -112,7 +60,7 @@ function FeedbackForm() {
             </div>
 
             <button type='submit' onClick={handleSubmitReview} className='btn'>
-                {loading ? <HashLoader size={25} color='#fff' /> : 'Trimite feedback'}
+                Trimite feedback
             </button>
 
         </form>

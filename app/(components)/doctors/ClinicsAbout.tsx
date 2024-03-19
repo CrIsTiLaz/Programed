@@ -1,7 +1,7 @@
 import FormateDate from '@/app/utils/FormateDate'
 import React from 'react'
 
-function ClinicsAbout({ name, about, qualifications }) {
+function ClinicsAbout({ name, about, qualifications, experience }) {
     return (
         <div>
             <div>

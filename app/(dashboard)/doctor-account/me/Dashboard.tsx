@@ -8,6 +8,7 @@ import Tabs from './Tabs'
 import Image from 'next/image';
 import ClinicsAbout from '@/app/(components)/clinics/ClinicsAbout'
 import Profile from './Profile'
+import Appointments from './Appointments'
 
 function Dashboard() {
 
@@ -96,7 +97,7 @@ function Dashboard() {
                                             qualifications={data.qualifications}
                                             experience={data.experience} />
                                     </div>)}
-                                {tab === 'appointments' && <div>appointments</div>}
+                                {tab === 'appointments' && <Appointments appointments={data.appointments} />}
                                 {tab === 'settings' && <Profile doctorData={data} />}
                             </div>
                         </div>
