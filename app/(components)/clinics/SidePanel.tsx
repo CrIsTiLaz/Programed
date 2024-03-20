@@ -1,7 +1,52 @@
-import React from 'react'
-import convertTime from '@/app/utils/convertTime'
+import React from 'react';
+import Swal from 'sweetalert2';
+import convertTime from '@/app/utils/convertTime';
+import { BASE_URL, token } from '@/app/config';
+import Error from '@/app/error/Error';
+import { useRouter } from 'next/navigation';
 
 export default function SidePanel({ doctorId, ticketPrice, timeSlots }) {
+    const router = useRouter();
+
+    const bookingHandler = async () => {
+
+        try {
+            const res = await fetch(`${BASE_URL}/bookings/checkout-session/${doctorId}`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.message || 'There was an error processing your request.');
+            }
+
+            // Afisam confirmarea rezervarii
+            await Swal.fire({
+                icon: 'success',
+                title: 'Your booking is confirmed!',
+                text: 'Thank you! Your booking has been successfully made.',
+                willClose: () => {
+                    // Redirectionam utilizatorul la pagina CheckoutSuccess dupa ce Sweet Alert se inchide
+                    router.push('/bookings');
+                    // navigate('/CheckoutSuccess');
+                }
+            });
+
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error.toString(),
+            });
+        }
+    };
+
+
+
     return (
         <div className='shadow-panelShadow p-3 lg:p-5 rounded-md'>
             <div className="flex items-center justify-between">
@@ -30,7 +75,7 @@ export default function SidePanel({ doctorId, ticketPrice, timeSlots }) {
                 </ul>
             </div>
 
-            <button className='btn px-2 w-full rounded-md'>
+            <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
                 Fa programare
             </button>
         </div>
