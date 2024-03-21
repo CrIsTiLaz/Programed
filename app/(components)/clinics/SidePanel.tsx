@@ -4,6 +4,7 @@ import convertTime from '@/app/utils/convertTime';
 import { BASE_URL, token } from '@/app/config';
 import Error from '@/app/error/Error';
 import { useRouter } from 'next/navigation';
+import Example from '@/app/utils/Calendar';
 
 export default function SidePanel({ doctorId, ticketPrice, timeSlots }) {
     const router = useRouter();
@@ -60,8 +61,11 @@ export default function SidePanel({ doctorId, ticketPrice, timeSlots }) {
 
             <div className="mt-[30px]">
                 <p className='text__para mt-0 font-semibold text-headingColor'>Ore disponibile</p>
-                <ul className='mt-3'>
-                    {timeSlots?.map((item, index) => (
+
+
+                <Example />
+
+                {/*  {timeSlots?.map((item, index) => (
                         <li key={index} className='flex items-center justify-between mb-2'>
                             <p className='text-[15px] leading-6 text-textColor font-semibold'>
                                 {item.day.charAt(0).toUpperCase() + item.day.slice(1)}
@@ -70,9 +74,9 @@ export default function SidePanel({ doctorId, ticketPrice, timeSlots }) {
                                 {convertTime(item.startingTime)} - {convertTime(item.endingTime)}
                             </p>
                         </li>
-                    ))}
+                    ))} */}
 
-                </ul>
+
             </div>
 
             <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
