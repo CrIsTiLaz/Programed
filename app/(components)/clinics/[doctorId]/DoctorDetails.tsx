@@ -122,7 +122,7 @@ function ClinicsDetails() {
                         </div>
                     </div>
                     <div>
-                        <SidePanel doctorId={doctor._id} ticketPrice={ticketPrice} timeSlots={timeSlots} />
+                        <SidePanel doctorId={doctor._id} ticketPrice={ticketPrice} />
                     </div>
                 </div>)}
             </div>
