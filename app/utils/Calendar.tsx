@@ -100,7 +100,7 @@ export default function Example({ onDateSelect }) {
                                             isEqual(day, selectedDay) && 'text-white',
                                             !isEqual(day, selectedDay) &&
                                             isToday(day) &&
-                                            'text-red-500',
+                                            'text-primaryColor',
                                             !isEqual(day, selectedDay) &&
                                             !isToday(day) &&
                                             isSameMonth(day, firstDayCurrentMonth) &&
@@ -109,7 +109,7 @@ export default function Example({ onDateSelect }) {
                                             !isToday(day) &&
                                             !isSameMonth(day, firstDayCurrentMonth) &&
                                             'text-gray-400',
-                                            isEqual(day, selectedDay) && isToday(day) && 'bg-red-500',
+                                            isEqual(day, selectedDay) && isToday(day) && 'bg-primaryColor',
                                             isEqual(day, selectedDay) &&
                                             !isToday(day) &&
                                             'bg-gray-900',

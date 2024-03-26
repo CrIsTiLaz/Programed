@@ -66,8 +66,19 @@ function ClinicsDetails() {
                     <div className='md:col-span-2'>
                         <div className="flex items-center gap-5">
                             <div className='max-w-[200px] max-h-[200px]'>
-                                <Image src={photo} alt='' className='w-full' width={400} height={400} />
+                                <div>
+                                    {photo ? (
+                                        <Image className='w-full ' src={photo} width={200} height={200} alt="User profile photo" />
+                                    ) : (
+                                        <Image className='w-full ' src="/header/user (4).png" width={200} height={200} alt="Default profile photo" />
+                                    )}
+                                </div>
                             </div>
+
+
+
+
+
 
                             <div>
                                 <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-6 lg:py-2 lg:px:6 text-[12px] leading-4

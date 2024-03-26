@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation'; // Presupunând că aceasta este calea corectă pentru useRouter în proiectul tău
 import Example from '@/app/utils/Calendar';
 import Time from './Time';
+import { BASE_URL, token } from '@/app/config';
 
 export default function SidePanel({ doctorId, ticketPrice }) {
     const router = useRouter();
@@ -28,17 +29,19 @@ export default function SidePanel({ doctorId, ticketPrice }) {
             // Asigură-te că datele sunt în formatul acceptat de backend
             const formattedDate = selectedDate.toISOString(); // Formatăm data ca string ISO dacă este necesar
             const bookingData = {
-
-                ticketPrice, // Prețul biletului
                 appointmentDate: formattedDate, // Data programării în format ISO string
                 appointmentTime: selectedHour, // Ora programării ca string
                 // Adaugă alte câmpuri necesare conform schemei backend-ului
             };
 
-            const res = await fetch(`${process.env.BASE_URL}/bookings/checkout-session/${doctorId}`, {
+            // Construiește URL-ul și loghează-l pentru verificare
+            const requestUrl = `${BASE_URL}/bookings/checkout-session/${doctorId}`;
+            // console.log(`Making a POST request to: ${requestUrl}`);
+
+            const res = await fetch(requestUrl, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${process.env.TOKEN}`, // Token-ul de autorizare
+                    Authorization: `Bearer ${token}`, // Token-ul de autorizare
                     'Content-Type': 'application/json', // Specificăm că trimitem date în format JSON
                 },
                 body: JSON.stringify(bookingData) // Convertim obiectul de date într-un string JSON
@@ -71,7 +74,6 @@ export default function SidePanel({ doctorId, ticketPrice }) {
     };
 
 
-
     return (
         <div className='shadow-panelShadow p-3 lg:p-5 rounded-md'>
             <div className="flex items-center justify-between">
@@ -88,13 +90,17 @@ export default function SidePanel({ doctorId, ticketPrice }) {
             </div>
             <div className='mt-[50px]'>
                 {tab === 'date' && <Example onDateSelect={handleDateSelect} />}
-                {tab === 'time' && <Time selectedDate={selectedDate} />}
+                {tab === 'time' && <Time onHourSelect={handleHourSelect} selectedDate={selectedDate} />}
             </div>
-            <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
-                Fa programare
-            </button>
+            {/* Afisează butonul doar dacă o dată și o oră sunt selectate */}
+            {selectedDate && selectedHour && (
+                <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
+                    Fa programare
+                </button>
+            )}
         </div>
     );
+
 }
 
 
