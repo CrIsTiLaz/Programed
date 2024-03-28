@@ -11,6 +11,8 @@ export default function SidePanel({ doctorId, ticketPrice }) {
     const [selectedDate, setSelectedDate] = useState(null); // State pentru data selectată
     const [selectedHour, setSelectedHour] = useState(null);
 
+    console.log('doctorId', doctorId)
+
     const handleDateSelect = (date) => {
         setSelectedDate(date);
         setTab('time');
@@ -90,7 +92,7 @@ export default function SidePanel({ doctorId, ticketPrice }) {
             </div>
             <div className='mt-[50px]'>
                 {tab === 'date' && <Example onDateSelect={handleDateSelect} />}
-                {tab === 'time' && <Time onHourSelect={handleHourSelect} selectedDate={selectedDate} />}
+                {tab === 'time' && <Time onHourSelect={handleHourSelect} selectedDate={selectedDate} doctorId={doctorId} />}
             </div>
             {/* Afisează butonul doar dacă o dată și o oră sunt selectate */}
             {selectedDate && selectedHour && (

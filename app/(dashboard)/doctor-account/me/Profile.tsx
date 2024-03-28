@@ -189,7 +189,7 @@ function Profile({ doctorData }) {
         e.preventDefault()
         deleteItem('timeSlots', index)
     }
-    console.log('formData.photo', formData.photo)
+    // console.log('formData.photo', formData.photo)
 
 
     return (
@@ -435,22 +435,16 @@ function Profile({ doctorData }) {
                                 <div className='grid grid-cols-2 md:grid-cols-4 mb-[30px] gap-5'>
                                     <div>
                                         <p className='form__label'>Day*</p>
-                                        <select
+                                        <input
                                             name='day'
                                             value={item.day}
                                             className='form__input py-3.5'
                                             onChange={e => handleTimeSlotChange(e, index)}
+                                            type='date'
                                         >
-                                            <option value="">Select</option>
-                                            <option value="saturday">Saturday</option>
-                                            <option value="sunday">Sunday</option>
-                                            <option value="monday">Monday</option>
-                                            <option value="tuesday">Tuesday</option>
-                                            <option value="wednesday">Wednesday</option>
-                                            <option value="thursday">Thursday</option>
-                                            <option value="friday">Friday</option>
 
-                                        </select>
+
+                                        </input>
                                     </div>
 
                                     <div>

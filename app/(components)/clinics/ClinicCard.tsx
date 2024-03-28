@@ -2,6 +2,7 @@ import Image from 'next/image'
 import React from 'react'
 import { BiRightArrowAlt } from 'react-icons/bi';
 import Link from 'next/link';
+import FormateDate from '@/app/utils/FormateDate';
 
 function ClinicCard({ doctor, appointmentDate, appointmentTime }) {
     // Presupunând că toate aceste date sunt acum incluse în obiectul "doctor"
@@ -22,9 +23,10 @@ function ClinicCard({ doctor, appointmentDate, appointmentTime }) {
             {/* Afișează data și ora dacă sunt furnizate */}
             {appointmentDate && (
                 <p className='mt-2 text-[14px] lg:text-[16px] text-headingColor'>
-                    Data: {appointmentDate}
+                    Data: {FormateDate(appointmentDate)}
                 </p>
             )}
+
             {appointmentTime && (
                 <p className='text-[14px] lg:text-[16px] text-headingColor'>
                     Ora: {appointmentTime}

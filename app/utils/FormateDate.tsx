@@ -1,11 +1,20 @@
 import React from 'react'
 
-function FormateDate(date, config) {
+function FormateDate(dateString) {
 
-    const defaultOptions = { day: 'numeric', month: 'long', year: 'numeric' }
-    const options = config ? config : defaultOptions
+    const date = new Date(dateString);
+    const options = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    };
+    // Extrage componentele datei folosind locale-ul ro-RO pentru a te asigura că luna este în formatul corect
+    const day = date.toLocaleDateString("ro-RO", { day: "2-digit" });
+    const month = date.toLocaleDateString("ro-RO", { month: "long" });
+    const year = date.toLocaleDateString("ro-RO", { year: "numeric" });
 
-    return new Date(date).toLocaleDateString('en-US', options)
-}
+    // Construiește și returnează șirul de caractere al datei în formatul dorit
+    return `${day} ${month}, ${year}`;
+};
 
 export default FormateDate
