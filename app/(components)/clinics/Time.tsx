@@ -8,58 +8,53 @@ import { blue } from '@mui/material/colors';
 import useFetchData from '@/app/hooks/useFetchData';
 import { BASE_URL } from '@/app/config';
 import { format, parseISO } from 'date-fns';
-//trebuie sa fac un endpoint care sa extraga toate bookingurilke
+
 function Time({ selectedDate, onHourSelect, doctorId }) {
     const [selectedHour, setSelectedHour] = useState(null);
-
-    // Ajustează această adresă URL conform nevoilor backend-ului tău
-    const { data: appointments, loading, error } = useFetchData(`${BASE_URL}/users/appointments/my-appointmentsDateAndTime`);
-
+    const { data: bookings, loading, error } = useFetchData(`${BASE_URL}/bookings/bookings`);
     const hours = Array.from({ length: 10 }, (_, i) => i + 10); // Presupunem orele de lucru de la 10 la 19
-    console.log('appointments', appointments)
+
+    console.log('bookings', bookings);
+    console.log('`${BASE_URL}/bookings/bookings`', `${BASE_URL}/bookings/bookings`)
     useEffect(() => {
         setSelectedHour(null); // Resetăm ora selectată la schimbarea datei sau a doctorului
     }, [selectedDate, doctorId]);
 
-    const availableHours = hours.filter(hour => {
+    const availableHours = bookings && Array.isArray(bookings) ? hours.filter(hour => {
         const dateString = format(selectedDate, 'yyyy-MM-dd');
         const hourString = `${hour}:00`;
 
         console.log('doctorId ca parametru:', doctorId);
 
-        return !appointments.some(appointment => {
+        return !bookings.some(appointment => {
             console.log('Verificare appointment:', {
                 'doctorId ca parametru': doctorId,
                 'appointment.doctor._id': appointment.doctor._id,
                 'appointment.appointmentTime': appointment.appointmentTime,
-                'appointment.appointmentDate': appointment.appointmentDate
+                'appointment.appointmentDate': appointment.appointmentDate,
             });
             if (appointment.doctor._id === doctorId) {
-                console.log('am gasit doctorul')
+                console.log('am gasit doctorul');
             }
-            // Asigurăm că appointment.appointmentDate este definit și convertim la 'yyyy-MM-dd'
             let appointmentDateString = appointment.appointmentDate
                 ? format(parseISO(appointment.appointmentDate), 'yyyy-MM-dd')
                 : null;
-
             const appointmentTimeString = `${appointment.appointmentTime}:00`;
             if (appointmentDateString === dateString) {
-                console.log('am gasit data egala')
+                console.log('am gasit data egala');
             }
             console.log('appointment.appointmentTime', appointment.appointmentTime);
             console.log('hourString', hourString);
 
             if (appointmentTimeString === hourString) {
-                console.log('am gasit ora egala')
+                console.log('am gasit ora egala');
             }
 
-            // Folosim dateString pentru comparație, care este acum în format 'yyyy-MM-dd'
             return appointmentDateString === dateString &&
                 appointmentTimeString === hourString &&
                 appointment.doctor._id === doctorId;
         });
-    });
-
+    }) : [];
 
     console.log('Ore disponibile după filtrare:', availableHours);
 
@@ -115,5 +110,3 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
 }
 
 export default Time;
-
-
