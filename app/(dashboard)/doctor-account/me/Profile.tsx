@@ -4,6 +4,7 @@ import Image from 'next/image';
 import uploadImageToCloudinary from '@/app/utils/uploadCloudinary';
 import { BASE_URL, token } from '@/app/config';
 import Swal from 'sweetalert2';
+import Time from '@/app/(components)/clinics/Time';
 
 function Profile({ doctorData }) {
 
@@ -23,7 +24,9 @@ function Profile({ doctorData }) {
         photo: null
         // photo: '/clinics/doctor-img01.png'
     })
+    const [selectedHour, setSelectedHour] = useState(null);
 
+    console.log('doctorData', doctorData)
     useEffect(() => {
         setFormData({
             name: doctorData?.name,
@@ -184,6 +187,11 @@ function Profile({ doctorData }) {
     const handleTimeSlotChange = (event: { target: { name: any; value: any; }; }, index: any) => {
         handleReusableInputChangeFunc('timeSlots', index, event)
     }
+
+    const handleHourSelect = (hour) => {
+        setSelectedHour(hour);
+        console.log(`Data selectată: ${selectedDate}, Ora selectată: ${hour}:00`);
+    };
 
     const deleteTimeSlot = (e: { preventDefault: () => void; }, index: any) => {
         e.preventDefault()
@@ -448,13 +456,11 @@ function Profile({ doctorData }) {
                                     </div>
 
                                     <div>
-                                        <p className='form__label'>Starting Time*</p>
-                                        <input
-                                            type="time"
-                                            name='startingTime'
-                                            value={item.startingTime}
-                                            className='form__input'
-                                            onChange={e => handleTimeSlotChange(e, index)}
+                                        <p className='form__label'>Ora*</p>
+                                        <Time
+                                            selectedDate={new Date(item.day)}
+                                            doctorId={doctorData._id}
+                                            onHourSelect={(hour) => console.log(`Ora selectată: ${hour}`)}
                                         />
                                     </div>
 
