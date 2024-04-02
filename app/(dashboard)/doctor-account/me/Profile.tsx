@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
+
 import Image from 'next/image';
 import uploadImageToCloudinary from '@/app/utils/uploadCloudinary';
 import { BASE_URL, token } from '@/app/config';
 import Swal from 'sweetalert2';
 import Time from '@/app/(components)/clinics/Time';
+import { format } from 'date-fns';
 
 function Profile({ doctorData }) {
 
@@ -25,8 +27,9 @@ function Profile({ doctorData }) {
         // photo: '/clinics/doctor-img01.png'
     })
     const [selectedHour, setSelectedHour] = useState(null);
+    const currentDate = format(new Date(), 'yyyy-MM-dd');
 
-    console.log('doctorData', doctorData)
+    // console.log('doctorData', doctorData)
     useEffect(() => {
         setFormData({
             name: doctorData?.name,
@@ -178,11 +181,19 @@ function Profile({ doctorData }) {
         deleteItem('experiences', index)
     }
 
-    const addTimeSlot = (e: { preventDefault: () => void; }) => {
+    const addTimeSlot = (e) => {
         e.preventDefault();
 
-        addItem('timeSlots', { day: 'Sunday', startingTime: '10:00', endingTime: '04:30' },)
-    }
+        // Inițializează 'day' cu ziua curentă
+        const newSlot = {
+            day: currentDate, // Folosește variabila definită anterior
+            time: '' // Aici presupunem că 'time' va fi setat mai târziu de utilizator
+        };
+
+        addItem('timeSlots', newSlot);
+    };
+
+
 
     const handleTimeSlotChange = (event: { target: { name: any; value: any; }; }, index: any) => {
         handleReusableInputChangeFunc('timeSlots', index, event)
@@ -212,7 +223,7 @@ function Profile({ doctorData }) {
                     <input
                         type='text'
                         name='name'
-                        value={formData.name}
+                        value={formData.name || ''}
                         onChange={handleInputChange}
                         placeholder='Full Name'
                         className='form__input'
@@ -230,7 +241,7 @@ function Profile({ doctorData }) {
                         className='form__input'
                         readOnly
                         aria-readonly
-                        disabled='true'
+                        disabled={true}
                     />
                 </div>
 
@@ -251,7 +262,7 @@ function Profile({ doctorData }) {
                     <input
                         type='text'
                         name='bio'
-                        value={formData.bio}
+                        value={formData.bio || ''}
                         onChange={handleInputChange}
                         placeholder='Bio'
                         className='form__input'
@@ -406,7 +417,7 @@ function Profile({ doctorData }) {
                                         <input
                                             type="text"
                                             name='position'
-                                            value={item.position}
+                                            value={item.position || ''}
                                             className='form__input'
                                             onChange={e => handleExperienceChange(e, index)}
                                         />
@@ -417,7 +428,7 @@ function Profile({ doctorData }) {
                                         <input
                                             type="text"
                                             name='hospital'
-                                            value={item.hospital}
+                                            value={item.hospital || ''}
                                             className='form__input'
                                             onChange={e => handleExperienceChange(e, index)}
                                         />
@@ -438,55 +449,51 @@ function Profile({ doctorData }) {
                 <div className='mb-5'>
                     <p className='form__label'>Time Slots*</p>
                     {formData.timeSlots?.map((item, index) => (
-                        <div key={index}>
+                        <div key={index} className='grid grid-cols-2 md:grid-cols-4 mb-[30px] gap-5'>
                             <div>
-                                <div className='grid grid-cols-2 md:grid-cols-4 mb-[30px] gap-5'>
-                                    <div>
-                                        <p className='form__label'>Day*</p>
-                                        <input
-                                            name='day'
-                                            value={item.day}
-                                            className='form__input py-3.5'
-                                            onChange={e => handleTimeSlotChange(e, index)}
-                                            type='date'
-                                        >
+                                <p className='form__label'>Day*</p>
+                                <input
+                                    name='day'
+                                    value={item.day}
+                                    className='form__input py-3.5'
+                                    onChange={e => handleTimeSlotChange(e, index)}
+                                    type='date'
+                                />
+                            </div>
 
+                            <div>
+                                <p className='form__label'>Time*</p>
+                                {/* Verifică dacă slotul are o oră setată */}
+                                {item.time ? (
+                                    <input
+                                        name='time'
+                                        value={item.time}
+                                        className='form__input py-3.5'
+                                        readOnly
+                                    />
+                                ) : (
+                                    // Dacă nu, afișează componenta Time pentru a selecta o oră
+                                    <Time
+                                        selectedDate={new Date(item.day)}
+                                        doctorId={doctorData._id}
+                                        onHourSelect={(hour) => handleTimeSlotChange(
+                                            { target: { name: 'time', value: `${hour}:00` } }, index
+                                        )}
+                                    />
+                                )}
+                            </div>
 
-                                        </input>
-                                    </div>
-
-                                    <div>
-                                        <p className='form__label'>Ora*</p>
-                                        <Time
-                                            selectedDate={new Date(item.day)}
-                                            doctorId={doctorData._id}
-                                            onHourSelect={(hour) => console.log(`Ora selectată: ${hour}`)}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <p className='form__label'>Ending Time*</p>
-                                        <input
-                                            type="time"
-                                            name='endingTime'
-                                            value={item.endingTime}
-                                            className='form__input'
-                                            onChange={e => handleTimeSlotChange(e, index)}
-                                        />
-                                    </div>
-
-                                    <div onClick={e => deleteTimeSlot(e, index)} className='flex items-center'>
-                                        <button className='btn bg-red-600 p-2 rounded-full text-white text-[18px] cursor-pointer mt-6'>
-                                            <AiOutlineDelete />
-                                        </button>
-                                    </div>
-                                </div>
+                            <div onClick={e => deleteTimeSlot(e, index)} className='flex items-center justify-center'>
+                                <button className='btn bg-red-600 p-2 rounded-full text-white text-[18px] cursor-pointer'>
+                                    <AiOutlineDelete />
+                                </button>
                             </div>
                         </div>
                     ))}
-
                     <button onClick={addTimeSlot} className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>Add Time Slot</button>
                 </div>
+
+
 
                 <div className="mb-5">
                     <p className='form__label'>About*</p>
@@ -535,5 +542,3 @@ function Profile({ doctorData }) {
 }
 
 export default Profile
-
-//31:29

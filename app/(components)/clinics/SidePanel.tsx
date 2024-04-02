@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation'; // Presupunând că aceasta este ca
 import Example from '@/app/utils/Calendar';
 import Time from './Time';
 import { BASE_URL, token } from '@/app/config';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { motion } from "framer-motion";
 
 export default function SidePanel({ doctorId, ticketPrice }) {
     const router = useRouter();
@@ -85,12 +87,19 @@ export default function SidePanel({ doctorId, ticketPrice }) {
                 </span>
             </div>
 
-            <div className="mt-[50px] border-b border-solid border-[#0066ff34]">
-                <button onClick={() => setTab('date')} className={`  ${tab === 'date' && 'border-b border-solid border-primaryColor'} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
-                    Date
-                </button>
-            </div>
-            <div className='mt-[50px]'>
+            {tab !== 'date' && (
+                <div className="mt-[50px]">
+
+                    <button onClick={() => setTab('date')} className="  py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold">
+                        <motion.div whileHover={{ scale: 1.1 }}>
+                            <AiOutlineArrowLeft className="inline-block mr-2" /> Back
+                        </motion.div>
+                    </button>
+
+                </div>
+            )}
+
+            <div className={`mt-[50px]`}>
                 {tab === 'date' && <Example onDateSelect={handleDateSelect} />}
                 {tab === 'time' && <Time onHourSelect={handleHourSelect} selectedDate={selectedDate} doctorId={doctorId} />}
             </div>
@@ -101,6 +110,7 @@ export default function SidePanel({ doctorId, ticketPrice }) {
                 </button>
             )}
         </div>
+
     );
 
 }
