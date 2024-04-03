@@ -10,6 +10,17 @@ import { format } from 'date-fns';
 
 function Profile({ doctorData }) {
 
+    const [workSchedule, setWorkSchedule] = useState(doctorData.workSchedule || [
+        { dayOfWeek: 'Luni', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Marti', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Miercuri', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Joi', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Vineri', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Sambata', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Duminica', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        // Repetă pentru fiecare zi a săptămânii
+    ]);
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -23,12 +34,13 @@ function Profile({ doctorData }) {
         experiences: [],
         timeSlots: [],
         about: '',
-        photo: null
+        photo: null,
+        workSchedule: doctorData.workSchedule || [],
         // photo: '/clinics/doctor-img01.png'
     })
     const [selectedHour, setSelectedHour] = useState(null);
     const currentDate = format(new Date(), 'yyyy-MM-dd');
-
+    const [generalConsultationDuration, setGeneralConsultationDuration] = useState(30);
     // console.log('doctorData', doctorData)
     useEffect(() => {
         setFormData({
@@ -66,58 +78,65 @@ function Profile({ doctorData }) {
     const updateProfileHandler = async e => {
         e.preventDefault();
 
-        // Filtrăm formData pentru a exclude câmpurile care nu au fost completate
-        const filteredFormData = Object.entries(formData).reduce((acc, [key, value]) => {
-            // Verificăm dacă valoarea este un array și dacă este gol
-            const isEmptyArray = Array.isArray(value) && value.length === 0;
+        // Construiește partea de workSchedule a payload-ului
+        const updatedWorkSchedule = workSchedule.map(schedule => ({
+            ...schedule,
+            consultationDuration: schedule.consultationDuration || generalConsultationDuration,
+            startTime: schedule.startTime ? schedule.startTime.toISOString() : null,
+            endTime: schedule.endTime ? schedule.endTime.toISOString() : null,
+        }));
 
-            // Adăugăm în acc doar valorile care nu sunt null, șiruri goale, sau array-uri goale
-            // Ajustează condiția în funcție de nevoile tale
+        // Construiește filteredFormData, similar cu cum ai făcut anterior
+        const filteredFormData = Object.entries(formData).reduce((acc, [key, value]) => {
+            // Filtrează câmpurile neutilizate, exact cum ai făcut înainte
+            const isEmptyArray = Array.isArray(value) && value.length === 0;
             if (value !== null && value !== '' && !isEmptyArray) {
                 acc[key] = value;
             } else if (Array.isArray(value)) {
-                // Dacă vrei să incluzi array-uri indiferent de conținutul lor, comentează linia de mai sus și decomentează această linie
                 acc[key] = value;
             }
             return acc;
         }, {});
 
+        // Îmbină updatedWorkSchedule în filteredFormData
+        const payload = {
+            ...filteredFormData,
+            workSchedule: updatedWorkSchedule,
+        };
+
         try {
-            const res = await fetch(`${BASE_URL}/doctors/${doctorData._id}`, {
+            const response = await fetch(`${BASE_URL}/doctors/${doctorData._id}`, {
                 method: 'PUT',
                 headers: {
-                    'content-type': 'application/json',
-                    Authorization: `Bearer ${token}`
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify(filteredFormData)
-            })
+                body: JSON.stringify(payload),
+            });
 
-            const result = await res.json()
-            if (!res.ok) {
-                throw Error(result.message)
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result.message);
             }
 
-            //sweet alert de success
+            //sweet alert de succes
             Swal.fire({
-                title: 'Succes!',
-                text: 'Profilul a fost actualizat cu succes.',
+                title: 'Success!',
+                text: 'Your profile has been updated successfully.',
                 icon: 'success',
-                confirmButtonText: 'Ok'
-            })
-
-
-
-
-        } catch (err) {
-            //sweet alert de error
+                confirmButtonText: 'Ok',
+            });
+        } catch (error) {
+            //sweet alert de eroare
             Swal.fire({
-                title: 'Eroare!',
-                text: err.message,
+                title: 'Error!',
+                text: error.toString(),
                 icon: 'error',
-                confirmButtonText: 'Ok'
-            })
+                confirmButtonText: 'Ok',
+            });
         }
-    }
+    };
+
 
 
 
@@ -209,6 +228,34 @@ function Profile({ doctorData }) {
         deleteItem('timeSlots', index)
     }
     // console.log('formData.photo', formData.photo)
+
+    const handleWorkScheduleChange = (dayOfWeek, field, value) => {
+        // Găsirea indexului elementului pe baza zilei săptămânii
+        const index = workSchedule.findIndex(schedule => schedule.dayOfWeek === dayOfWeek);
+
+        if (index !== -1) {
+            // Construim o nouă valoare pentru startTime sau endTime
+            let newValue = value;
+            if (field === 'startTime' || field === 'endTime') {
+                let [hours, minutes] = value.split(':');
+                newValue = new Date();
+                newValue.setHours(hours, minutes, 0);
+            }
+
+            // Actualizăm workSchedule într-un mod imutabil
+            const newWorkSchedule = [...workSchedule];
+            newWorkSchedule[index] = { ...newWorkSchedule[index], [field]: newValue };
+
+            setWorkSchedule(newWorkSchedule);
+        }
+    };
+
+
+
+    const updatedWorkSchedule = workSchedule.map(schedule => ({
+        ...schedule,
+        consultationDuration: generalConsultationDuration || schedule.consultationDuration
+    }));
 
 
     return (
@@ -492,6 +539,65 @@ function Profile({ doctorData }) {
                     ))}
                     <button onClick={addTimeSlot} className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>Add Time Slot</button>
                 </div>
+
+                <div className="mb-5">
+                    <h3>Orar de lucru</h3>
+                    {['Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri', 'Sambata', 'Duminica'].map((dayOfWeek) => {
+                        // Găsește indexul zilei curente în array-ul workSchedule sau -1 dacă nu este prezentă
+                        const index = workSchedule.findIndex(schedule => schedule.dayOfWeek === dayOfWeek);
+
+                        // Funcția de actualizare pentru startTime și endTime
+                        const handleScheduleChange = (field, value) => {
+                            // Creează un obiect Date din valoarea de timp primită
+                            const timeValue = value ? new Date(`1970-01-01T${value}:00`) : null;
+
+                            // Actualizează workSchedule cu noua valoare
+                            setWorkSchedule(currentSchedule => {
+                                let newSchedule = [...currentSchedule];
+                                if (index !== -1) {
+                                    // Actualizăm ziua existentă
+                                    newSchedule[index] = { ...newSchedule[index], [field]: timeValue };
+                                } else {
+                                    // Adăugăm o nouă zi în program
+                                    newSchedule = [...newSchedule, { dayOfWeek, [field]: timeValue, consultationDuration: 30 }]; // Presupunem durată standard pentru noile zile
+                                }
+                                return newSchedule;
+                            });
+                        };
+
+                        return (
+                            <div key={dayOfWeek} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <label>{dayOfWeek}</label>
+                                <div className="flex items-center">
+                                    <input
+                                        type="time"
+                                        className='form__input'
+                                        value={index !== -1 && workSchedule[index].startTime ? format(workSchedule[index].startTime, 'HH:mm') : ''}
+                                        onChange={(e) => handleScheduleChange('startTime', e.target.value)}
+                                    />
+                                    <span className="mx-2">la</span>
+                                    <input
+                                        type="time"
+                                        className='form__input'
+                                        value={index !== -1 && workSchedule[index].endTime ? format(workSchedule[index].endTime, 'HH:mm') : ''}
+                                        onChange={(e) => handleScheduleChange('endTime', e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                        );
+                    })}
+                    <div>
+                        <label>Durata consultației (minute)</label>
+                        <input
+                            type="number"
+                            className='form__input'
+                            value={generalConsultationDuration}
+                            onChange={e => setGeneralConsultationDuration(e.target.value)}
+                            min="1" // Asigură-te că durata este pozitivă
+                        />
+                    </div>
+                </div>
+
 
 
 
