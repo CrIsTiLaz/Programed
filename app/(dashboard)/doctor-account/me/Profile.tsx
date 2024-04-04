@@ -59,7 +59,9 @@ function Profile({ doctorData }) {
 
         })
     }, [doctorData])
-
+    useEffect(() => {
+        console.log(generalConsultationDuration);
+    }, [generalConsultationDuration]);
     const handleInputChange = e => {
 
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -81,9 +83,10 @@ function Profile({ doctorData }) {
         // Construiește partea de workSchedule a payload-ului
         const updatedWorkSchedule = workSchedule.map(schedule => ({
             ...schedule,
-            consultationDuration: schedule.consultationDuration || generalConsultationDuration,
-            startTime: schedule.startTime ? schedule.startTime.toISOString() : null,
-            endTime: schedule.endTime ? schedule.endTime.toISOString() : null,
+            consultationDuration: generalConsultationDuration,
+            startTime: schedule.startTime ? new Date(schedule.startTime).toISOString() : null,
+            endTime: schedule.endTime ? new Date(schedule.endTime).toISOString() : null,
+            consultation: `Consultație generala: ${generalConsultationDuration} minute` // Exemplu de valoare adăugată
         }));
 
         // Construiește filteredFormData, similar cu cum ai făcut anterior
@@ -103,6 +106,7 @@ function Profile({ doctorData }) {
             ...filteredFormData,
             workSchedule: updatedWorkSchedule,
         };
+        console.log("Payload being sent:", JSON.stringify(payload, null, 2));
 
         try {
             const response = await fetch(`${BASE_URL}/doctors/${doctorData._id}`, {
@@ -590,9 +594,11 @@ function Profile({ doctorData }) {
                         <label>Durata consultației (minute)</label>
                         <input
                             type="number"
+                            id="consultationDuration"
+                            name="generalConsultationDuration"
                             className='form__input'
                             value={generalConsultationDuration}
-                            onChange={e => setGeneralConsultationDuration(e.target.value)}
+                            onChange={e => setGeneralConsultationDuration(Number(e.target.value))}
                             min="1" // Asigură-te că durata este pozitivă
                         />
                     </div>

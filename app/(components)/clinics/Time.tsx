@@ -7,51 +7,62 @@ import ListItemText from '@mui/material/ListItemText';
 import { blue } from '@mui/material/colors';
 import useFetchData from '@/app/hooks/useFetchData';
 import { BASE_URL } from '@/app/config';
-import { format, parseISO } from 'date-fns';
+import { addMinutes, format, parseISO } from 'date-fns';
 
 function Time({ selectedDate, onHourSelect, doctorId }) {
     const [selectedHour, setSelectedHour] = useState(null);
-    const { data: bookings, loading, error } = useFetchData(`${BASE_URL}/bookings/bookings`);
-
+    const { data: bookings } = useFetchData(`${BASE_URL}/bookings/bookings`);
     const { data: doctor } = useFetchData(`${BASE_URL}/doctors/${doctorId}`);
 
-    const hours = Array.from({ length: 10 }, (_, i) => i + 10); // Presupunem orele de lucru de la 10 la 19
+    // Mapare zile din engleză în română
+    const dayMap = {
+        Monday: 'Luni',
+        Tuesday: 'Marti',
+        Wednesday: 'Miercuri',
+        Thursday: 'Joi',
+        Friday: 'Vineri',
+        Saturday: 'Sambata',
+        Sunday: 'Duminica',
+    };
 
-    // console.log('bookings', bookings);
-    // console.log('`${BASE_URL}/bookings/bookings`', `${BASE_URL}/bookings/bookings`)
     useEffect(() => {
-        setSelectedHour(null); // Resetăm ora selectată la schimbarea datei sau a doctorului
-    }, [selectedDate, doctorId, doctor]); // Adaugă doctor ca dependență dacă datele acestuia se pot schimba
+        setSelectedHour(null); // Reset ora selectată la schimbare datei/doctorului
+    }, [selectedDate, doctorId, doctor]);
 
-    const availableHours = bookings && doctor && Array.isArray(bookings) && Array.isArray(doctor.timeSlots) ? hours.filter(hour => {
-        const dateString = format(selectedDate, 'yyyy-MM-dd');
-        const hourString = `${hour}:00`;
+    const availableHours = (() => {
+        if (!bookings || !doctor || !selectedDate) return [];
 
-        // Verifică dacă ora este deja rezervată în appointments
-        const isBooked = bookings.some(appointment => {
-            let appointmentDateString = appointment.appointmentDate
-                ? format(parseISO(appointment.appointmentDate), 'yyyy-MM-dd')
-                : null;
-            const appointmentTimeString = `${appointment.appointmentTime}:00`;
+        // Obține ziua săptămânii în engleză și apoi traduce-o în română
+        const dayOfWeekEng = format(selectedDate, 'EEEE');
+        const dayOfWeek = dayMap[dayOfWeekEng];
 
-            return appointmentDateString === dateString &&
-                appointmentTimeString === hourString &&
-                appointment.doctor._id === doctorId;
+        const workSchedule = doctor?.workSchedule?.find(schedule => schedule.dayOfWeek === dayOfWeek);
+
+        console.log('dayOfWeek', dayOfWeek); // Verifică maparea
+
+        if (!workSchedule) return [];
+
+        let startTime = new Date(workSchedule.startTime);
+        const endTime = new Date(workSchedule.endTime);
+        const consultationDuration = workSchedule.consultationDuration;
+        let hours = [];
+
+        while (startTime < endTime) {
+            hours.push(format(startTime, 'HH:mm'));
+            startTime = addMinutes(startTime, consultationDuration);
+        }
+
+        // Filtrare ore bazate pe programări existente
+        return hours.filter(hour => {
+            const hourString = `${format(selectedDate, 'yyyy-MM-dd')}T${hour}`;
+            return !bookings.some(booking => {
+                const bookingStart = new Date(booking.appointmentTime);
+                const bookingEnd = addMinutes(bookingStart, consultationDuration);
+                const checkTime = new Date(hourString);
+                return booking.doctor._id === doctorId && checkTime >= bookingStart && checkTime < bookingEnd;
+            });
         });
-        console.log('doctor.timeSlots', doctor.timeSlots)
-        // Verifică dacă ora este rezervată de doctor în timeSlots
-        const isReservedByDoctor = doctor.timeSlots.some(slot => {
-            const slotDateString = slot.day ? format(parseISO(slot.day), 'yyyy-MM-dd') : null;
-            const slotHourString = slot.time; // Formatul este "HH:MM", corespunde cu ceea ce avem nevoie
-            return slotDateString === dateString && slotHourString === hourString;
-        });
-
-        return !isBooked && !isReservedByDoctor;
-    }) : [];
-
-
-
-    // console.log('Ore disponibile după filtrare:', availableHours);
+    })();
 
     const handleHourClick = (hour) => {
         setSelectedHour(hour);
@@ -74,9 +85,9 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
         <Container maxWidth="sm" sx={{ mt: 4 }}>
             <List>
                 {availableHours.length > 0 ? (
-                    availableHours.map(hour => (
+                    availableHours.map((hour, index) => (
                         <ListItem
-                            key={hour}
+                            key={index}
                             divider
                             button
                             selected={selectedHour === hour}
@@ -88,7 +99,7 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
                                 },
                             }}
                         >
-                            <ListItemText primary={`${hour}:00`} />
+                            <ListItemText primary={hour} />
                         </ListItem>
                     ))
                 ) : (
