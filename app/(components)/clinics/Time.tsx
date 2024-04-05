@@ -32,13 +32,9 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
     const availableHours = (() => {
         if (!bookings || !doctor || !selectedDate) return [];
 
-        // Obține ziua săptămânii în engleză și apoi traduce-o în română
         const dayOfWeekEng = format(selectedDate, 'EEEE');
         const dayOfWeek = dayMap[dayOfWeekEng];
-
         const workSchedule = doctor?.workSchedule?.find(schedule => schedule.dayOfWeek === dayOfWeek);
-
-        console.log('dayOfWeek', dayOfWeek); // Verifică maparea
 
         if (!workSchedule) return [];
 
@@ -47,74 +43,44 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
         const consultationDuration = workSchedule.consultationDuration;
         let hours = [];
 
+        // Generează toate orele posibile în intervalul de lucru al doctorului
         while (startTime < endTime) {
             hours.push(format(startTime, 'HH:mm'));
             startTime = addMinutes(startTime, consultationDuration);
         }
-        console.log(`Data selectată este: ${format(selectedDate, 'yyyy-MM-dd')}`);
 
-        // Filtrare ore bazate pe programări existente
+        // Extrage sloturile rezervate de doctor pentru ziua selectată
+        const doctorReservedSlots = doctor.timeSlots.filter(slot =>
+            format(parseISO(slot.day), 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')
+        ).map(slot => slot.time);
+
+        // Filtrare ore bazate pe programări existente și sloturi rezervate de doctor
         return hours.filter(hour => {
             const hourDateTimeString = `${format(selectedDate, 'yyyy-MM-dd')}T${hour}`;
             const hourDateTime = new Date(hourDateTimeString);
 
-            const overlappingBookings = bookings.filter(booking => {
-                if (!booking.appointmentDate || !booking.appointmentTime) {
-                    return false;
-                }
+            // Verifică dacă ora este rezervată de doctor
+            const isDoctorReserved = doctorReservedSlots.includes(hour);
+            if (isDoctorReserved) {
+                return false; // Ora este rezervată de doctor și nu este disponibilă
+            }
 
-                const bookingDateUTC = booking.appointmentDate; // Aceasta ar trebui să fie un string UTC din baza de date.
-                const bookingDateLocal = parseISO(bookingDateUTC); // Parsează într-un obiect Date, ajustat pentru UTC.
+            // Verifică dacă ora este rezervată de pacienți
+            const isPatientBooked = bookings.some(booking => {
+                const bookingDateUTC = booking.appointmentDate;
+                const bookingDateLocal = parseISO(bookingDateUTC);
                 const bookingDateTimeLocalString = `${format(bookingDateLocal, 'yyyy-MM-dd')}T${booking.appointmentTime}`;
-                // Presupunem că timpul programărilor este local și construim un string de dată/timp corespunzător.
                 const bookingDateTime = new Date(bookingDateTimeLocalString);
-                // console.log('bookingDateTime', bookingDateTime)
-                // console.log('hourDateTime', hourDateTime)
-                console.log('bookingDateTime', bookingDateTime)
-                if (bookingDateTime.getFullYear() === hourDateTime.getFullYear() &&
-                    bookingDateTime.getMonth() === hourDateTime.getMonth() &&
-                    bookingDateTime.getDate() === hourDateTime.getDate()) {
-                    console.log('Datele sunt identice.');
-                }
-
-                if (bookingDateTime.getFullYear() === hourDateTime.getFullYear()) {
-                    console.log('Anii sunt identice.');
-                }
-
-                if (bookingDateTime.getFullYear() === hourDateTime.getFullYear() &&
-                    bookingDateTime.getMonth() === hourDateTime.getMonth()) {
-                    console.log('Luniile sunt identic.');
-                }
-
-
-                if (bookingDateTime.getFullYear() === hourDateTime.getFullYear() &&
-                    bookingDateTime.getMonth() === hourDateTime.getMonth() &&
-                    bookingDateTime.getDate() === hourDateTime.getDate()) {
-                    console.log('Zilele sunt identice.');
-                } else {
-
-                    console.log('bookingDateTime.getDate()', bookingDateTime.getDate())
-                    console.log('hourDateTime.getDate()', hourDateTime.getDate())
-
-                }
 
                 const bookingEndDateTime = addMinutes(bookingDateTime, consultationDuration);
 
-                return booking.doctor._id === doctorId && hourDateTime >= bookingDateTime && hourDateTime < bookingEndDateTime;
+                return booking.doctor._id.toString() === doctorId.toString() && hourDateTime >= bookingDateTime && hourDateTime < bookingEndDateTime;
             });
 
-            // Logăm programările care se suprapun cu ora/data selectată
-            if (overlappingBookings.length > 0) {
-                console.log(`Există ${overlappingBookings.length} programări care se suprapun cu data și ora selectată.`);
-                console.log(overlappingBookings); // Afișăm detaliile programărilor suprapunătoare
-            }
-
-            // Determinăm dacă ora curentă este disponibilă (neocupată de vreo programare)
-            return overlappingBookings.length === 0;
+            return !isPatientBooked;
         });
-
-
     })();
+
 
     const handleHourClick = (hour) => {
         setSelectedHour(hour);
