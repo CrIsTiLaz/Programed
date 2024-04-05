@@ -6,7 +6,7 @@ import FormateDate from '@/app/utils/FormateDate';
 
 function ClinicCard({ doctor, appointmentDate, appointmentTime }) {
     // Presupunând că toate aceste date sunt acum incluse în obiectul "doctor"
-    const { name, avgRating, totalRating, photo, specialization, totalPatients, hospital } = doctor;
+    const { name, avgRating, totalRating, photo, specialization, medicalGrade, totalPatients, hospital } = doctor;
     console.log('appointmentDate', appointmentDate)
     return (
         <div className='p-3 lg:p-5'>
@@ -55,7 +55,7 @@ function ClinicCard({ doctor, appointmentDate, appointmentTime }) {
                 <div className='flex justify-start flex-grow'>
                     <span className='bg-[#fff9ea] text-yellowColor py-1 px-2 lg:py-2 lg:px-6 text-[12px] leading-4
                  lg:text-[16px] lg:leading-7 font-semibold rounded'>
-                        medic primar
+                        Medic {medicalGrade}
                     </span>
 
                     {/* <span className='bg-[#e7c1ff] text-purpleColor py-1 px-2 lg:py-2 lg:px-6 text-[12px] leading-4

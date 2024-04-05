@@ -29,6 +29,7 @@ function Profile({ doctorData }) {
         bio: '',
         gender: '',
         specialization: '',
+        medicalGrade: '',
         ticketPrice: 0,
         qualifications: [],
         experiences: [],
@@ -50,6 +51,7 @@ function Profile({ doctorData }) {
             bio: doctorData?.bio,
             gender: doctorData?.gender,
             specialization: doctorData?.specialization,
+            medicalGrade: doctorData?.medicalGrade,
             ticketPrice: doctorData?.ticketPrice,
             qualifications: doctorData?.qualification || [],
             experiences: doctorData?.experiences,
@@ -105,6 +107,7 @@ function Profile({ doctorData }) {
         const payload = {
             ...filteredFormData,
             workSchedule: updatedWorkSchedule,
+            medicalGrade: formData.medicalGrade, // Adaugă acest rând
         };
         console.log("Payload being sent:", JSON.stringify(payload, null, 2));
 
@@ -353,6 +356,19 @@ function Profile({ doctorData }) {
 
 
 
+                            </select>
+                        </div>
+
+                        <div>
+                            <p className='form__label'>Grad medical*</p>
+                            <select
+                                name='medicalGrade'
+                                value={formData.medicalGrade}
+                                onChange={handleInputChange}
+                                className='form__input py-3.5'>
+                                <option value=''>Selectează</option>
+                                <option value='primar'>Medic primar</option>
+                                <option value='specialist'>Medic specialist</option>
                             </select>
                         </div>
 
