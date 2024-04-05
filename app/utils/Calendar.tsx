@@ -45,9 +45,10 @@ export default function Example({ onDateSelect }) {
     const handleDaySelect = (day) => {
         setSelectedDay(day);
         if (onDateSelect) {
-            onDateSelect(day); // Apelează funcția callback cu ziua selectată
+            onDateSelect(day); // Trimite direct obiectul Date către funcția callback
         }
     };
+
     // pentru ecran de tableet nu e responsive calendarul
     return (
         <div className="pt-10">

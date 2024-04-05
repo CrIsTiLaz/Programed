@@ -53,9 +53,16 @@ function ClinicCard({ doctor, appointmentDate, appointmentTime }) {
 
             <div className='mt-[18px] lg:mt-5 flex items-center justify-between'>
                 <div className='flex justify-start flex-grow'>
-                    <p className='text-[14px] leading-6 font-[400] text-textColor'>
-                        At {hospital}
-                    </p>
+                    <span className='bg-[#fff9ea] text-yellowColor py-1 px-2 lg:py-2 lg:px-6 text-[12px] leading-4
+                 lg:text-[16px] lg:leading-7 font-semibold rounded'>
+                        medic primar
+                    </span>
+
+                    {/* <span className='bg-[#e7c1ff] text-purpleColor py-1 px-2 lg:py-2 lg:px-6 text-[12px] leading-4
+                 lg:text-[16px] lg:leading-7 font-semibold rounded'>
+                        medic primar
+                    </span> */}
+
                 </div>
 
                 <Link className='w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] flex items-center justify-center group hover:bg-primaryColor hover:border-none'

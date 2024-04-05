@@ -42,7 +42,7 @@ function Clinics() {
 
     return (
         <>
-            <section className='bg-[#fff9ea]'>
+            <section >
                 <div className='container text-center'>
                     <h2 className='heading'>Gaseste un cabinet</h2>
 

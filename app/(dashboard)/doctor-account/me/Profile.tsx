@@ -528,7 +528,7 @@ function Profile({ doctorData }) {
                                         selectedDate={new Date(item.day)}
                                         doctorId={doctorData._id}
                                         onHourSelect={(hour) => handleTimeSlotChange(
-                                            { target: { name: 'time', value: `${hour}:00` } }, index
+                                            { target: { name: 'time', value: `${hour}` } }, index
                                         )}
                                     />
                                 )}
