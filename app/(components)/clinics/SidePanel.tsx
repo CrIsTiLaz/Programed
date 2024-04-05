@@ -100,7 +100,7 @@ export default function SidePanel({ doctorId, ticketPrice }) {
             )}
 
             <div className={`mt-[50px]`}>
-                {tab === 'date' && <Example onDateSelect={handleDateSelect} />}
+                {tab === 'date' && <Example onDateSelect={handleDateSelect} doctorId={doctorId} />}
                 {tab === 'time' && <Time onHourSelect={handleHourSelect} selectedDate={selectedDate} doctorId={doctorId} />}
             </div>
             {/* Afisează butonul doar dacă o dată și o oră sunt selectate */}
