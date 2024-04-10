@@ -20,6 +20,7 @@ function Profile({ doctorData }) {
         { dayOfWeek: 'Duminica', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
         // Repetă pentru fiecare zi a săptămânii
     ]);
+    const [services, setServices] = useState(doctorData.services || []);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -106,6 +107,7 @@ function Profile({ doctorData }) {
         // Îmbină updatedWorkSchedule în filteredFormData
         const payload = {
             ...filteredFormData,
+            services,
             workSchedule: updatedWorkSchedule,
             medicalGrade: formData.medicalGrade, // Adaugă acest rând
         };
@@ -255,6 +257,24 @@ function Profile({ doctorData }) {
 
             setWorkSchedule(newWorkSchedule);
         }
+    };
+
+    const addService = (e) => {
+        e.preventDefault();
+
+        const newService = { name: '', price: '' }; // Inițializați un nou serviciu
+        setServices([...services, newService]); // Adăugați noul serviciu la array
+    };
+
+    const updateService = (index, field, value) => {
+        const newServices = [...services];
+        newServices[index][field] = value;
+        setServices(newServices);
+    };
+
+    const deleteService = (index) => {
+        const newServices = services.filter((_, i) => i !== index);
+        setServices(newServices);
     };
 
 
@@ -619,6 +639,45 @@ function Profile({ doctorData }) {
                         />
                     </div>
                 </div>
+
+                <div className="mb-5">
+                    <p className='form__label'>Services*</p>
+                    {services.map((service, index) => (
+                        <div key={index} className='grid grid-cols-2 gap-5 mb-[30px]'>
+                            <input
+                                type="text"
+                                placeholder="Nume Serviciu"
+                                value={service.name}
+                                className='form__input py-3.5 w-full'
+                                onChange={(e) => updateService(index, 'name', e.target.value)}
+                            />
+                            <div className="flex flex-row items-center gap-2">
+                                <input
+                                    type="number"
+                                    placeholder="Preț"
+                                    value={service.price}
+                                    className='form__input py-3.5 w-full'
+                                    onChange={(e) => updateService(index, 'price', e.target.value)}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => deleteService(index)}
+                                    className='bg-red-600 p-2 rounded-full text-white text-[18px] cursor-pointer flex-shrink-0'
+                                    aria-label={`Delete service ${index + 1}`}
+                                >
+                                    <AiOutlineDelete />
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                    <button
+                        onClick={addService}
+                        className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'
+                    >
+                        Add Service
+                    </button>
+                </div>
+
 
 
 

@@ -73,7 +73,7 @@ function Clinics() {
                     </section>
                 </div>
             </section>
-            <section>
+            {/* <section>
                 <div className="container">
                     <div className="xl:w-[470px] mx-auto">
                         <h2 className="heading text-center">Ce zic utlizatorii nostri</h2>
@@ -81,7 +81,7 @@ function Clinics() {
                     </div>
                     <Testimonial />
                 </div>
-            </section>
+            </section> */}
         </>
     )
 }

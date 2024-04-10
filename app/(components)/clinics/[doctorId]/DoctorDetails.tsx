@@ -9,6 +9,7 @@ import useFetchData from '@/app/hooks/useFetchData';
 import Loading from '@/app/loading';
 import Error from '@/app/error/Error';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import Services from '../Services';
 
 // function usePathId() {
 //     const [id, setId] = useState(null);
@@ -119,26 +120,30 @@ function ClinicsDetails() {
                                 className={`  ${tab === 'despre' && 'border-b border-solid border-primaryColor'} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
                                 Despre
                             </button>
-
+                            <button
+                                onClick={() => setTab('servicii')}
+                                className={`  ${tab === 'servicii' && 'border-b border-solid border-primaryColor'} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
+                                Servicii
+                            </button>
                             <button
                                 onClick={() => setTab('feedback')}
                                 className={`  ${tab === 'feedback' && 'border-b border-solid border-primaryColor'} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
                                 Feedback
                             </button>
 
-                            <button
-                                onClick={() => setTab('detalii')}
-                                className={`  ${tab === 'detalii' && 'border-b border-solid border-primaryColor'} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
-                                Detalii
-                            </button>
+
                         </div>
                         <div className='mt-[50px]'>
                             {
                                 tab === 'despre' && <ClinicsAbout name={name} about={about} qualifications={qualifications} />
                             }
                             {
+                                tab === 'servicii' && <Services doctorId={id} />
+                            }
+                            {
                                 tab === 'feedback' && <Feedback reviews={reviews} totalRating={totalRating} />
                             }
+
                         </div>
                     </div>
                     <div>
