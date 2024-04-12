@@ -729,3 +729,4 @@ function Profile({ doctorData }) {
 }
 
 export default Profile
+//cand sterg orice mi se sterge si qualification
