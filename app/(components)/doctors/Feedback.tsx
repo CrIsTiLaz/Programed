@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { AiFillStar } from 'react-icons/ai'
 import FeedbackForm from './FeedbackForm';
 
-function Feedback() {
+function Feedback({ reviews, totalRating }) {
 
     const [showFeedbackForm, setShowFeedbackForm] = useState(false);
 
@@ -12,31 +12,33 @@ function Feedback() {
         <div>
             <div className='mb-[50px]'>
                 <h4 className='text-[20px] leading-[30px] font-bold text-headingColor mb-[30px]'>
-                    Toate review-urile (272)
+                    Toate review-urile ({totalRating})
                 </h4>
 
-                <div className="flex justify-between gap-10 mb-[30px]">
+                {reviews?.map((review, index) =>
+                (<div key={index} className="flex justify-between gap-10 mb-[30px]">
                     <div className='flex gap-3'>
                         <div className='rounded-full'>
-                            <Image src='\testimonial\undraw_pic_profile_re_7g2h.svg' alt='' width={40} height={40} />
+                            <Image src={review?.user?.photo} alt='' width={40} height={40} />
                         </div>
 
                         <div>
                             <h5 className='text-[16px] leading-6 text-primaryColor font-bold'>
-                                Ali ahmet
+                                {review?.user?.name}
                             </h5>
                             <p className='text-[14px] leading-6 text-textColor'>
-                                {FormateDate('02-14-2023')}
+                                {FormateDate(review?.createdAt)}
                             </p>
                             <p className='text__para mt-3 font-medium text-[15px]'>
-                                Good service, highly recommended
+                                {review.reviewText}
                             </p>
                         </div>
                     </div>
                     <div className='flex gap-1'>
-                        {[...Array(5).keys()].map((_, index) => <AiFillStar key={index} color="#1E90FF" />)}
+                        {[...Array(review?.rating).keys()].map((_, index) => <AiFillStar key={index} color="#1E90FF" />)}
                     </div>
-                </div>
+                </div>)
+                )}
             </div>
 
             {!showFeedbackForm && <div className="text-center">

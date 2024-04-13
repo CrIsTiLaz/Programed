@@ -14,6 +14,7 @@ const initialState = {
 };
 
 
+
 // const initialState = {
 //   access: typeof window !== "undefined" ? window.localStorage.getItem('access') : false,
 //   refresh: typeof window !== "undefined" ?  window.localStorage.getItem('refresh') : false,
@@ -25,39 +26,35 @@ export const authContext = createContext(initialState);
 
 const authReducer = (state, action) => {
   switch (action.type) {
-    case "LOGIN_START":
-      return {
-        user: null,
-        role: null,
-        token: null,
-      };
-
     case "LOGIN_SUCCESS":
       return {
+        ...state,
         user: action.payload.user,
         token: action.payload.token,
         role: action.payload.role,
       };
     case "LOGOUT":
       return {
+        ...state,
         user: null,
         role: null,
         token: null,
       };
-
     default:
       return state;
   }
 };
 
+
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
-    localStorage.setItem('user', JSON.stringify(state.user))
-    localStorage.setItem('token', state.token)
-    localStorage.setItem('role', state.role)
-  }, [state]);
+    localStorage.setItem('user', JSON.stringify(state.user));
+    localStorage.setItem('token', state.token);
+    localStorage.setItem('role', state.role);
+  }, [state.user, state.token, state.role]);
+
 
   return (
     <authContext.Provider

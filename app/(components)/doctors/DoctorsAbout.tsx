@@ -1,7 +1,8 @@
+import Example from '@/app/utils/Calendar'
 import FormateDate from '@/app/utils/FormateDate'
 import React from 'react'
 
-function ClinicsAbout({ name, about, qualifications, experience }) {
+function ClinicsAbout({ name, about, qualifications }) {
     return (
         <div>
             <div>
@@ -19,7 +20,6 @@ function ClinicsAbout({ name, about, qualifications, experience }) {
                 <h3 className='text-[20px] leading-[30px] text-headingColor font-semibold'>
                     Education
                 </h3>
-
                 <ul className='pt-4 md:p-5'>
 
                     {qualifications?.map((item, index) => <li key={index} className='flex flex-col sm:flex-row sm:justify-between sm:items-end md:gap-5 mb-[30px]'>
@@ -35,6 +35,8 @@ function ClinicsAbout({ name, about, qualifications, experience }) {
                         <p className='text-[14px] leading-5 font-medium text-textColor'>
                             {item.university}
                         </p>
+
+
                     </li>)}
 
 

@@ -20,11 +20,19 @@ function Header() {
     const { data: userData } = useFetchData(`${BASE_URL}/users/profile/me`)
 
     const { user, role, token } = useContext(authContext)
-
+    // console.log('Role:', role);
+    // console.log('User:', user);
+    // console.log('Token:', token);
     const navigateToProfile = () => {
-        const profilePath = role === 'doctor' ? '/doctor-account/me' : '/user-account/me';
-        router.push(profilePath); // Folosește router.push pentru a naviga
+        let profilePath = '/user-account/me'; // Implicit pentru pacienți
+        if (role === 'doctor') {
+            profilePath = '/doctor-account/me';
+        } else if (role === 'cabinet') {
+            profilePath = '/clinic-account/me'; // Presupunând că există o rută separată pentru profilul cabinetelor
+        }
+        router.push(profilePath);
     };
+
 
     const toggleMenu = () => menuRef.current.classList.toggle('show__menu')
 
@@ -44,7 +52,7 @@ function Header() {
                             </motion.div>
 
                             <motion.div whileHover={{ scale: 1.1 }}>
-                                <Link href="/clinics" className={` ${pathname === "/clinics" ? "font-bold" : ""} text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor `}>
+                                <Link href="/doctors" className={` ${pathname === "/doctors" ? "font-bold" : ""} text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor `}>
                                     Cabinete
                                 </Link>
                             </motion.div>
@@ -58,27 +66,21 @@ function Header() {
                     </div>
 
                     <div className='flex items-center gap-4'>
-                        {
-                            token && user ? (
-                                <div className={`${pathname === "/doctor-account/me" ? "border-2 border-black" : ""} w-[35px] h-[35px] rounded-full cursor-pointer`} onClick={navigateToProfile}>
-                                    {user.photo ? (
-                                        <Image className='w-full rounded-full' src={user.photo} width={40} height={40} alt="User profile photo" />
-                                    ) : (
-                                        <Image className='w-full rounded-full' src="/header/user64.png" width={40} height={40} alt="Default profile photo" />
-                                    )}
-                                </div>
-                            ) : (
-                                <Link href="/login" className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]'>
-                                    Login
-                                </Link>
-                            )
-                        }
-
-                        {/* <motion.div whileHover={{ scale: 1.1 }}> */}
-                        <div className='md:hidden' onClick={toggleMenu}>
-                            <BiMenu className="w-6 h-6 cursor-pointer" />
-                        </div>
+                        {token && user ? (
+                            <div className={`${(pathname === "/doctor-account/me" || pathname === "/clinic-account/me") ? "border-2 border-black" : ""} w-[35px] h-[35px] rounded-full cursor-pointer`} onClick={navigateToProfile}>
+                                {user.photo ? (
+                                    <Image className='w-full rounded-full' src={user.photo} width={40} height={40} alt="User profile photo" />
+                                ) : (
+                                    <Image className='w-full rounded-full' src="/header/user64.png" width={40} height={40} alt="Default profile photo" />
+                                )}
+                            </div>
+                        ) : (
+                            <Link href="/login" className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]'>
+                                Login
+                            </Link>
+                        )}
                     </div>
+
                 </div>
             </div>
         </header>

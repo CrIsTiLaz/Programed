@@ -3,7 +3,7 @@ import { doctors } from '@/Shared/doctors';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react'
 import { BiSearch } from 'react-icons/bi';
-import ClinicCard from './ClinicCard';
+import ClinicCard from './DoctorCard';
 import Testimonial from '../(homepage)/testimonial/Testimonial';
 import { BASE_URL } from '@/app/config';
 import useFetchData from '@/app/hooks/useFetchData';
@@ -42,7 +42,7 @@ function Clinics() {
 
     return (
         <>
-            <section className='bg-[#fff9ea]'>
+            <section >
                 <div className='container text-center'>
                     <h2 className='heading'>Gaseste un cabinet</h2>
 
@@ -73,7 +73,7 @@ function Clinics() {
                     </section>
                 </div>
             </section>
-            <section>
+            {/* <section>
                 <div className="container">
                     <div className="xl:w-[470px] mx-auto">
                         <h2 className="heading text-center">Ce zic utlizatorii nostri</h2>
@@ -81,7 +81,7 @@ function Clinics() {
                     </div>
                     <Testimonial />
                 </div>
-            </section>
+            </section> */}
         </>
     )
 }
