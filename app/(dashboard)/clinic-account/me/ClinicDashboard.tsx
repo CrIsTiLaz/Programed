@@ -14,9 +14,11 @@ import ClinicProfile from './ClinicProfile'
 function ClinicDashboard() {
 
     const { data, loading, error } = useGetProfile(`${BASE_URL}/clinics/profile/me`)
-    console.log('`${BASE_URL}/clinics/profile/me`', `${BASE_URL}/clinics/profile/me`)
+    // console.log('`${BASE_URL}/clinics/profile/me`', `${BASE_URL}/clinics/profile/me`)
     console.log('data', data)
     const [tab, setTab] = useState('overview')
+    console.log('data?.adress', data?.adress)
+    console.log('data?.name', data?.name)
 
     return (
         <section>
@@ -88,15 +90,13 @@ function ClinicDashboard() {
                                                     </span>
                                                 </div>
 
-                                                <p className='text__para font-[15px] lg:max-w-[390px] leading-6'>
-                                                    {data?.bio}
-                                                </p>
+
                                             </div>
                                         </div>
                                         <ClinicsAbout
                                             name={data.name}
-                                            about={data.about}
-                                            qualifications={data.qualifications}
+                                            description={data?.description}
+                                            address={data?.address}
                                             experience={data.experience} />
                                     </div>)}
                                 {tab === 'appointments' && <Appointments appointments={data.appointments} />}

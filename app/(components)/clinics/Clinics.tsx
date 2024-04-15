@@ -9,7 +9,8 @@ import { BASE_URL } from '@/app/config';
 import useFetchData from '@/app/hooks/useFetchData';
 import Loading from '@/app/loading';
 import Error from '@/app/error/Error';
-import DoctorList from './DoctorList';
+import DoctorList from './ClinicList';
+import ClinicList from './ClinicList';
 function Clinics() {
 
     // const { data, loading, error } = useFetchData(`${BASE_URL}/doctors`)
@@ -67,7 +68,7 @@ function Clinics() {
                                     <ClinicCard key={doctor.id} doctor={doctor} />
                                 ))}
                             </div> */}
-                            <DoctorList query={debounceQuery} />
+                            <ClinicList query={debounceQuery} />
 
                         </div>
                     </section>

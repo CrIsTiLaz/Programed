@@ -10,7 +10,7 @@ import useFetchData from '@/app/hooks/useFetchData';
 import Loading from '@/app/loading';
 import Error from '@/app/error/Error';
 import DoctorList from './DoctorList';
-function Clinics() {
+function Doctors() {
 
     // const { data, loading, error } = useFetchData(`${BASE_URL}/doctors`)
 
@@ -91,4 +91,4 @@ function Clinics() {
 {/* <button className='bg-primaryColor py-[15px] px-[35px] text-white font-[600] rounded-r-[50px]'>
 Cauta
 </button> */}
-export default Clinics
+export default Doctors

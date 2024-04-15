@@ -23,18 +23,19 @@ body {
     width: 100vw;
 }
 
-.swipe-pagination-bullet{
-    width: 12px !important;
-    height: 12px !important;
-    border: 1px solid #181a1e !important;
-    opacity: 100% !important;
-    background: #fff !important
-}
+.swiper-pagination-bullet{
+        width: 12px !important;
+        height: 12px !important;
+        border: 1px solid #181a1e !important;
+        opacity: 100% !important;
+        background: #fff !important;
+ }
 
-.swipe-pagination-bullet-active{
-    background: #1E90FF !important;
-    border: none !important;
-}
+ .swiper-pagination-bullet-active{
+        background: #1E90FF !important;
+        border: none !important;
+ }
+
 
 .swiper{
     padding-bottom: 70px !important;
@@ -45,17 +46,22 @@ body {
     border-radius: 12px;
     box-shadow: 0px 20px 70px rgba(0, 103, 255, 0.3) !important;
 }
-
-.swiper-slide.swiper-slide-next h4,
-.swiper-slide.swiper-slide-next p,
-.swiper-slide.swiper-slide-next blockquote {
-    color: #fff !important;
+/* Acest cod presupune că folosești Tailwind CSS */
+.swiper-button-next, 
+.swiper-button-prev {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s ease-in-out;
 }
 
-
-.swiper-pagination{
-    top: 90px !important;
+/* Arată săgețile când este hover pe containerul swiper */
+.swiper-container:hover .swiper-button-next, 
+.swiper-container:hover .swiper-button-prev {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s; /* acest lucru va face tranziția să înceapă imediat când se face hover */
 }
+
 
 @layer base{
     section{
