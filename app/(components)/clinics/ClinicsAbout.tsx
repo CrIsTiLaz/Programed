@@ -2,16 +2,16 @@ import Example from '@/app/utils/Calendar'
 import FormateDate from '@/app/utils/FormateDate'
 import React from 'react'
 
-function ClinicsAbout({ name, description, address }) {
+function ClinicsAbout({ name, address, email, services, openingHours, description }) {
     return (
         <div>
             <div>
-                <h3 className='text-[20px] leading-[30px] text-headingColor font-semibold flex items-center gap-2'>
+                {/* <h3 className='text-[20px] leading-[30px] text-headingColor font-semibold flex items-center gap-2'>
                     Despre
-                    <span className='text-irisBlueColor font-bold text-[24px] leading-9'>
+                    <span className='text-irisBlueColor text-[20px] leading-5'>
                         {name}
                     </span>
-                </h3>
+                </h3> */}
                 <p className="text__para">{description}
                 </p>
             </div>

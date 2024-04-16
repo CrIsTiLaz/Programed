@@ -5,6 +5,8 @@ import Loading from '@/app/loading';
 import Error from '@/app/error/Error';
 import ClinicCard from './ClinicCard';
 import Swipe from './Swipe';
+import TestSwiper from './Swipe';
+import Page from './Swipe';
 
 function ClinicList({ query }) {
 
@@ -19,7 +21,7 @@ function ClinicList({ query }) {
                     <ClinicCard key={clinic._id} clinic={clinic} />
                 ))}
             </div>}
-            <Swipe />
+            <Page />
         </>
     )
 }

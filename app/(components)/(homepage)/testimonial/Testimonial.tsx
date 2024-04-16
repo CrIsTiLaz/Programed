@@ -4,12 +4,18 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import { HiStar } from 'react-icons/hi'
 import Image from 'next/image';
+import 'swiper/css'; // baza
+import 'swiper/css/navigation'; // pentru navigație
+import 'swiper/css/pagination'; // pentru paginare
+// ... orice alte module necesare
 
 
 function Testimonial() {
+
     return (
         <div className='mt-[30px] lg:mt-[55px]'>
             <Swiper modules={[Pagination]} spaceBetween={30} slidesPerView={1} pagination={{ clickable: true }}
+
                 breakpoints={{
                     640: {
                         slidesPerView: 1,
@@ -23,7 +29,8 @@ function Testimonial() {
                         slidesPerView: 3,
                         spaceBetween: 30,
                     },
-                }}>
+                }}
+                className="testimonial-slide-next">
                 <SwiperSlide>
                     <div className="py-[30] px-5 rounded-3">
                         <div className="flex items-center gap-[13px]">

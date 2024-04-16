@@ -26,7 +26,7 @@ import Services from '../Services';
 
 
 
-function ClinicsDetails() {
+function DoctorDetails() {
 
     const [tab, setTab] = useState('despre');
 
@@ -155,4 +155,4 @@ function ClinicsDetails() {
     )
 }
 
-export default ClinicsDetails
+export default DoctorDetails

@@ -40,28 +40,48 @@ body {
 .swiper{
     padding-bottom: 70px !important;
 }
-
-.swiper-slide.swiper-slide-next{
+.custom-swiper-container {
+    padding-bottom: 2px !important;
+    border-radius: 10px; /* Adaugă margini rotunjite */ /* Ajustează conform necesităților */
+  }
+/* Fisier CSS */
+/* Fisier CSS */
+.my-custom-next-slide-class {
     background: #1E90FF;
     border-radius: 12px;
-    box-shadow: 0px 20px 70px rgba(0, 103, 255, 0.3) !important;
+    box-shadow: 0px 20px 70px rgba(0, 103, 255, 0.3);
 }
+
+
 /* Acest cod presupune că folosești Tailwind CSS */
-.swiper-button-next, 
+/* .swiper-button-next, 
 .swiper-button-prev {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s, opacity 0.5s ease-in-out;
+} */
+.swiper-button-next, 
+.swiper-button-prev {
+  visibility: hidden;
+  opacity: 0;
+  /* transition: opacity 0.5s ease-in-out, visibility 0s linear 0.5s; */
 }
 
-/* Arată săgețile când este hover pe containerul swiper */
-.swiper-container:hover .swiper-button-next, 
+/* Adaugă acest cod pentru a face săgețile vizibile când faci hover pe containerul Swiper */
+.swiper-container:hover .swiper-button-next,
 .swiper-container:hover .swiper-button-prev {
   visibility: visible;
   opacity: 1;
-  transition-delay: 0s; /* acest lucru va face tranziția să înceapă imediat când se face hover */
+  transition-delay: 0s; /* Asigură-te că tranziția începe imediat */
 }
 
+.thumbs .swiper-slide {
+    opacity: 0.25;
+  }
+  
+  .thumbs .swiper-slide-thumb-active {
+    opacity: 1;
+  }
 
 @layer base{
     section{

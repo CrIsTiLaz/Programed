@@ -1,167 +1,166 @@
-// import Image from 'next/image'
-// import React from 'react'
-// import { Pagination, Navigation, Autoplay, Scrollbar, A11y } from "swiper/modules";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import 'swiper/css/bundle'
-// import { BiRightArrowAlt } from 'react-icons/bi';
-// import Link from 'next/link';
-// import FormateDate from '@/app/utils/FormateDate';
-// import SwiperCore from 'swiper'
-// SwiperCore.use([Pagination]);
+'use client'
 
-// function Swipe() {
-//     SwiperCore.use([Autoplay])
+import { useState } from 'react'
+import Image from 'next/image'
 
-//     return (
-//         <div><Swiper
-//             slidesPerView={1}
-//             autoplay={{
-//                 delay: 2000
-//             }}
-//             modules={[Navigation, Pagination, Scrollbar]}
-//             navigation
-//             pagination={{
-//                 clickable: true,
-//                 el: `swiper-container swiper-container-testClass`,
-
-//             }}
-//             scrollbar={{ draggable: true }}>
-//             <SwiperSlide>Slide 1</SwiperSlide>
-//             <SwiperSlide>Slide 2</SwiperSlide>
-//             <SwiperSlide>Slide 3</SwiperSlide>
-//             <SwiperSlide>Slide 4</SwiperSlide>
-//             <SwiperSlide>Slide 5</SwiperSlide>
-//         </Swiper></div>
-//     )
-// }
-
-// export default Swipe
-
-import React from 'react'
-import { Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { HiStar } from 'react-icons/hi'
-import Image from 'next/image';
+import { FreeMode, Navigation, Thumbs } from 'swiper/modules'
+
+
 import 'swiper/css'
-import 'swiper/css/pagination'
+import 'swiper/css/free-mode'
+import 'swiper/css/navigation'
+import 'swiper/css/thumbs'
 
-function Swipe() {
+export default function Page() {
+    const [thumbsSwiper, setThumbsSwiper] = useState(null)
+
+    const images = [
+        "/temp/cabinet1.jpg",
+        "/temp/cabinet2.jpg",
+        "/temp/cabinet3.jpg",
+
+    ];
+
     return (
-        <div className='mt-[30px lg::mt-[55px]'>
-            <Swiper modules={[Pagination]} spaceBetween={30} slidesPerView={1} pagination={{ clickable: true }}
-                breakpoints={{
-                    640: {
-                        slidesPerView: 1,
-                        spaceBetween: 0,
-                    },
-                    768: {
-                        slidesPerView: 2,
-                        spaceBetween: 20,
-                    },
-                    1024: {
-                        slidesPerView: 3,
-                        spaceBetween: 30,
-                    },
-                }}>
-                <SwiperSlide>
-                    <div className="py-[30] px-5 rounded-3">
-                        <div className="flex items-center gap-[13px]">
-                            <Image src="/testimonial/undraw_pic_profile_re_7g2h.svg" alt="" width={60} height={60} />
-                            <div>
-                                <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>
-                                    Asas ssss
-                                </h4>
-                                <div className='flex items-center gap-[2px]'>
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                </div>
+        <section className='py-12'>
+            <div className='container'>
+                <Swiper
+                    loop={true}
+                    spaceBetween={10}
+                    navigation={true}
+                    thumbs={{
+                        swiper:
+                            thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null
+                    }}
+                    modules={[FreeMode, Navigation, Thumbs]}
+                    className=' rounded-lg'
+                >
+                    {images.map((imgSrc, index) => (
+                        <SwiperSlide key={index}>
+                            <div className='flex items-center justify-center'>
+                                <Image
+                                    src={imgSrc}
+                                    alt={imgSrc}
+                                    className='block h-auto w-full object-cover'
+                                    width={0}
+                                    height={0}
+                                    sizes="100vw"
+                                />
                             </div>
-                        </div>
-                        <blockquote className='text-[16px] leading-7 mt-4 text-textColor font-[400]'>
-                            &quot;I have taken medical services from them. They treat so well and they are providing the best medical services.&quot;
-                        </blockquote>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
 
-                    </div>
-                </SwiperSlide>
+                {/* Thumbnail */}
+                <Swiper
+                    onSwiper={setThumbsSwiper}
+                    loop={true}
+                    spaceBetween={12}
+                    slidesPerView={3}
+                    freeMode={true}
+                    watchSlidesProgress={true}
+                    modules={[FreeMode, Navigation, Thumbs]}
+                    className='thumbs rounded-lg'  // Ajustează marja de la mt-3 la mt-1
+                >
+                    {images.map((imgSrc, index) => (
+                        <SwiperSlide key={index}>
+                            <button className='flex items-center justify-center'>
+                                <Image
+                                    src={imgSrc}
+                                    alt={imgSrc}
+                                    className='block h-auto w-full object-cover'
+                                    width={0}
+                                    height={0}
+                                    sizes="100vw"
+                                />
+                            </button>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
 
-                <SwiperSlide>
-                    <div className="py-[30] px-5 rounded-3">
-                        <div className="flex items-center gap-[13px]">
-                            <Image src="/testimonial/undraw_pic_profile_re_7g2h.svg" alt="" width={60} height={60} />
-                            <div>
-                                <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>
-                                    Asas ssss
-                                </h4>
-                                <div className='flex items-center gap-[2px]'>
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                </div>
-                            </div>
-                        </div>
-                        <blockquote className='text-[16px] leading-7 mt-4 text-textColor font-[400]'>
-                            &quot;I have taken medical services from them. They treat so well and they are providing the best medical services.&quot;
-                        </blockquote>
-
-                    </div>
-                </SwiperSlide>
-
-                <SwiperSlide>
-                    <div className="py-[30] px-5 rounded-3">
-                        <div className="flex items-center gap-[13px]">
-                            <Image src="/testimonial/undraw_pic_profile_re_7g2h.svg" alt="" width={60} height={60} />
-                            <div>
-                                <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>
-                                    Asas ssss
-                                </h4>
-                                <div className='flex items-center gap-[2px]'>
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                </div>
-                            </div>
-                        </div>
-                        <blockquote className='text-[16px] leading-7 mt-4 text-textColor font-[400]'>
-                            &quot;I have taken medical services from them. They treat so well and they are providing the best medical services.&quot;
-                        </blockquote>
-
-                    </div>
-                </SwiperSlide>
-
-                <SwiperSlide>
-                    <div className="py-[30] px-5 rounded-3">
-                        <div className="flex items-center gap-[13px]">
-                            <Image src="/testimonial/undraw_pic_profile_re_7g2h.svg" alt="" width={60} height={60} />
-                            <div>
-                                <h4 className='text-[18px] leading-[30px] font-semibold text-headingColor'>
-                                    Asas ssss
-                                </h4>
-                                <div className='flex items-center gap-[2px]'>
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                    <HiStar className='text-yellowColor w-[18px] h-5' />
-                                </div>
-                            </div>
-                        </div>
-                        <blockquote className='text-[16px] leading-7 mt-4 text-textColor font-[400]'>
-                            &quot;I have taken medical services from them. They treat so well and they are providing the best medical services.&quot;
-                        </blockquote>
-
-                    </div>
-                </SwiperSlide>
-            </Swiper>
-
-        </div>
+            </div>
+        </section>
     )
 }
 
-export default Swipe
+// 'use client'
+
+// import { useState } from 'react'
+// import Image from 'next/image'
+
+// import { Swiper, SwiperSlide } from 'swiper/react'
+
+
+
+// import 'swiper/css'
+
+// export default function Page() {
+//     const [swiper, setSwiper] = useState(null)
+//     const [showNavigation, setShowNavigation] = useState(false)
+//     const images = [
+//         "/temp/cabinet1.jpg",
+//         "/temp/cabinet2.jpg",
+//         "/temp/cabinet3.jpg"
+//     ];
+//     return (
+//         <section className='relative min-h-screen  py-12 text-white'>
+//             <div className='container'>
+//                 <div className='my-10 bg-black'>
+//                     <button onClick={() => setShowNavigation(open => !open)}>
+//                         View All
+//                     </button>
+//                 </div>
+
+//                 {/* navigation */}
+//                 <nav className={`my-10 ${!showNavigation && 'hidden'}`}>
+//                     <ul className='flex gap-4'>
+//                         {images.map((imgSrc, index) => (
+//                             <li key={index}>
+//                                 <button
+//                                     onClick={() => {
+//                                         swiper.slideTo(index)
+//                                         // setShowNavigation(false)
+//                                     }}
+//                                     className='relative block h-20 w-20 overflow-hidden rounded-lg'
+//                                 >
+//                                     <Image
+//                                         src={imgSrc}
+//                                         alt={imgSrc}
+//                                         className='block h-auto w-full object-cover'
+//                                         width={0}
+//                                         height={0}
+//                                         sizes="100vw"
+//                                     />
+//                                 </button>
+//                             </li>
+//                         ))}
+//                     </ul>
+//                 </nav>
+
+//                 {/* Main slides */}
+//                 <Swiper
+//                     spaceBetween={10}
+//                     onSwiper={setSwiper}
+//                     className='h-96 w-full rounded-lg'
+//                 >
+//                     {images.map((imgSrc, index) => (
+//                         <SwiperSlide key={index}>
+//                             <div className='flex h-full w-full items-center justify-center'>
+//                                 <Image
+//                                     src={imgSrc}
+//                                     alt={imgSrc}
+//                                     className='block h-auto w-full object-cover'
+//                                     width={0}
+//                                     height={0}
+//                                     sizes="100vw"
+//                                 />
+//                             </div>
+//                         </SwiperSlide>
+//                     ))}
+//                 </Swiper>
+//             </div>
+//         </section>
+//     )
+// }
+
