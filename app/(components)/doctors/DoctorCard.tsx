@@ -4,19 +4,23 @@ import { BiRightArrowAlt } from 'react-icons/bi';
 import Link from 'next/link';
 import FormateDate from '@/app/utils/FormateDate';
 
-function ClinicCard({ doctor, appointmentDate, appointmentTime, isExpired }) { // Adaugă isExpired ca prop    // Presupunând că toate aceste date sunt acum incluse în obiectul "doctor"
-    const { name, avgRating, totalRating, photo, specialization, medicalGrade, totalPatients, hospital } = doctor;
+function DoctorCard({ doctor, appointmentDate, appointmentTime, isExpired }) { // Adaugă isExpired ca prop    // Presupunând că toate aceste date sunt acum incluse în obiectul "doctor"
+    const { name, averageRating, totalRating, photo, specialization, medicalGrade, totalPatients, hospital } = doctor;
     // console.log('appointmentDate', appointmentDate)
     if (isExpired == true) {
         console.log('isExpired', isExpired)
     }
-
+    console.log('avgRating', averageRating)
+    console.log('totalRating', totalRating)
     return (
-        <div className={'p-3 lg:p-5 '}>
-            <div >
+        <div className={`p-2 sm:p-3 lg:p-5 max-w-sm mx-auto bg-white rounded-lg shadow-md`}>
+            <div className="aspect-w-16 aspect-h-9">
                 {
-                    <img
-                        className="w-full "
+                    <Image
+                        width={300}
+                        height={0}
+                        sizes="100vw"
+                        className=" h-auto rounded-lg"
                         src={photo ? photo : "/header/user (4).png"}
                         alt="Profile photo"
                         style={{ filter: isExpired ? 'grayscale(100%)' : 'none' }}
@@ -41,18 +45,18 @@ function ClinicCard({ doctor, appointmentDate, appointmentTime, isExpired }) { /
             )}
 
             <div className="mt-2 lg:mt-4 flex items-center justify-between">
-                <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-2 lg:py-2 lg:px-6 text-[12px] leading-4
-                 lg:text-[16px] lg:leading-7 font-semibold rounded'>
+                <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-2 lg:py-2 lg:px-6 text-[15px] leading-4
+                 lg:text-[15px] lg:leading-7 font-semibold rounded'>
                     {specialization}
                 </span>
 
                 <div className='flex items-center gap-[6px]'>
-                    <span className='flex items-center gap-[6px] text-[14px] leading-6 lg:text-[16px] leading-7 font-semibold text-headingColor'>
+                    <span className='flex items-center gap-[6px] text-[14px] lg:text-[16px] leading-7 font-semibold text-headingColor'>
                         <Image src='/clinics/Star.png' alt='' width={20} height={20} />
-                        {avgRating}
+                        {averageRating.toFixed(1)}
                     </span>
 
-                    <span className='text-[14px] leading-6 lg:text-[16px] leading-7 font-[400] text-textColor'>
+                    <span className='text-[14px]  lg:text-[16px] leading-7 font-[400] text-textColor'>
                         ({totalRating})
                     </span>
                 </div>
@@ -60,8 +64,8 @@ function ClinicCard({ doctor, appointmentDate, appointmentTime, isExpired }) { /
 
             <div className='mt-[18px] lg:mt-5 flex items-center justify-between'>
                 <div className='flex justify-start flex-grow'>
-                    <span className='bg-[#fff9ea] text-yellowColor py-1 px-2 lg:py-2 lg:px-6 text-[12px] leading-4
-                 lg:text-[16px] lg:leading-7 font-semibold rounded'>
+                    <span className='bg-[#fff9ea] text-yellowColor py-1 px-2 lg:py-2 lg:px-6 text-[15px] leading-4
+                 lg:text-[15px] lg:leading-7 font-semibold rounded'>
                         Medic {medicalGrade}
                     </span>
 
@@ -84,7 +88,7 @@ function ClinicCard({ doctor, appointmentDate, appointmentTime, isExpired }) { /
     )
 }
 
-export default ClinicCard
+export default DoctorCard
 
 
 // import React from 'react';

@@ -26,7 +26,7 @@ export default function Page() {
         <section className='py-12'>
             <div className='container'>
                 <Swiper
-                    loop={true}
+
                     spaceBetween={10}
                     navigation={true}
                     thumbs={{
@@ -55,7 +55,6 @@ export default function Page() {
                 {/* Thumbnail */}
                 <Swiper
                     onSwiper={setThumbsSwiper}
-                    loop={true}
                     spaceBetween={12}
                     slidesPerView={3}
                     freeMode={true}

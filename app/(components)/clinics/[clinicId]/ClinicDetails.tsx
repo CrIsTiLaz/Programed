@@ -14,11 +14,13 @@ import ClinicsAbout from '../ClinicsAbout';
 import Page from '../Swipe';
 import ClinicCarousel from '../ClinicCarousel';
 import { FaLocationDot } from "react-icons/fa6";
+import DoctorList from '../../doctors/DoctorList';
+import Doctors from '../../doctors/Doctors';
 
 
 
 function ClinicDetails() {
-    const [tab, setTab] = useState('despre');
+    const [tab, setTab] = useState('servicii');
     const params = useParams();
     const id = params.clinicId;
     const { data: clinic, loading, error } = useFetchData(`${BASE_URL}/clinics/${id}`);
@@ -47,25 +49,38 @@ function ClinicDetails() {
                 {!loading && !error && (
                     <>
                         {/* Detalii clinica și carusel imagini */}
-                        <div className='grid md:grid-cols-2 gap-[50px]'>
-                            <div className='flex-1'>
-                                <ClinicCarousel />
-                            </div>
+                        {/* <div className='grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1'> */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-5 ">
+
+                            <ClinicCarousel />
+
                             <div className=''> {/* Ajustează lățimea după nevoie */}
                                 <h3 className='text-headingColor text-[22px] leading-9 font-bold'>
                                     {name}
                                 </h3>
-                                <div className='flex items-center gap-[6px] my-2'>
-                                    <Image src='/clinics/Star.png' alt='' width={20} height={20} />
-                                    <span className='text-rating'>{averageRating} ({totalRating} reviews)</span>
-                                </div>
+                                {/* <h3 className='text-[20px] leading-[30px] text-headingColor font-semibold flex items-center gap-2'> */}
+
                                 <div className='my-3'>
-                                    <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-2 text-[12px] leading-4
-                          lg:text-[16px] lg:leading-7 font-semibold rounded'>
+                                    <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-2 sm:text-[20px] leading-4
+                          lg:text-[20px] lg:leading-7 font-semibold rounded '>
                                         {specialization}
                                     </span>
                                 </div>
-                                <FaLocationDot /> asas
+                                <div className="mt-10 md:mt-[230px]">
+                                    <div className='flex items-center gap-[6px] my-2'>
+                                        <span className='flex items-center gap-[6px] text-[14px] leading-5 lg:text-[20px] lg:leading-7 font-semibold text-headingColor'>
+                                            <Image src='/clinics/Star.png' alt='' width={20} height={20} /> 5
+                                        </span>
+                                        <span className='text-[14px] leading-5 lg:text-[20px] lg:leading-7 font-[400] text-textColor'>
+                                            (255)
+                                        </span>
+                                    </div> {/* sau orice valoare de marjă dorești */}
+                                    <div className="flex items-center lg:text-[20px]">
+                                        <FaLocationDot className="inline-block" />
+                                        <span className="inline-block ml-2">{address}</span>
+                                    </div>
+
+                                </div>
                             </div>
 
                         </div>
@@ -73,21 +88,29 @@ function ClinicDetails() {
                         {/* Tab buttons */}
                         <div className="mt-4 border-b border-solid border-[#0066ff34]">
                             <button
+                                onClick={() => setTab('servicii')}
+                                className={`py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold ${tab === 'servicii' && 'border-b border-solid border-primaryColor'}`}>
+                                Servicii
+                            </button>
+                            <button
                                 onClick={() => setTab('despre')}
                                 className={`py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold ${tab === 'despre' && 'border-b border-solid border-primaryColor'}`}>
                                 Despre
                             </button>
                             <button
-                                onClick={() => setTab('servicii')}
-                                className={`py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold ${tab === 'servicii' && 'border-b border-solid border-primaryColor'}`}>
-                                Servicii
+                                onClick={() => setTab('feedback')}
+                                className={`py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold ${tab === 'feedback' && 'border-b border-solid border-primaryColor'}`}>
+                                Feedback
                             </button>
+
                         </div>
 
                         {/* Content based on selected tab */}
                         <div className='mt-3'>
+                            {tab === 'servicii' && <Doctors />}
                             {tab === 'despre' && <ClinicsAbout name={name} address={address} email={email} services={services} openingHours={openingHours} description={description} />}
-                            {tab === 'servicii' && <Services doctorId={id} />}
+                            {tab === 'feedback' && <Doctors />}
+
                         </div>
                     </>
                 )}

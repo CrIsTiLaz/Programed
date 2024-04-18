@@ -21,7 +21,7 @@ function ClinicList({ query }) {
                     <ClinicCard key={clinic._id} clinic={clinic} />
                 ))}
             </div>}
-            <Page />
+            {/* <Page /> */}
         </>
     )
 }

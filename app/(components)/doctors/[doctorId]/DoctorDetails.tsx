@@ -70,9 +70,9 @@ function DoctorDetails() {
                             <div className='max-w-[200px] max-h-[200px]'>
                                 <div>
                                     {photo ? (
-                                        <Image className='w-full ' src={photo} width={200} height={200} alt="User profile photo" />
+                                        <Image className='w-full rounded-lg' src={photo} width={200} height={200} alt="User profile photo" />
                                     ) : (
-                                        <Image className='w-full ' src="/header/user (4).png" width={200} height={200} alt="Default profile photo" />
+                                        <Image className='w-full rounded-lg' src="/header/user (4).png" width={200} height={200} alt="Default profile photo" />
                                     )}
                                 </div>
                             </div>

@@ -55,13 +55,21 @@ function ClinicCard({ clinic }) {
                 ))}
             </Swiper> */}
             <ClinicCarousel />
-            <div className='mt-3'>
+            <div className='mt-3 grid grid-cols-1 sm:grid-cols-5 md:grid-cols-3 lg:grid-cols-1 gap-1 '>
                 <div className='flex justify-between items-center'>
-                    <h2 className='text-[18px] lg:text-[26px] font-bold text-headingColor'>{name}</h2>
-                    <div className='flex items-center gap-[6px]'>
+                    <h2 className='text-left text-[18px] lg:text-[24px] font-bold text-headingColor break-words overflow-hidden max-w-full sm:max-w-xs'>
+                        {name}
+                    </h2>
+
+
+                    <div className='flex items-center gap-[6px] '> {/* Adjust the margin-top value as needed */}
                         <Image src='/clinics/Star.png' alt='' width={20} height={20} />
-                        <span className='text-rating'>{avgRating} ({totalRating} reviews)</span>
+                        <span className='text-headingColor font-semibold'>4.2</span>
+                        <span className='text-rating'>(233)</span>
                     </div>
+
+
+
                 </div>
                 <div className='flex items-center justify-between mt-2'>
                     <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-2 text-[12px] lg:text-[16px] font-semibold rounded'>

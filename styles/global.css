@@ -185,7 +185,9 @@ body {
        
     }
 
-      
+    .section-class {
+        margin-top: 10px; /* sau orice altă valoare mai mică preferată */
+      }
     .menu {
         @apply w-60 h-screen; /* Aceasta este o alternativă la setarea manuală a lățimii și înălțimii */
         @apply absolute top-0 right-0;

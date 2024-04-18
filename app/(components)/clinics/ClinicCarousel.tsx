@@ -29,6 +29,7 @@ function ClinicCarousel() {
                 delay: 3000
             }}
             speed={800}
+            loop={true}
             modules={[Pagination, Navigation, Scrollbar]}
             className="custom-swiper-container w-full rounded-lg">
             {images.map((imgSrc, index) => (
@@ -41,6 +42,7 @@ function ClinicCarousel() {
                             className="w-full h-auto "
                             src={imgSrc}
                             alt={`Clinic Slide ${index + 1}`}
+
                         // className="w-full h-8" // optional
                         />
                     </div>
