@@ -138,6 +138,7 @@ function Signup() {
                                         <option value="patient">Pacient</option>
                                         <option value="doctor">Doctor</option>
                                         <option value="cabinet">Cabinet</option>
+                                        <option value="superAdmin">Admin</option>
                                     </select>
                                 </label>
                                 <label className='text-headingColor font-bold text-[16px] leading-7'>

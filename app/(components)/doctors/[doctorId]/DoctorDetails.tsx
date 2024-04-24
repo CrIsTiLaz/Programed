@@ -57,6 +57,10 @@ function DoctorDetails() {
         photo = ''
     } = doctor || {}; // Folosește un obiect gol ca fallback
     if (!doctor) return <div>Nu s-au putut încărca datele doctorului.</div>;
+    if (loading) {
+        return <Loading />;
+    }
+    console.log('loading', loading)
     return (
         <section>
             <div className='max-w-[1170px] px-5 mx-auto'>
@@ -70,7 +74,7 @@ function DoctorDetails() {
                             <div className='max-w-[200px] max-h-[200px]'>
                                 <div>
                                     {photo ? (
-                                        <Image className='w-full rounded-lg' src={photo} width={200} height={200} alt="User profile photo" />
+                                        <Image className='w-full rounded-lg transition-opacity opacity-0 duration-[2s]' onLoadingComplete={(image) => image.classList.remove('opacity-0')} src={photo} width={200} height={200} alt="User profile photo" />
                                     ) : (
                                         <Image className='w-full rounded-lg' src="/header/user (4).png" width={200} height={200} alt="Default profile photo" />
                                     )}

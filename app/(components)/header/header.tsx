@@ -20,15 +20,20 @@ function Header() {
     const { data: userData } = useFetchData(`${BASE_URL}/users/profile/me`)
 
     const { user, role, token } = useContext(authContext)
-    // console.log('Role:', role);
-    // console.log('User:', user);
-    // console.log('Token:', token);
+    console.log('Role:', role);
+    console.log('User:', user);
+    console.log('Token:', token);
+    console.log('user', user)
+    console.log('role', role)
     const navigateToProfile = () => {
         let profilePath = '/user-account/me'; // Implicit pentru pacienți
         if (role === 'doctor') {
             profilePath = '/doctor-account/me';
         } else if (role === 'cabinet') {
             profilePath = '/clinic-account/me'; // Presupunând că există o rută separată pentru profilul cabinetelor
+        }
+        else if (role === 'superAdmin') {
+            profilePath = '/admin-account'; // Presupunând că există o rută separată pentru profilul cabinetelor
         }
         router.push(profilePath);
     };
@@ -67,7 +72,7 @@ function Header() {
 
                     <div className='flex items-center gap-4'>
                         {token && user ? (
-                            <div className={`${(pathname === "/doctor-account/me" || pathname === "/clinic-account/me") ? "border-2 border-black" : ""} w-[35px] h-[35px] rounded-full cursor-pointer`} onClick={navigateToProfile}>
+                            <div className={`${(pathname === "/doctor-account/me" || pathname === "/clinic-account/me " || pathname === "/admin") ? "border-2 border-black" : ""} w-[35px] h-[35px] rounded-full cursor-pointer`} onClick={navigateToProfile}>
                                 {user.photo ? (
                                     <Image className='w-full rounded-full' src={user.photo} width={40} height={40} alt="User profile photo" />
                                 ) : (
