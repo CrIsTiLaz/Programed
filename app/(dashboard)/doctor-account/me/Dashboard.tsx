@@ -9,6 +9,7 @@ import Image from 'next/image';
 import ClinicsAbout from '@/app/(components)/clinics/ClinicsAbout'
 import Profile from './Profile'
 import Appointments from './Appointments'
+import DoctorsAbout from '@/app/(components)/doctors/DoctorsAbout'
 
 function Dashboard() {
 
@@ -62,40 +63,40 @@ function Dashboard() {
                                             </figure>
 
                                             <div>
-                                                <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-4 lg:py-2 lg:px-6 rounded 
-                                                text-[12px] leading-4 lg:text-[16px] lg:leading-6 font-semibold'>
-                                                    {/* {data.specialization}  */}
-                                                    {data.specialization}
-                                                </span>
-
-                                                <h3 className='text-[22px] leading-9 font-bold text-headingColor mt-3'>
+                                                <h3 className='text-[22px] leading-9 font-bold text-headingColor'>
                                                     {data.name}
                                                 </h3>
 
-                                                <div className='flex item-center gap-[6px]'>
-                                                    <span className='flex items-center gap-[6px] text-headingColor text-[14px] 
-                                                    leading-5 lg:text-[16px] lg:leading-6 font-semibold'>
+                                                <div className='flex item-center gap-[6px] my-3'>
+                                                    <span className='flex items-center gap-[6px] text-headingColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold'>
                                                         <Image src='/clinics/Star.png' alt='' width={20} height={20} />
                                                         {data.averageRating}
                                                     </span>
-
-                                                    <span className='text-textColor text-[14px] 
-                                                    leading-5 lg:text-[16px] lg:leading-6 font-semibold'>
-
+                                                    <span className='text-textColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold'>
                                                         ({data.totalRating})
                                                     </span>
+                                                </div>
+
+                                                <div>
+                                                    <div className='bg-[#CCF0F3] text-irisBlueColor py-1 px-4 lg:py-2 lg:px-6 rounded text-[12px] leading-4 lg:text-[16px] lg:leading-6 font-semibold'>
+                                                        {data.specialization}
+                                                    </div>
+                                                    <div className='bg-[#fff9ea] text-yellowColor py-1 px-4 lg:py-2 lg:px-6 text-[12px] leading-4 lg:text-[16px] lg:leading-6 font-semibold rounded mt-2'>
+                                                        Medic {data.medicalGrade}
+                                                    </div>
                                                 </div>
 
                                                 <p className='text__para font-[15px] lg:max-w-[390px] leading-6'>
                                                     {data?.bio}
                                                 </p>
                                             </div>
+
                                         </div>
-                                        <ClinicsAbout
+                                        <DoctorsAbout
                                             name={data.name}
                                             about={data.about}
                                             qualifications={data.qualifications}
-                                            experience={data.experience} />
+                                        />
                                     </div>)}
                                 {tab === 'appointments' && <Appointments appointments={data.appointments} />}
                                 {tab === 'settings' && <Profile doctorData={data} />}

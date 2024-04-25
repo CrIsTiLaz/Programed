@@ -107,7 +107,7 @@ function ClinicDetails() {
 
                         {/* Content based on selected tab */}
                         <div className='mt-3'>
-                            {tab === 'servicii' && <Doctors />}
+                            {tab === 'servicii' && <Doctors clinicId={id} />}
                             {tab === 'despre' && <ClinicsAbout name={name} address={address} email={email} services={services} openingHours={openingHours} description={description} />}
                             {tab === 'feedback' && <Doctors />}
 

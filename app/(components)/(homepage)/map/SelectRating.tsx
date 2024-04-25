@@ -10,7 +10,7 @@ function SelectRating() {
         else {
             setSelectedRating(selectedRating.filter((n) => n !== value))
         }
-        console.log(selectedRating)
+        // console.log(selectedRating)
     }
 
     return (

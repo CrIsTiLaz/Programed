@@ -24,7 +24,7 @@ function Clinics() {
         // Validare simplă, exemplu: asigură că query-ul nu conține caractere speciale periculoase
         if (/^[a-zA-Z0-9\s]+$/.test(sanitizedQuery)) {
             setQuery(sanitizedQuery);
-            console.log('handle search');
+            // console.log('handle search');
         } else {
             console.error('Query invalid!');
             // Afișează un mesaj de eroare utilizatorului

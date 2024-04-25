@@ -2,7 +2,7 @@ import Example from '@/app/utils/Calendar'
 import FormateDate from '@/app/utils/FormateDate'
 import React from 'react'
 
-function ClinicsAbout({ name, about, qualifications }) {
+function DoctorsAbout({ name, about, qualifications }) {
     return (
         <div>
             <div>
@@ -48,4 +48,4 @@ function ClinicsAbout({ name, about, qualifications }) {
     )
 }
 // 25:39
-export default ClinicsAbout
+export default DoctorsAbout

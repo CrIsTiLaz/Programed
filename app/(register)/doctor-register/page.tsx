@@ -1,10 +1,12 @@
+'use client'
+
 import React from 'react'
-import ClinicsDetails from '../ClinicsDetails'
+import Signup from './Signup'
 
 function page() {
     return (
         <div>
-            <ClinicsDetails />
+            <Signup />
         </div>
     )
 }

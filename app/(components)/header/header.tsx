@@ -23,8 +23,6 @@ function Header() {
     console.log('Role:', role);
     console.log('User:', user);
     console.log('Token:', token);
-    console.log('user', user)
-    console.log('role', role)
     const navigateToProfile = () => {
         let profilePath = '/user-account/me'; // Implicit pentru pacienți
         if (role === 'doctor') {

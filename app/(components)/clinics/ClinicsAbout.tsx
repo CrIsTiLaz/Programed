@@ -31,7 +31,7 @@ function ClinicsAbout({ name, address, email, services, description }) {
             </div>
             <div className="w-1/4 pl-4">
                 <h3 className='text-[20px] leading-[30px] text-headingColor font-semibold'>
-                    Orar
+                    Orarrr
                 </h3>
                 <div className="mt-4">
                     {scheduleElements}

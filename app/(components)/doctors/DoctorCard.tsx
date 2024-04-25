@@ -10,8 +10,8 @@ function DoctorCard({ doctor, appointmentDate, appointmentTime, isExpired }) { /
     if (isExpired == true) {
         console.log('isExpired', isExpired)
     }
-    console.log('avgRating', averageRating)
-    console.log('totalRating', totalRating)
+    // console.log('avgRating', averageRating)
+    // console.log('totalRating', totalRating)
     return (
         <div className={`p-2 sm:p-3 lg:p-5 max-w-sm mx-auto bg-white rounded-lg shadow-md`}>
             <div className="aspect-w-16 aspect-h-9">

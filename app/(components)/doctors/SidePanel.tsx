@@ -13,7 +13,7 @@ export default function SidePanel({ doctorId, ticketPrice }) {
     const [selectedDate, setSelectedDate] = useState(null); // State pentru data selectată
     const [selectedHour, setSelectedHour] = useState(null);
 
-    console.log('doctorId', doctorId)
+    // console.log('doctorId', doctorId)
 
     const handleDateSelect = (date) => {
         setSelectedDate(date);
