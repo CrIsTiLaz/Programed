@@ -52,7 +52,7 @@ function ClinicDetails() {
                         {/* <div className='grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1'> */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-5 ">
 
-                            <ClinicCarousel />
+                            <ClinicCarousel photos={clinic.photos} />
 
                             <div className=''> {/* Ajustează lățimea după nevoie */}
                                 <h3 className='text-headingColor text-[22px] leading-9 font-bold'>

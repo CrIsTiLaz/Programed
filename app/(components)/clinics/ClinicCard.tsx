@@ -15,7 +15,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import ClinicCarousel from './ClinicCarousel';
 
 function ClinicCard({ clinic }) {
-    const { name, avgRating, totalRating, specialization, medicalGrade } = clinic;
+    const { name, avgRating, totalRating, specialization, medicalGrade, photos } = clinic;
     SwiperCore.use([Autoplay])
     // Array cu imagini predefinite
     const images = [
@@ -54,7 +54,7 @@ function ClinicCard({ clinic }) {
 
                 ))}
             </Swiper> */}
-            <ClinicCarousel />
+            <ClinicCarousel photos={photos} />
             <div className='mt-3 grid grid-cols-1 sm:grid-cols-5 md:grid-cols-3 lg:grid-cols-1 gap-1 '>
                 <div className='flex justify-between items-center'>
                     <h2 className='text-left text-[18px] lg:text-[24px] font-bold text-headingColor break-words overflow-hidden max-w-full sm:max-w-xs'>

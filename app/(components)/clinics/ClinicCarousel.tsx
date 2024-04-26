@@ -13,12 +13,15 @@ import SwiperCore from 'swiper'
 import Swipe from './Swipe';
 import { FaLocationDot } from "react-icons/fa6";
 
-function ClinicCarousel() {
+function ClinicCarousel({ photos }) {
     const images = [
         "/temp/cabinet1.jpg",
         "/temp/cabinet2.jpg",
         "/temp/cabinet3.jpg"
     ];
+    if (!photos || photos.length === 0) {
+        return <div>No photos available</div>;  // Afisare mesaj sau fallback când nu sunt poze
+    }
     return (
         <div><Swiper
             navigation
@@ -32,7 +35,7 @@ function ClinicCarousel() {
             loop={true}
             modules={[Pagination, Navigation, Scrollbar]}
             className="custom-swiper-container w-full rounded-lg">
-            {images.map((imgSrc, index) => (
+            {photos.map((imgSrc, index) => (
                 <SwiperSlide key={index}>
                     <div className='flex items-center justify-center' style={{ width: '100%', height: '100%', position: 'relative' }}>
                         <Image
