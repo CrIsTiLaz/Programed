@@ -24,10 +24,38 @@ function ClinicDetails() {
     const params = useParams();
     const id = params.clinicId;
     const { data: clinic, loading, error } = useFetchData(`${BASE_URL}/clinics/${id}`);
+    const [allReviews, setAllReviews] = useState([]);
+    let totalRatingsSum = 0;
+    let totalAverageRatingSum = 0;
+    let doctorCount = 0;
+    useEffect(() => {
+        if (clinic && clinic.doctors) {
+            const reviews = clinic.doctors.reduce((acc, doctor) => {
+                return acc.concat(doctor.reviews || []);
+            }, []);
+            setAllReviews(reviews);
+            console.log('Toate review-urile:', reviews);  // Afișăm la consolă pentru verificare
+        }
+    }, [clinic]);
 
+
+    if (clinic.doctors && Array.isArray(clinic.doctors)) {
+        clinic.doctors.forEach((doctor) => {
+            // Asigură-te că avgRating este tratat ca un număr
+            const averageRating = parseFloat(doctor.averageRating);
+            const totalRating = parseInt(doctor.totalRating, 10); // Convertim și totalRating, pentru siguranță
+
+            console.log(`Doctor: ${doctor.name}, Average Rating: ${averageRating}, Total Ratings: ${totalRating}`);
+            totalRatingsSum += totalRating;
+            totalAverageRatingSum += averageRating;  // Adăugăm avgRating ca număr
+            doctorCount++;
+        });
+    }
+
+    // Calculul mediei averageRating, asigurându-ne că doctorCount nu este 0
+    const averageRating = doctorCount > 0 ? (totalAverageRatingSum / doctorCount).toFixed(1) : "N/A";
     const {
         name,
-        averageRating,
         totalRating,
         specialization,
         address,
@@ -69,10 +97,10 @@ function ClinicDetails() {
                                 <div className="mt-10 md:mt-[230px]">
                                     <div className='flex items-center gap-[6px] my-2'>
                                         <span className='flex items-center gap-[6px] text-[14px] leading-5 lg:text-[20px] lg:leading-7 font-semibold text-headingColor'>
-                                            <Image src='/clinics/Star.png' alt='' width={20} height={20} /> 5
+                                            <Image src='/clinics/Star.png' alt='' width={20} height={20} /> {averageRating}
                                         </span>
                                         <span className='text-[14px] leading-5 lg:text-[20px] lg:leading-7 font-[400] text-textColor'>
-                                            (255)
+                                            ({totalRatingsSum})
                                         </span>
                                     </div> {/* sau orice valoare de marjă dorești */}
                                     <div className="flex items-center lg:text-[20px]">
@@ -109,7 +137,7 @@ function ClinicDetails() {
                         <div className='mt-3'>
                             {tab === 'servicii' && <Doctors clinicId={id} />}
                             {tab === 'despre' && <ClinicsAbout name={name} address={address} email={email} services={services} openingHours={openingHours} description={description} />}
-                            {tab === 'feedback' && <Doctors />}
+                            {tab === 'feedback' && <Feedback reviews={allReviews} totalReviews={totalRatingsSum} />}
 
                         </div>
                     </>

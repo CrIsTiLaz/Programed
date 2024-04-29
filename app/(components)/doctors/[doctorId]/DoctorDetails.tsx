@@ -37,7 +37,7 @@ function DoctorDetails() {
     // console.log('ID:', id);
 
     const { data: doctor, loading, error } = useFetchData(`${BASE_URL}/doctors/${id}`);
-
+    console.log('doctors', doctor)
     // console.log('url: )', (`${BASE_URL}/doctors/${id}`))
     // console.log('data', doctor)
 
@@ -60,7 +60,7 @@ function DoctorDetails() {
     if (loading) {
         return <Loading />;
     }
-    console.log('loading', loading)
+    console.log('reviews', reviews)
     return (
         <section>
             <div className='max-w-[1170px] px-5 mx-auto'>

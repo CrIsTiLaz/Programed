@@ -15,7 +15,29 @@ import { FaLocationDot } from "react-icons/fa6";
 import ClinicCarousel from './ClinicCarousel';
 
 function ClinicCard({ clinic }) {
-    const { name, avgRating, totalRating, specialization, medicalGrade, photos } = clinic;
+    const { name, specialization, medicalGrade, photos, doctors } = clinic;
+    let totalRatingsSum = 0;
+    let totalAverageRatingSum = 0;
+    let doctorCount = 0;
+
+    if (doctors && Array.isArray(doctors)) {
+        doctors.forEach((doctor) => {
+            // Asigură-te că avgRating este tratat ca un număr
+            const averageRating = parseFloat(doctor.averageRating);
+            const totalRating = parseInt(doctor.totalRating, 10); // Convertim și totalRating, pentru siguranță
+
+            console.log(`Doctor: ${doctor.name}, Average Rating: ${averageRating}, Total Ratings: ${totalRating}`);
+            totalRatingsSum += totalRating;
+            totalAverageRatingSum += averageRating;  // Adăugăm avgRating ca număr
+            doctorCount++;
+        });
+    }
+
+    // Calculul mediei averageRating, asigurându-ne că doctorCount nu este 0
+    const averageRating = doctorCount > 0 ? (totalAverageRatingSum / doctorCount).toFixed(1) : "N/A";
+
+    console.log(`Suma totală a ratingurilor pentru toți medicii este: ${totalRatingsSum}`);
+    console.log(`Media ratingurilor medii pentru toți medicii este: ${averageRating}`);
     SwiperCore.use([Autoplay])
     // Array cu imagini predefinite
     const images = [
@@ -64,9 +86,8 @@ function ClinicCard({ clinic }) {
 
                     <div className='flex items-center gap-[6px] '> {/* Adjust the margin-top value as needed */}
                         <Image src='/clinics/Star.png' alt='' width={20} height={20} />
-                        <span className='text-headingColor font-semibold'>4.2</span>
-                        <span className='text-rating'>(233)</span>
-                    </div>
+                        <span className='text-headingColor font-semibold'>{averageRating}</span>
+                        <span className='text-rating'>({totalRatingsSum})</span>  {/* Afișarea sumei totale a ratingurilor */}                    </div>
 
 
 

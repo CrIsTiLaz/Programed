@@ -2,17 +2,16 @@ import FormateDate from '@/app/utils/FormateDate'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { AiFillStar } from 'react-icons/ai'
-import FeedbackForm from './FeedbackForm';
 
-function Feedback({ reviews, totalRating }) {
+function Feedback({ reviews, totalReviews }) {
 
     const [showFeedbackForm, setShowFeedbackForm] = useState(false);
 
     return (
         <div>
             <div className='mb-[50px]'>
-                <h4 className='text-[20px] leading-[30px] font-bold text-headingColor mb-[30px]'>
-                    Toate review-urile ({totalRating})
+                <h4 className='text-[20px] leading-[30px] font-bold text-headingColor mb-[30px] mt-[50px]'>
+                    Toate review-urile ({totalReviews})
                 </h4>
 
                 {reviews?.map((review, index) =>
@@ -45,7 +44,6 @@ function Feedback({ reviews, totalRating }) {
                 <button className='btn' onClick={() => setShowFeedbackForm(true)}>Feedback</button>
             </div>}
 
-            {showFeedbackForm && <FeedbackForm />}
 
         </div>
     )

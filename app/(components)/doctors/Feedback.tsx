@@ -7,11 +7,11 @@ import FeedbackForm from './FeedbackForm';
 function Feedback({ reviews, totalRating }) {
 
     const [showFeedbackForm, setShowFeedbackForm] = useState(false);
-
+    console.log('reviews', reviews)
     return (
         <div>
             <div className='mb-[50px]'>
-                <h4 className='text-[20px] leading-[30px] font-bold text-headingColor mb-[30px]'>
+                <h4 className='text-[20px] leading-[30px] font-bold text-headingColor mb-[30px] '>
                     Toate review-urile ({totalRating})
                 </h4>
 
