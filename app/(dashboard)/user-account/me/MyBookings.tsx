@@ -4,6 +4,7 @@ import Error from '@/app/error/Error';
 import useFetchData from '@/app/hooks/useFetchData';
 import Loading from '@/app/loading';
 import ClinicCard from '@/app/(components)/clinics/ClinicCard';
+import DoctorCard from '@/app/(components)/doctors/DoctorCard';
 
 function MyBookings() {
     const { data: appointments, loading, error } = useFetchData(`${BASE_URL}/users/appointments/my-appointmentsDateAndTime`);
@@ -35,7 +36,7 @@ function MyBookings() {
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
                     {sortedAppointments.map((appointment) => (
                         <div key={appointment.doctorId} className={`flex flex-col md:flex-row md:items-center gap-4 `}>
-                            <ClinicCard
+                            <DoctorCard
                                 doctor={appointment.doctor}
                                 appointmentDate={appointment.appointmentDate}
                                 appointmentTime={appointment.appointmentTime}

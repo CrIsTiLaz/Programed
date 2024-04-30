@@ -40,9 +40,6 @@ function Feedback({ reviews, totalReviews }) {
                 )}
             </div>
 
-            {!showFeedbackForm && <div className="text-center">
-                <button className='btn' onClick={() => setShowFeedbackForm(true)}>Feedback</button>
-            </div>}
 
 
         </div>

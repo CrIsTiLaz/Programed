@@ -6,7 +6,6 @@ import Swal from 'sweetalert2';
 import { AiOutlineDelete } from 'react-icons/ai';
 
 function Profile({ clinicData }) {
-    console.log('clinicData', clinicData)
     const [formData, setFormData] = useState({
         name: clinicData?.name || '',
         email: clinicData?.email || '',
@@ -16,45 +15,18 @@ function Profile({ clinicData }) {
         description: clinicData?.description || '',
         services: clinicData?.services || [],
         openingHours: clinicData?.openingHours || {},
-        photos: clinicData?.photos || [] // Schimbă numele câmpului de la 'photo' la 'photos' și initializează-l ca un array
+        photos: clinicData?.photos || []
     });
-
-    const [services, setServices] = useState(clinicData.services || []);
-    const [selectedFile, setSelectedFile] = useState(null)
-
-    useEffect(() => {
-        if (clinicData) {
-            setFormData(prev => ({ ...prev, ...clinicData }));
-        }
-    }, [clinicData]);
 
     const handleInputChange = e => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    // const handleFileInputChange = async (event) => {
-    //     const file = event.target.files[0];
-    //     if (file) {
-    //         const data = await uploadImageToCloudinary(file);
-    //         if (data?.url) {
-    //             console.log("URL from Cloudinary:", data.url); // Verifică URL-ul primit
-    //             setFormData(prevFormData => ({
-    //                 ...prevFormData,
-    //                 photos: [...prevFormData.photos, data.url] // Adaugă URL-ul nou în array-ul de photos
-    //             }));
-    //         } else {
-    //             console.log("Failed to receive URL from Cloudinary");
-    //         }
-    //     }
-    // };
-
-
     const updateProfileHandler = async e => {
         e.preventDefault();
-        const payload = { ...formData };
-
-        console.log("Sending payload to server with 'photos' array:", payload); // Verifică structura payload-ului înainte de a-l trimite
+        const payload = { ...formData };  // Exclude doctors and reviews
+        console.log("Sending payload to server:", payload);
 
         try {
             const response = await fetch(`${BASE_URL}/clinics/${clinicData._id}`, {
@@ -78,7 +50,7 @@ function Profile({ clinicData }) {
                 confirmButtonText: 'Ok',
             });
         } catch (error) {
-            console.log("Error updating profile:", error);
+            console.error("Error updating profile:", error);
             Swal.fire({
                 title: 'Error!',
                 text: error.toString(),
@@ -88,28 +60,24 @@ function Profile({ clinicData }) {
         }
     };
 
-    // Adaugă o nouă poza
     const addPhoto = () => {
         setFormData(prevFormData => ({
             ...prevFormData,
-            photos: [...prevFormData.photos, ''] // adaugă un element nou, inițial gol
+            photos: [...prevFormData.photos, '']
         }));
     };
 
-    // Actualizează o poza existentă
     const updatePhoto = (index, value) => {
         const newPhotos = [...formData.photos];
         newPhotos[index] = value;
         setFormData({ ...formData, photos: newPhotos });
     };
 
-    // Șterge o poza
     const deletePhoto = (index) => {
         const newPhotos = formData.photos.filter((_, i) => i !== index);
         setFormData({ ...formData, photos: newPhotos });
     };
 
-    // Handler pentru încărcarea fișierelor
     const handleFileInputChange = async (index, event) => {
         const file = event.target.files[0];
         if (file) {
