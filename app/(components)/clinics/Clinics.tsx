@@ -40,7 +40,7 @@ function Clinics() {
 
     }, [query])
 
-
+    // console.log('debounceQuery', debounceQuery)
     return (
         <>
             <section >

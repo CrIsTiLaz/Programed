@@ -4,6 +4,7 @@ import uploadImageToCloudinary from '@/app/utils/uploadCloudinary';
 import { BASE_URL, token } from '@/app/config';
 import Swal from 'sweetalert2';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { format } from 'date-fns';
 
 function Profile({ clinicData }) {
     const [formData, setFormData] = useState({
@@ -14,10 +15,19 @@ function Profile({ clinicData }) {
         specialization: clinicData?.specialization || '',
         description: clinicData?.description || '',
         services: clinicData?.services || [],
-        openingHours: clinicData?.openingHours || {},
-        photos: clinicData?.photos || []
+        photos: clinicData?.photos || [],
+        openingHours: clinicData?.openingHours || []
     });
-
+    const [openingHours, setOpeningHours] = useState(clinicData.openingHours || [
+        { dayOfWeek: 'Luni', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Marti', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Miercuri', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Joi', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Vineri', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Sambata', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        { dayOfWeek: 'Duminica', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
+        // Repetă pentru fiecare zi a săptămânii
+    ]);
     const handleInputChange = e => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -25,8 +35,11 @@ function Profile({ clinicData }) {
 
     const updateProfileHandler = async e => {
         e.preventDefault();
-        const payload = { ...formData };  // Exclude doctors and reviews
-        console.log("Sending payload to server:", payload);
+        const payload = {
+            ...formData,
+            openingHours: openingHours
+        };
+        // console.log("Sending payload to server:", payload);
 
         try {
             const response = await fetch(`${BASE_URL}/clinics/${clinicData._id}`, {
@@ -120,6 +133,53 @@ function Profile({ clinicData }) {
                 <div className="mb-5">
                     <label className="form__label">Description</label>
                     <textarea name="description" value={formData.description} onChange={handleInputChange} className="form__input" rows="4"></textarea>
+                </div>
+                <div className="mb-5">
+                    <h3>Orar de lucru</h3>
+                    {['Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri', 'Sambata', 'Duminica'].map((dayOfWeek) => {
+                        // Găsește indexul zilei curente în array-ul workSchedule sau -1 dacă nu este prezentă
+                        const index = openingHours.findIndex(schedule => schedule.dayOfWeek === dayOfWeek);
+
+                        // Funcția de actualizare pentru startTime și endTime
+                        const handleScheduleChange = (field, value) => {
+                            // Creează un obiect Date din valoarea de timp primită
+                            const timeValue = value ? new Date(`1970-01-01T${value}:00`) : null;
+
+                            // Actualizează workSchedule cu noua valoare
+                            setOpeningHours(currentSchedule => {
+                                let newSchedule = [...currentSchedule];
+                                if (index !== -1) {
+                                    // Actualizăm ziua existentă
+                                    newSchedule[index] = { ...newSchedule[index], [field]: timeValue };
+                                } else {
+                                    // Adăugăm o nouă zi în program
+                                    newSchedule = [...newSchedule, { dayOfWeek, [field]: timeValue, consultationDuration: 30 }]; // Presupunem durată standard pentru noile zile
+                                }
+                                return newSchedule;
+                            });
+                        };
+
+                        return (
+                            <div key={dayOfWeek} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <label>{dayOfWeek}</label>
+                                <div className="flex items-center">
+                                    <input
+                                        type="time"
+                                        className='form__input'
+                                        value={index !== -1 && openingHours[index].startTime ? format(openingHours[index].startTime, 'HH:mm') : ''}
+                                        onChange={(e) => handleScheduleChange('startTime', e.target.value)}
+                                    />
+                                    <span className="mx-2">la</span>
+                                    <input
+                                        type="time"
+                                        className='form__input'
+                                        value={index !== -1 && openingHours[index].endTime ? format(openingHours[index].endTime, 'HH:mm') : ''}
+                                        onChange={(e) => handleScheduleChange('endTime', e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
                 <div className="mb-5">
                     <p className='form__label'>Photos*</p>

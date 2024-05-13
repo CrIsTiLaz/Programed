@@ -9,7 +9,7 @@ import TestSwiper from './Swipe';
 import Page from './Swipe';
 
 function ClinicList({ query }) {
-
+    console.log('query', query)
     const { data: clinics, loading, error } = useFetchData(`${BASE_URL}/clinics?query=${query}`)
 
     return (
