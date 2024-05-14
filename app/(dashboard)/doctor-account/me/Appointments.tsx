@@ -2,6 +2,8 @@ import React from 'react'
 import Image from 'next/image';
 import formatDate from "../../../utils/FormateDate"
 import convertTime from '@/app/utils/convertTime';
+import Example from './AppointmentsCalendar';
+import Ex from './Ex';
 
 function Appointments({ appointments }) {
     console.log('appointments', appointments);
@@ -24,56 +26,58 @@ function Appointments({ appointments }) {
     });
 
     return (
-        <table className='w-full text-left text-sm text-gray-500'>
-            <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
-                <tr>
-                    <th scope='col' className='px-6 py-3'>
-                        Nume
-                    </th>
-                    <th scope='col' className='px-6 py-3'>
-                        Gen
-                    </th>
-                    <th scope='col' className='px-6 py-3'>
-                        Pret
-                    </th>
-                    <th scope='col' className='px-6 py-3'>
-                        Data
-                    </th>
-                    <th scope='col' className='px-6 py-3'>
-                        Ora
-                    </th>
-                </tr>
-            </thead>
+        // <table className='w-full text-left text-sm text-gray-500'>
+        //     <thead className='text-xs text-gray-700 uppercase bg-gray-50'>
+        //         <tr>
+        //             <th scope='col' className='px-6 py-3'>
+        //                 Nume
+        //             </th>
+        //             <th scope='col' className='px-6 py-3'>
+        //                 Gen
+        //             </th>
+        //             <th scope='col' className='px-6 py-3'>
+        //                 Pret
+        //             </th>
+        //             <th scope='col' className='px-6 py-3'>
+        //                 Data
+        //             </th>
+        //             <th scope='col' className='px-6 py-3'>
+        //                 Ora
+        //             </th>
+        //         </tr>
+        //     </thead>
 
-            <tbody>
-                {sortedAppointments?.map(item => <tr key={item._id}>
+        //     <tbody>
+        //         {sortedAppointments?.map(item => <tr key={item._id}>
 
-                    <th scope='row' className='flex items-center px-6 py-4 text-gray-900 whitespace-nowrap'>
-                        <Image src={item.user.photo} className='w-10 h-10 rounded-full' alt="" width={50} height={50} />
-                        <div className="pl-3">
-                            <div className='text-base font-semibold'>
-                                {item.user.name}
-                            </div>
-                            <div className='text-normal text-gray-500'>
-                                {item.user.email}
-                            </div>
-                        </div>
-                    </th>
-                    <td className='px-6 py-4'>
-                        {item.user.gender}
-                    </td>
-                    <td className='px-6 py-4'>
-                        {item.ticketPrice}
-                    </td>
-                    <td className='px-6 py-4'>
-                        {formatDate(item.appointmentDate)}
-                    </td>
-                    <td className='px-6 py-4'>
-                        {convertTime(item.appointmentTime)}
-                    </td>
-                </tr>)}
-            </tbody>
-        </table>
+        //             <th scope='row' className='flex items-center px-6 py-4 text-gray-900 whitespace-nowrap'>
+        //                 <Image src={item.user.photo} className='w-10 h-10 rounded-full' alt="" width={50} height={50} />
+        //                 <div className="pl-3">
+        //                     <div className='text-base font-semibold'>
+        //                         {item.user.name}
+        //                     </div>
+        //                     <div className='text-normal text-gray-500'>
+        //                         {item.user.email}
+        //                     </div>
+        //                 </div>
+        //             </th>
+        //             <td className='px-6 py-4'>
+        //                 {item.user.gender}
+        //             </td>
+        //             <td className='px-6 py-4'>
+        //                 {item.ticketPrice}
+        //             </td>
+        //             <td className='px-6 py-4'>
+        //                 {formatDate(item.appointmentDate)}
+        //             </td>
+        //             <td className='px-6 py-4'>
+        //                 {convertTime(item.appointmentTime)}
+        //             </td>
+        //         </tr>)}
+        //     </tbody>
+        // </table>
+        <Example appointments={appointments} />
+        // <Ex />
     )
 }
 
