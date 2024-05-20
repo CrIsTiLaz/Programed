@@ -5,7 +5,7 @@ import convertTime from '@/app/utils/convertTime';
 import Example from './AppointmentsCalendar';
 import Ex from './Ex';
 
-function Appointments({ appointments }) {
+function Appointments({ appointments, doctorId }) {
     console.log('appointments', appointments);
 
     // Sortează programările în funcție de data și ora programării, de la cele mai apropiate la cele mai îndepărtate
@@ -76,7 +76,7 @@ function Appointments({ appointments }) {
         //         </tr>)}
         //     </tbody>
         // </table>
-        <Example appointments={appointments} />
+        <Example appointments={appointments} doctorId={doctorId} />
         // <Ex />
     )
 }

@@ -9,7 +9,7 @@ import DoctorCard from '@/app/(components)/doctors/DoctorCard';
 function MyBookings() {
     const { data: appointments, loading, error } = useFetchData(`${BASE_URL}/users/appointments/my-appointmentsDateAndTime`);
     const [sortedAppointments, setSortedAppointments] = useState([]);
-
+    console.log('appointments', appointments)
     useEffect(() => {
         if (appointments) {
             const now = new Date(); // Obține data curentă

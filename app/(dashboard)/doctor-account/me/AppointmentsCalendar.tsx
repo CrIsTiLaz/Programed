@@ -15,22 +15,24 @@ import {
     parseISO,
     startOfToday,
 } from 'date-fns'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
+import Time from '@/app/(components)/doctors/Time';
+import { AiOutlineDelete } from 'react-icons/ai';
+import Swal from 'sweetalert2';
+import { BASE_URL, token } from '@/app/config';
 
 const today = new Date();
-const tomorrow = new Date(today);
-tomorrow.setDate(tomorrow.getDate() + 1);
 
 function AppointmentItem({ appointment }) {
     return (
         <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
             <img
-                src={appointment.user.photo}
+                src={appointment.patientPhoto}
                 alt=""
                 className="flex-none w-10 h-10 rounded-full"
             />
             <div className="flex-auto">
-                <p className="text-gray-900">{appointment.user.name}</p>
+                <p className="text-gray-900">{appointment.patientName}</p>
                 <p className="mt-0.5">
                     De la ora <time dateTime={appointment.appointmentTime}>
                         {appointment.appointmentTime}
@@ -41,13 +43,13 @@ function AppointmentItem({ appointment }) {
     )
 }
 
-
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Example({ appointments }) {
+export default function Example({ appointments, doctorId }) {
     console.log('appointments', appointments)
+    console.log('doctorId', doctorId)
     let today = startOfToday()
     let [selectedDay, setSelectedDay] = useState(today)
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
@@ -72,6 +74,91 @@ export default function Example({ appointments }) {
         isSameDay(parseISO(appointment.appointmentDate), selectedDay)
     )
 
+    const currentDate = format(new Date(), 'yyyy-MM-dd');
+
+    const [formData, setFormData] = useState({
+        timeSlots: []
+    });
+
+    const addItem = (key, item) => {
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [key]: [...prevFormData[key], item]
+        }));
+    }
+
+    const addTimeSlot = (e) => {
+        e.preventDefault();
+        setShowForm(true);
+    };
+
+
+    const handleTimeSlotChange = (e, index) => {
+        const { name, value } = e.target;
+        const updatedTimeSlots = formData.timeSlots.map((slot, i) =>
+            i === index ? { ...slot, [name]: value } : slot
+        );
+        setFormData({ ...formData, timeSlots: updatedTimeSlots });
+    };
+
+
+    const deleteTimeSlot = (e, index) => {
+        e.preventDefault();
+        const updatedTimeSlots = formData.timeSlots.filter((_, i) => i !== index);
+        setFormData({ ...formData, timeSlots: updatedTimeSlots });
+    };
+    const [selectedHour, setSelectedHour] = useState(null);
+    const [patientEmail, setPatientEmail] = useState('');
+    const [showForm, setShowForm] = useState(false);
+
+    const handleHourSelect = (hour) => {
+        setSelectedHour(hour);
+        console.log(`Data selectată: ${selectedDay}, Ora selectată: ${hour}:00, Email: ${patientEmail}`);
+    };
+
+    const bookingHandler = async () => {
+        try {
+            const formattedDate = selectedDay.toISOString(); // Formatăm data ca string ISO dacă este necesar
+            const bookingData = {
+                appointmentDate: formattedDate, // Data programării în format ISO string
+                appointmentTime: selectedHour, // Ora programării ca string
+                email: patientEmail, // Adăugăm email-ul pacientului
+                // Adaugă alte câmpuri necesare conform schemei backend-ului
+            };
+            console.log('bookingData', bookingData)
+            const requestUrl = `${BASE_URL}/bookings/checkout-session/${doctorId}`;
+
+            const res = await fetch(requestUrl, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`, // Token-ul de autorizare
+                    'Content-Type': 'application/json', // Specificăm că trimitem date în format JSON
+                },
+                body: JSON.stringify(bookingData) // Convertim obiectul de date într-un string JSON
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.message || 'There was an error processing your request.');
+            }
+
+            await Swal.fire({
+                icon: 'success',
+                title: 'Your booking is confirmed!',
+                text: 'Thank you! Your booking has been successfully made.',
+            });
+
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error.toString(),
+            });
+        }
+    };
+
+
     return (
         <div className="pt-16">
             <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
@@ -89,8 +176,7 @@ export default function Example({ appointments }) {
                                 <span className="sr-only">Previous month</span>
                                 <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
                             </button>
-                            <button
-                                onClick={nextMonth}
+                            <button onClick={nextMonth}
                                 type="button"
                                 className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
                             >
@@ -146,19 +232,11 @@ export default function Example({ appointments }) {
                                             {format(day, 'd')}
                                         </time>
                                     </button>
-
-                                    {/* <div className="w-1 h-1 mx-auto mt-1">
-                                        {meetings.some((meeting) =>
-                                            isSameDay(parseISO(meeting.startDatetime), day)
-                                        ) && (
-                                                <div className="w-1 h-1 rounded-full bg-sky-500"></div>
-                                            )}
-                                    </div> */}
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <section className="md:pl-14 md:mt-0 lg:mt-0"> {/* Ajustat de la mt-20 la mt-0 */}
+                    <section className="md:pl-14 md:mt-0 lg:mt-0">
                         <h2 className="font-semibold text-gray-900">
                             Programați pentru{' '}
                             <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>
@@ -174,93 +252,64 @@ export default function Example({ appointments }) {
                                 <p>Fără programări astăzi.</p>
                             )}
                         </ol>
-                        <button onClick={() => console.log('Adaugă o nouă programare')}
-                            className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>Add Time Slot</button>
+                        <button onClick={addTimeSlot} className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>
+                            Add Time Slot
+                        </button>
+
+                        {showForm && (
+                            <div className='mb-5'>
+                                <div className='mb-[30px] gap-5'>
+                                    <div>
+                                        <p className='form__label'>Email Pacient*</p>
+                                        <input
+                                            name='email'
+                                            value={patientEmail}
+                                            className='form__input py-3.5'
+                                            onChange={e => setPatientEmail(e.target.value)}
+                                            type='email'
+                                        />
+                                    </div>
+
+                                    {patientEmail && (
+                                        <div>
+                                            <p className='form__label'>Time*</p>
+                                            {selectedHour ? (
+                                                <input
+                                                    name='time'
+                                                    value={selectedHour}
+                                                    className='form__input py-3.5'
+                                                    onChange={e => setSelectedHour(e.target.value)}
+                                                    type='time'
+                                                />
+                                            ) : (
+                                                <Time selectedDate={selectedDay} onHourSelect={handleHourSelect} doctorId={doctorId} />
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+
+                        {patientEmail && selectedHour && (
+                            <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
+                                Fa programare
+                            </button>
+                        )}
+
+                        {/* <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
+                            Fa programare
+                        </button> */}
+                        {/* <button onClick={bookingHandler} className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>
+                            Fa programare
+                        </button> */}
+
+
 
                     </section>
-
                 </div>
             </div>
         </div>
-    )
-}
-
-function Meeting({ meeting }) {
-    let startDateTime = parseISO(meeting.startDatetime)
-    let endDateTime = parseISO(meeting.endDatetime)
-
-    return (
-        <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
-            <img
-                src={meeting.imageUrl}
-                alt=""
-                className="flex-none w-10 h-10 rounded-full"
-            />
-            <div className="flex-auto">
-                <p className="text-gray-900">{meeting.name}</p>
-                <p className="mt-0.5">
-                    <time dateTime={meeting.startDatetime}>
-                        {format(startDateTime, 'h:mm a')}
-                    </time>{' '}
-                    -{' '}
-                    <time dateTime={meeting.endDatetime}>
-                        {format(endDateTime, 'h:mm a')}
-                    </time>
-                </p>
-            </div>
-            <Menu
-                as="div"
-                className="relative opacity-0 focus-within:opacity-100 group-hover:opacity-100"
-            >
-                <div>
-                    <Menu.Button className="-m-2 flex items-center rounded-full p-1.5 text-gray-500 hover:text-gray-600">
-                        <span className="sr-only">Open options</span>
-                        {/* <DotsVerticalIcon className="w-6 h-6" aria-hidden="true" /> */}
-                    </Menu.Button>
-                </div>
-
-                <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-36 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <div className="py-1">
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <a
-                                        href="#"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Edit
-                                    </a>
-                                )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <a
-                                        href="#"
-                                        className={classNames(
-                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                            'block px-4 py-2 text-sm'
-                                        )}
-                                    >
-                                        Cancel
-                                    </a>
-                                )}
-                            </Menu.Item>
-                        </div>
-                    </Menu.Items>
-                </Transition>
-            </Menu>
-        </li>
     )
 }
 

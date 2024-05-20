@@ -16,7 +16,7 @@ function Dashboard() {
     const { data, loading, error } = useGetProfile(`${BASE_URL}/doctors/profile/me`)
 
     const [tab, setTab] = useState('overview')
-
+    console.log('data._id', data._id)
     return (
         <section>
             <div className='max-w-[1170px] px-5 mx-auto'>
@@ -98,7 +98,7 @@ function Dashboard() {
                                             qualifications={data.qualifications}
                                         />
                                     </div>)}
-                                {tab === 'appointments' && <Appointments appointments={data.appointments} />}
+                                {tab === 'appointments' && <Appointments appointments={data.appointments} doctorId={data._id} />}
                                 {tab === 'settings' && <Profile doctorData={data} />}
                             </div>
                         </div>
