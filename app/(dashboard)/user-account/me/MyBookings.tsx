@@ -36,11 +36,13 @@ function MyBookings() {
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
                     {sortedAppointments.map((appointment) => (
                         <div key={appointment.doctorId} className={`flex flex-col md:flex-row md:items-center gap-4 `}>
+                            {/* <p className="text-sm font-semibold">Appointment ID: {appointment.appointmentId}</p> */}
                             <DoctorCard
                                 doctor={appointment.doctor}
                                 appointmentDate={appointment.appointmentDate}
                                 appointmentTime={appointment.appointmentTime}
                                 isExpired={appointment.isExpired}
+                                appointmentId={appointment.appointmentId}
                             />
                         </div>
                     ))}
