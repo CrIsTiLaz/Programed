@@ -24,7 +24,7 @@ export default function SidePanel({ doctorId, ticketPrice }) {
 
     const handleHourSelect = (hour) => {
         setSelectedHour(hour);
-        console.log(`Data selectată: ${selectedDate}, Ora selectată: ${hour}:00`);
+        // console.log(`Data selectată: ${selectedDate}, Ora selectată: ${hour}:00`);
     };
 
     // Presupunând că bookingHandler este necesar și este folosit în altă parte a componentei tale

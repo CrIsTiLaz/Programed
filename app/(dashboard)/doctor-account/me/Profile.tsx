@@ -678,10 +678,6 @@ function Profile({ doctorData }) {
                     </button>
                 </div>
 
-
-
-
-
                 <div className="mb-5">
                     <p className='form__label'>About*</p>
 

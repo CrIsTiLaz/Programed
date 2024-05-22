@@ -24,11 +24,46 @@ import { BASE_URL, token } from '@/app/config';
 const today = new Date();
 
 function AppointmentItem({ appointment }) {
+    const handleDelete = async (id) => {
+        const result = await Swal.fire({
+            title: 'Ești sigur?',
+            text: "Această acțiune nu poate fi anulată!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#1E90FF',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Da, șterge!',
+            cancelButtonText: 'Anulează'
+        });
+
+        if (result.isConfirmed) {
+            try {
+                // Apel API pentru ștergerea rezervării folosind fetch
+                const response = await fetch(`${BASE_URL}/bookings/booking/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.success) {
+                    Swal.fire('Șters!', 'Rezervarea a fost ștearsă.', 'success');
+                } else {
+                    Swal.fire('Eroare!', 'A apărut o eroare la ștergerea rezervării.', 'error');
+                }
+            } catch (error) {
+                Swal.fire('Eroare!', 'A apărut o eroare la ștergerea rezervării.', 'error');
+            }
+        }
+    };
+
     return (
-        <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
+        <li className="flex items-center px-4 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
             <img
                 src={appointment.patientPhoto}
-                alt=""
+                alt={`Photo of ${appointment.patientName}`}
                 className="flex-none w-10 h-10 rounded-full"
             />
             <div className="flex-auto">
@@ -39,9 +74,20 @@ function AppointmentItem({ appointment }) {
                     </time>
                 </p>
             </div>
+            <div className="h-full">
+                <button
+                    className='btn bg-red-600 p-2 rounded-full text-white text-[18px] cursor-pointer mb-5 mt-6'
+                    onClick={() => handleDelete(appointment._id)}
+                    aria-label={`Delete appointment for ${appointment.patientName}`}
+                >
+                    <AiOutlineDelete />
+                </button>
+            </div>
         </li>
-    )
+    );
 }
+
+
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -126,7 +172,7 @@ export default function Example({ appointments, doctorId }) {
                 // Adaugă alte câmpuri necesare conform schemei backend-ului
             };
             console.log('bookingData', bookingData)
-            const requestUrl = `${BASE_URL}/bookings/checkout-session/${doctorId}`;
+            const requestUrl = `${BASE_URL}/bookings/checkout-sessionWithEmail/${doctorId}`;
 
             const res = await fetch(requestUrl, {
                 method: 'POST',
