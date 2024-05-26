@@ -319,6 +319,18 @@ function Profile({ doctorData }) {
                     />
                 </div>
 
+                <div className='mb-5'>
+                    <p className="form__label">Parola*</p>
+                    <input
+                        type='password'
+                        placeholder='Parola'
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        className='form__input'
+                    />
+                </div>
+
                 <div className="mb-5">
                     <p className="form__label">Phone*</p>
                     <input

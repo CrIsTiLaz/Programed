@@ -1,74 +1,87 @@
-import React, { useEffect, useRef, useContext } from 'react'
+import React, { useRef, useContext, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { BiMenu } from 'react-icons/bi';
 import { motion } from "framer-motion";
-import { usePathname } from "next/navigation"
-import { authContext } from "../../context/AuthContext"
+import { authContext } from "../../context/AuthContext";
 import dynamic from "next/dynamic";
 import useFetchData from '@/app/hooks/useFetchData';
 import { BASE_URL } from '@/app/config';
+import { FaBars, FaTimes } from "react-icons/fa";
 
 function Header() {
     const { data: session } = useSession();
-    const headerRef = useRef(null)
-    const menuRef = useRef()
+    const headerRef = useRef(null);
+    const menuRef = useRef(null); // corectat aici
     const router = useRouter();
     const pathname = usePathname();
-    const { data: userData } = useFetchData(`${BASE_URL}/users/profile/me`)
+    const { data: userData } = useFetchData(`${BASE_URL}/users/profile/me`);
 
-    const { user, role, token } = useContext(authContext)
-    console.log('Role:', role);
-    console.log('User:', user);
-    console.log('Token:', token);
+    const { user, role, token } = useContext(authContext);
+    const [menuOpen, setMenuOpen] = useState(false);
+
     const navigateToProfile = () => {
         let profilePath = '/user-account/me'; // Implicit pentru pacienți
         if (role === 'doctor') {
             profilePath = '/doctor-account/me';
         } else if (role === 'cabinet') {
             profilePath = '/clinic-account/me'; // Presupunând că există o rută separată pentru profilul cabinetelor
-        }
-        else if (role === 'superAdmin') {
+        } else if (role === 'superAdmin') {
             profilePath = '/admin-account'; // Presupunând că există o rută separată pentru profilul cabinetelor
         }
         router.push(profilePath);
     };
 
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
 
-    const toggleMenu = () => menuRef.current.classList.toggle('show__menu')
+    const closeMenu = () => {
+        setMenuOpen(false);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!menuRef.current.contains(event.target)) {
+                closeMenu();
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    });
 
     return (
-        <header className='header flex items-center sticky__header' ref={headerRef} >
+        <header className='header flex items-center sticky__header' ref={headerRef}>
             <div className='container'>
                 <div className='flex items-center justify-between'>
-
                     <Image src="/header/logo-removebg-preview.png" alt="Logo" width={90} height={90} />
-
-                    <div className='navigation' ref={menuRef} onClick={toggleMenu}>
-                        <div className='menu flex items-center gap-[2.7rem]'>
-                            <motion.div whileHover={{ scale: 1.1 }}>
+                    <div className={`navigation ${menuOpen ? 'show__menu' : ''}`} ref={menuRef}>
+                        <div className='menu flex flex-col lg:flex-row items-center gap-[2.7rem]'>
+                            <motion.div whileHover={{ scale: 1.1 }} onClick={closeMenu}>
                                 <Link href="/" className={` ${pathname === "/" ? "font-bold" : ""} text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor `}>
                                     Home
                                 </Link>
                             </motion.div>
-
-                            <motion.div whileHover={{ scale: 1.1 }}>
+                            <motion.div whileHover={{ scale: 1.1 }} onClick={closeMenu}>
                                 <Link href="/clinics" className={` ${pathname === "/clinics" ? "font-bold" : ""} text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor `}>
                                     Cabinete
                                 </Link>
                             </motion.div>
-
-                            <motion.div whileHover={{ scale: 1.1 }}>
+                            <motion.div whileHover={{ scale: 1.1 }} onClick={closeMenu}>
                                 <Link href="/contact" className={` ${pathname === "/contact" ? "font-bold" : ""} text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor `}>
                                     Contact
                                 </Link>
                             </motion.div>
                         </div>
                     </div>
-
                     <div className='flex items-center gap-4'>
+                        <button className='lg:hidden text-3xl menu-toggle' onClick={toggleMenu}>
+                            <BiMenu />
+                        </button>
                         {token && user ? (
                             <div className={`${(pathname === "/doctor-account/me" || pathname === "/clinic-account/me " || pathname === "/admin") ? "border-2 border-black" : ""} w-[35px] h-[35px] rounded-full cursor-pointer`} onClick={navigateToProfile}>
                                 {user.photo ? (
@@ -83,11 +96,10 @@ function Header() {
                             </Link>
                         )}
                     </div>
-
                 </div>
             </div>
         </header>
-    )
+    );
 }
 
-export default dynamic(() => Promise.resolve(Header), { ssr: false })
+export default dynamic(() => Promise.resolve(Header), { ssr: false });
