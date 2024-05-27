@@ -18,6 +18,7 @@ import Header from './(components)/header/header';
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { AuthContextProvider } from './context/AuthContext';
+import { RecoveryContext } from './context/RecoveryContext';
 
 
 
@@ -50,7 +51,9 @@ export default function RootLayout({
 
   const [userLocation, setUserLocation] = useState([]);
   const [selectedBusiness, setSelectedBusiness] = useState([]);
-
+  const [page, setPage] = useState("login");
+  const [email, setEmail] = useState();
+  const [otp, setOTP] = useState();
   //const session = await getServerSession();
   return (
     <html lang="en">
@@ -67,16 +70,19 @@ export default function RootLayout({
         </nav> */}
         <Provider>
           <AuthContextProvider>
-            <SelectedBusinessContext.Provider value={{ selectedBusiness, setSelectedBusiness }}>
-              <UserLocationContext.Provider value={{ userLocation, setUserLocation }}>
-                {/* <ToastContainer theme='dark' position="top-right" autoClose={3000} closeOnClick pauseOnHover={false} /> */}
-                <Header />
+            <RecoveryContext.Provider value={{ page, setPage, otp, setOTP, setEmail, email }}>
 
-                {children}
+              <SelectedBusinessContext.Provider value={{ selectedBusiness, setSelectedBusiness }}>
+                <UserLocationContext.Provider value={{ userLocation, setUserLocation }}>
+                  {/* <ToastContainer theme='dark' position="top-right" autoClose={3000} closeOnClick pauseOnHover={false} /> */}
+                  <Header />
 
-                <Footer />
-              </UserLocationContext.Provider>
-            </SelectedBusinessContext.Provider>
+                  {children}
+
+                  <Footer />
+                </UserLocationContext.Provider>
+              </SelectedBusinessContext.Provider>
+            </RecoveryContext.Provider>
           </AuthContextProvider>
         </Provider>
       </body>

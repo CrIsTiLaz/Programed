@@ -1,33 +1,67 @@
 import Link from 'next/link';
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext } from 'react';
 import { useRouter } from 'next/navigation';
 import { BASE_URL } from '../config';
 import Swal from 'sweetalert2';
-import { authContext } from "../context/AuthContext"
-import HashLoader from 'react-spinners/HashLoader'
+import { authContext } from "../context/AuthContext";
+import HashLoader from 'react-spinners/HashLoader';
+import { RecoveryContext } from '../context/RecoveryContext';
 
 function Login() {
-
-    function nagigateToOtp({ email }) {
-        if (email) {
-            const OTP = Math.floor(Math.random() * 9000 + 1000);
-            console.log(OTP);
-            setOTP(OTP);
-
-
-            return;
-        }
-        return alert("Please enter your email");
-    }
-
+    const { setEmail, setPage, email, setOTP } = useContext(RecoveryContext);
     const [formData, setFormData] = useState({
         email: '',
         password: ''
-    })
-
-    const [loading, setLoading] = useState(false)
+    });
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
-    const { dispatch } = useContext(authContext)
+    const { dispatch } = useContext(authContext);
+
+    function navigateToOtp() {
+        if (formData.email) {
+            const OTP = Math.floor(Math.random() * 9000 + 1000);
+            console.log("Generated OTP:", OTP);
+            setOTP(OTP);
+            setEmail(formData.email); // Set email in context
+
+            console.log('formData.email', formData.email);
+
+            fetch(`${BASE_URL}/auth/send_recovery_email`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    OTP,
+                    recipient_email: formData.email,
+                })
+            })
+                .then((response) => {
+                    console.log('Response received:', response);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log('Data received:', data);
+                    console.log('second');
+                    router.push('/recover');
+                })
+                .catch((error) => {
+                    console.error("Error occurred:", error);
+                    alert("Failed to send recovery email. Please try again.");
+                });
+
+            return;
+        }
+        console.log("Email not provided");
+        return alert("Please enter your email");
+    }
+
+
+
+
 
     const handleInputChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,7 +86,6 @@ function Login() {
                 throw new Error(result.message || 'Eroare la înregistrare');
             }
 
-            // Dacă înregistrarea este un succes, afișează un Sweet Alert de succes
             dispatch({
                 type: 'LOGIN_SUCCESS',
                 payload: {
@@ -62,11 +95,9 @@ function Login() {
                 },
             });
 
-            // console.log('login result', result)
             setLoading(false);
             router.push('/');
         } catch (err) {
-            // Dacă înregistrarea eșuează, afișează un Sweet Alert de eșec
             Swal.fire({
                 title: 'Error!',
                 text: err.message || 'Înregistrarea a eșuat!',
@@ -92,8 +123,8 @@ function Login() {
                             name="email"
                             value={formData.email}
                             onChange={handleInputChange}
-                            className='w-full  py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor 
-                        text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
+                            className='w-full py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor 
+                        text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer'
                         />
                     </div>
 
@@ -104,8 +135,8 @@ function Login() {
                             name="password"
                             value={formData.password}
                             onChange={handleInputChange}
-                            className='w-full  py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor 
-                        text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
+                            className='w-full py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor 
+                        text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer'
                         />
                     </div>
                     <div className='mt-7'>
@@ -117,7 +148,7 @@ function Login() {
                         Nu ai cont? <Link href="/user-register" className='text-primaryColor font-medium ml-1'>Inregistrare</Link>
                     </p>
                     <p className='mt-5 text-textColor text-center'>
-                        Ai uitat parola? <Link href="/user-register" className='text-primaryColor font-medium ml-1'>Resetare</Link>
+                        Ai uitat parola? <Link href="#" onClick={navigateToOtp} className='text-primaryColor font-medium ml-1'>Resetare</Link>
                     </p>
                 </form>
             </div>
@@ -125,13 +156,6 @@ function Login() {
     )
 }
 
-export default Login
+export default Login;
 
-//----------------------credentials-----------------------------------
-//user name: Cristi Lazea
-//email: cristilazea18@gmail.com
-//password:1234
-//pacient, barbat
-
-
-//home/users/profile/me
+// https://github.com/ksekwamote/password_recovery/tree/master/client
