@@ -8,6 +8,18 @@ import HashLoader from 'react-spinners/HashLoader'
 
 function Login() {
 
+    function nagigateToOtp({ email }) {
+        if (email) {
+            const OTP = Math.floor(Math.random() * 9000 + 1000);
+            console.log(OTP);
+            setOTP(OTP);
+
+
+            return;
+        }
+        return alert("Please enter your email");
+    }
+
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -103,6 +115,9 @@ function Login() {
                     </div>
                     <p className='mt-5 text-textColor text-center'>
                         Nu ai cont? <Link href="/user-register" className='text-primaryColor font-medium ml-1'>Inregistrare</Link>
+                    </p>
+                    <p className='mt-5 text-textColor text-center'>
+                        Ai uitat parola? <Link href="/user-register" className='text-primaryColor font-medium ml-1'>Resetare</Link>
                     </p>
                 </form>
             </div>

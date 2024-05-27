@@ -23,6 +23,8 @@ function MyAccount() {
         dispatch({ type: 'LOGOUT' })
     }
 
+
+
     return (
         <section>
             <div className='max-w-[1170px] px-5 mx-auto'>
@@ -49,11 +51,7 @@ function MyAccount() {
                                 <p className='text-textColor text-[15px] leading-6 font-medium'>
                                     {userData.email}
                                 </p>
-                                <p className='text-textColor text-[15px] leading-6 font-medium'>
-                                    Blood Type: <span className='ml-2 text-headingColor text-[22px] leading-8'>
-                                        {userData.bloodType}
-                                    </span>
-                                </p>
+
                             </div>
 
                             <div className='mt-[50px] md:mt-[100px]'>

@@ -53,6 +53,8 @@ function Header() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     });
+    const navRef = useRef();
+
 
     return (
         <header className='header flex items-center sticky__header' ref={headerRef}>
@@ -60,7 +62,14 @@ function Header() {
                 <div className='flex items-center justify-between'>
                     <Image src="/header/logo-removebg-preview.png" alt="Logo" width={90} height={90} />
                     <div className={`navigation ${menuOpen ? 'show__menu' : ''}`} ref={menuRef}>
-                        <div className='menu flex flex-col lg:flex-row items-center gap-[2.7rem]'>
+
+                        <div className='menu flex flex-col lg:flex-row items-center gap-[2.7rem] relative'>
+                            <button
+                                className="nav-btn nav-close-btn absolute top-5 right-5"
+                                onClick={toggleMenu}
+                                style={{ zIndex: 101 }}> {/* Stilul pentru a se asigura că butonul este deasupra meniului */}
+                                <FaTimes style={{ color: 'black' }} />
+                            </button>
                             <motion.div whileHover={{ scale: 1.1 }} onClick={closeMenu}>
                                 <Link href="/" className={` ${pathname === "/" ? "font-bold" : ""} text-textColor text-[16px] leading-7 font-[500] hover:text-primaryColor `}>
                                     Home
@@ -77,6 +86,7 @@ function Header() {
                                 </Link>
                             </motion.div>
                         </div>
+
                     </div>
                     <div className='flex items-center gap-4'>
                         <button className='lg:hidden text-3xl menu-toggle' onClick={toggleMenu}>
