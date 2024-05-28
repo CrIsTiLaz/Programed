@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useContext } from "react";
 import { RecoveryContext } from "../context/RecoveryContext";
 import { useRouter } from 'next/navigation';
+import { BASE_URL } from "../config";
+import Swal from "sweetalert2";
 
 export default function OTPInput() {
     const { email, otp, setPage } = useContext(RecoveryContext);
@@ -17,7 +19,7 @@ export default function OTPInput() {
     function resendOTP() {
         if (disable) return;
 
-        fetch("http://localhost:5000/send_recovery_email", {
+        fetch(`${BASE_URL}/auth/send_recovery_email`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -35,10 +37,23 @@ export default function OTPInput() {
             })
             .then(() => {
                 setDisable(true);
-                alert("A new OTP has successfully been sent to your email.");
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'OTP has been resent to your email.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
                 setTimer(60);
             })
-            .catch(console.log);
+            .catch((err) => {
+                console.error(err);
+                Swal.fire({
+                    title: 'Error!',
+                    text: err.message || 'Failed to resend OTP!',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            });
     }
 
 
@@ -47,9 +62,12 @@ export default function OTPInput() {
             router.push('/reset');
             return;
         }
-        alert(
-            "The code you have entered is not correct, try again or re-send the link"
-        );
+        Swal.fire({
+            title: 'Error!',
+            text: 'The code you have entered is not correct, try again or re-send the link',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
         return;
     }
 

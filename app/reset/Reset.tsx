@@ -1,13 +1,54 @@
 'use client'
-import React from "react";
+import React, { useState } from "react";
 import { useContext } from "react";
 import { RecoveryContext } from "../context/RecoveryContext";
+import { useRouter } from 'next/navigation';
+import { BASE_URL } from "../config";
 
 export default function Reset() {
-    const { setPage } = useContext(RecoveryContext);
-    function changePassword() {
-        setPage("recovered");
+    const { email, setPage } = useContext(RecoveryContext);
+    console.log('email', email)
+    const router = useRouter();
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+    async function changePassword() {
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
+
+        try {
+            const response = await fetch(`${BASE_URL}/reset-password/reset`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const contentType = response.headers.get('content-type');
+            if (!contentType || !contentType.includes('application/json')) {
+                const text = await response.text();
+                console.error('Received non-JSON response:', text);
+                alert('An error occurred while resetting the password');
+                return;
+            }
+
+            const data = await response.json();
+
+            if (response.ok) {
+                router.push('/recoverd');
+                setPage("recovered");
+            } else {
+                alert(data.message || "Failed to reset password");
+            }
+        } catch (error) {
+            console.error("Error resetting password:", error);
+            alert("An error occurred while resetting the password");
+        }
     }
+
 
     return (
         <div>
@@ -17,7 +58,7 @@ export default function Reset() {
                         <h2 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Change Password
                         </h2>
-                        <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5">
+                        <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" onSubmit={e => e.preventDefault()}>
                             <div>
                                 <label
                                     htmlFor="password"
@@ -31,15 +72,17 @@ export default function Reset() {
                                     id="password"
                                     placeholder="••••••••"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    required=""
-                                ></input>
+                                    required
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                />
                             </div>
                             <div>
                                 <label
                                     htmlFor="confirm-password"
                                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                 >
-                                    Confirm password
+                                    Confirm Password
                                 </label>
                                 <input
                                     type="password"
@@ -47,41 +90,18 @@ export default function Reset() {
                                     id="confirm-password"
                                     placeholder="••••••••"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                    required=""
-                                ></input>
+                                    required
+                                    value={confirmPassword}
+                                    onChange={e => setConfirmPassword(e.target.value)}
+                                />
                             </div>
-                            <div className="flex items-start">
-                                <div className="flex items-center h-5">
-                                    <input
-                                        id="newsletter"
-                                        aria-describedby="newsletter"
-                                        type="checkbox"
-                                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                                        required=""
-                                    ></input>
-                                </div>
-                                <div className="ml-3 text-sm">
-                                    <label
-                                        htmlFor="newsletter"
-                                        className="font-light text-gray-500 dark:text-gray-300"
-                                    >
-                                        I accept the{" "}
-                                        <a
-                                            className="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                                            href="#"
-                                        >
-                                            Terms and Conditions
-                                        </a>
-                                    </label>
-                                </div>
-                            </div>
+                            <button
+                                onClick={changePassword}
+                                className=" btn w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                            >
+                                Reset password
+                            </button>
                         </form>
-                        <button
-                            onClick={() => changePassword()}
-                            className="w-full text-white btn hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                        >
-                            Reset passwod
-                        </button>
                     </div>
                 </div>
             </section>
