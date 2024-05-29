@@ -1,27 +1,28 @@
 import { useEffect, useState } from 'react';
-import { token } from '../config';
 import Swal from 'sweetalert2';
 
 function useFetchData(url) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [token, setToken] = useState(null);
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem('token');
+        setToken(storedToken);
+    }, []);
 
     useEffect(() => {
         const fetchData = async () => {
-            // await new Promise(resolve => setTimeout(resolve, 3000))
+            if (!token) return; // Așteaptă până când token-ul este disponibil
+
+            setLoading(true);
             try {
-
-
                 const res = await fetch(url, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
-
-
                 const result = await res.json();
-
-
 
                 if (!res.ok) {
                     throw new Error(result.message);
@@ -33,18 +34,10 @@ function useFetchData(url) {
                 setLoading(false);
                 setError(err.message);
             }
-
-
         };
-        // const fetchDataWithDelay = async (delayInMilliseconds) => {
-        //     // Așteaptă intervalul specificat înainte de a continua
-        //     await new Promise(resolve => setTimeout(resolve, delayInMilliseconds));
 
-        //     // Apelul funcției fetchData
-        //     await fetchData();
-        // };
         fetchData();
-    }, [url]);
+    }, [url, token]);
 
     return {
         data,
@@ -54,7 +47,3 @@ function useFetchData(url) {
 }
 
 export default useFetchData;
-
-export async function wait(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms))
-}
