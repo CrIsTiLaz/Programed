@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const CheckoutSuccess = () => {
     return (
-        <div className="bg-gray-100 h-screen">
+        <div className="bg-gray-100 h-200vh">
             <div className="bg-white p-6 md:mx-auto">
                 <svg
                     viewBox="0 0 24 24"
@@ -15,18 +15,18 @@ const CheckoutSuccess = () => {
                 </svg>
                 <div className="text-center">
                     <h3 className="md:text-2xl text-base text-gray-900 font-semibold text-center">
-                        Payment Done!
+                        Rezervare făcută cu succes!
                     </h3>
-                    <p className="text-gray-600 my-2">
-                        Thank you for completing your secure online payment.
+
+                    <p>
+                        Ați primit un email cu detaliile rezervării. Vă dorim o zi minunată!
                     </p>
-                    <p>Have a great day!</p>
                     <div className="py-10 text-center">
                         <Link
                             href="/home"
                             className="px-12 bg-buttonBgColor text-white font-semibold py-3"
                         >
-                            Go Back To Home
+                            Înapoi la pagina principală
                         </Link>
                     </div>
                 </div>
