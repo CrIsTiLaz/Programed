@@ -6,14 +6,14 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { blue } from '@mui/material/colors';
 import useFetchData from '@/app/hooks/useFetchData';
-import { BASE_URL } from '@/app/config';
+import { BASE_URL, token } from '@/app/config';
 import { addMinutes, format, parseISO } from 'date-fns';
 
 function Time({ selectedDate, onHourSelect, doctorId }) {
     const [selectedHour, setSelectedHour] = useState(null);
     const { data: bookings } = useFetchData(`${BASE_URL}/bookings/bookings`);
     const { data: doctor } = useFetchData(`${BASE_URL}/doctors/${doctorId}`);
-
+    // console.log('token', token)
     // Mapare zile din engleză în română
     const dayMap = {
         Monday: 'Luni',
@@ -74,7 +74,7 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
 
                 const bookingEndDateTime = addMinutes(bookingDateTime, consultationDuration);
 
-                return booking.doctor._id.toString() === doctorId.toString() && hourDateTime >= bookingDateTime && hourDateTime < bookingEndDateTime;
+                return booking?.doctor?._id.toString() === doctorId.toString() && hourDateTime >= bookingDateTime && hourDateTime < bookingEndDateTime;
             });
 
             return !isPatientBooked;
@@ -88,6 +88,9 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
             onHourSelect(hour);
         }
     };
+
+
+
 
     if (!selectedDate) {
         return (

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import { useRouter } from 'next/navigation'; // Presupunând că aceasta este calea corectă pentru useRouter în proiectul tău
+import { useRouter } from 'next/navigation';
 import Example from '@/app/utils/Calendar';
 import Time from './Time';
 import { BASE_URL, token } from '@/app/config';
@@ -10,45 +10,86 @@ import { motion } from "framer-motion";
 export default function SidePanel({ doctorId, ticketPrice }) {
     const router = useRouter();
     const [tab, setTab] = useState('date');
-    const [selectedDate, setSelectedDate] = useState(null); // State pentru data selectată
+    const [selectedDate, setSelectedDate] = useState(null);
     const [selectedHour, setSelectedHour] = useState(null);
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [currentToken, setCurrentToken] = useState('');
 
-    // console.log('doctorId', doctorId)
+    useEffect(() => {
+        // Set current token from config or 'z' if token is empty
+        // console.log('token', token)
+        // if (token === 'null') {
+        //     setCurrentToken('z');
+        //     console.log('ifff')
+        // }
+        // else {
+        //     setCurrentToken(token || 'z');
+        //     console.log('elseeeeee')
+        // }
+        setCurrentToken(token);
+        console.log('Token set in useEffect:', token);
+    }, []);
 
     const handleDateSelect = (date) => {
         setSelectedDate(date);
         setTab('time');
-        // Reset selected hour when a new date is selected
         setSelectedHour(null);
     };
 
     const handleHourSelect = (hour) => {
         setSelectedHour(hour);
-        // console.log(`Data selectată: ${selectedDate}, Ora selectată: ${hour}:00`);
     };
 
-    // Presupunând că bookingHandler este necesar și este folosit în altă parte a componentei tale
     const bookingHandler = async () => {
         try {
-            // Asigură-te că datele sunt în formatul acceptat de backend
-            const formattedDate = selectedDate.toISOString(); // Formatăm data ca string ISO dacă este necesar
-            const bookingData = {
-                appointmentDate: formattedDate, // Data programării în format ISO string
-                appointmentTime: selectedHour, // Ora programării ca string
-                // Adaugă alte câmpuri necesare conform schemei backend-ului
-            };
+            const formattedDate = selectedDate.toISOString();
+            let requestUrl, bookingData;
+            console.log('currentToken in bookingHandler:', currentToken);
+            console.log('currentToken', currentToken)
+            // if (currentToken && currentToken !== 'z') {
+            //     console.log('if')
+            //     requestUrl = `${BASE_URL}/bookings/checkout-session/${doctorId}`;
+            //     bookingData = {
+            //         appointmentDate: formattedDate,
+            //         appointmentTime: selectedHour,
+            //     };
 
-            // Construiește URL-ul și loghează-l pentru verificare
-            const requestUrl = `${BASE_URL}/bookings/checkout-session/${doctorId}`;
-            // console.log(`Making a POST request to: ${requestUrl}`);
 
+            if (currentToken === 'null') {
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailPattern.test(email)) {
+                    throw new Error('Emailul nu este valid.');
+
+                }
+                console.log('else if (token is z)')
+                requestUrl = `${BASE_URL}/bookings/checkout-sessionWithEmail/${doctorId}`;
+                bookingData = {
+                    appointmentDate: formattedDate,
+                    appointmentTime: selectedHour,
+                    email,
+                    name
+                };
+
+
+
+
+
+            } else {
+                console.log('if')
+                requestUrl = `${BASE_URL}/bookings/checkout-session/${doctorId}`;
+                bookingData = {
+                    appointmentDate: formattedDate,
+                    appointmentTime: selectedHour,
+                };
+            }
             const res = await fetch(requestUrl, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${token}`, // Token-ul de autorizare
-                    'Content-Type': 'application/json', // Specificăm că trimitem date în format JSON
+                    Authorization: currentToken ? `Bearer ${currentToken}` : '',
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(bookingData) // Convertim obiectul de date într-un string JSON
+                body: JSON.stringify(bookingData)
             });
 
             const data = await res.json();
@@ -57,7 +98,6 @@ export default function SidePanel({ doctorId, ticketPrice }) {
                 throw new Error(data.message || 'There was an error processing your request.');
             }
 
-            // Dacă rezervarea este confirmată cu succes, afișăm o alertă și redirecționăm utilizatorul
             await Swal.fire({
                 icon: 'success',
                 title: 'Your booking is confirmed!',
@@ -68,7 +108,6 @@ export default function SidePanel({ doctorId, ticketPrice }) {
             });
 
         } catch (error) {
-            // În caz de eroare, afișăm o alertă cu detaliile erorii
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -87,15 +126,14 @@ export default function SidePanel({ doctorId, ticketPrice }) {
                 </span>
             </div>
 
+
             {tab !== 'date' && (
                 <div className="mt-[50px]">
-
-                    <button onClick={() => setTab('date')} className="  py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold">
+                    <button onClick={() => setTab('date')} className="py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold">
                         <motion.div whileHover={{ scale: 1.1 }}>
                             <AiOutlineArrowLeft className="inline-block mr-2" /> Back
                         </motion.div>
                     </button>
-
                 </div>
             )}
 
@@ -103,20 +141,46 @@ export default function SidePanel({ doctorId, ticketPrice }) {
                 {tab === 'date' && <Example onDateSelect={handleDateSelect} doctorId={doctorId} />}
                 {tab === 'time' && <Time onHourSelect={handleHourSelect} selectedDate={selectedDate} doctorId={doctorId} />}
             </div>
-            {/* Afisează butonul doar dacă o dată și o oră sunt selectate */}
+
             {selectedDate && selectedHour && (
-                <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
-                    Fa programare
-                </button>
+                currentToken === 'null' && tab === 'time' ? (
+                    <div>
+                        <div className='mt-[30px] gap-5'>
+                            <input
+                                type="email"
+                                placeholder="Introduceți emailul"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="form__input"
+                            />
+                        </div>
+                        <div className='mt-[15px] gap-5'>
+                            <input
+                                type="text"
+                                placeholder="Introduceți numele complet"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                className="form__input "
+                            />
+                        </div>
+                        {email && name && (
+                            <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
+                                Fa programare
+                            </button>
+
+                        )}
+
+                    </div>
+
+
+                ) : (
+                    tab === 'time' &&
+                    <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
+                        Fa programare
+                    </button>
+                )
             )}
         </div>
-
     );
-
 }
-
-
-
-{/* <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
-                Fa programare
-            </button> */}
+//cristilazea18@gmail.com

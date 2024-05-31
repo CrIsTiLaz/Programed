@@ -70,8 +70,9 @@ function Dashboard() {
                                                 <div className='flex item-center gap-[6px] my-3'>
                                                     <span className='flex items-center gap-[6px] text-headingColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold'>
                                                         <Image src='/clinics/Star.png' alt='' width={20} height={20} />
-                                                        {data.averageRating}
+                                                        {data.averageRating?.toFixed(1)}
                                                     </span>
+
                                                     <span className='text-textColor text-[14px] leading-5 lg:text-[16px] lg:leading-6 font-semibold'>
                                                         ({data.totalRating})
                                                     </span>

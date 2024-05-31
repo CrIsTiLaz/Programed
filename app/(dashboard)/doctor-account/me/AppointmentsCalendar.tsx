@@ -20,6 +20,7 @@ import Time from '@/app/(components)/doctors/Time';
 import { AiOutlineDelete } from 'react-icons/ai';
 import Swal from 'sweetalert2';
 import { BASE_URL, token } from '@/app/config';
+import Image from 'next/image'
 
 const today = new Date();
 
@@ -61,11 +62,37 @@ function AppointmentItem({ appointment }) {
 
     return (
         <li className="flex items-center px-4 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
-            <img
-                src={appointment.patientPhoto}
-                alt={`Photo of ${appointment.patientName}`}
-                className="flex-none w-10 h-10 rounded-full"
-            />
+            {appointment.patientPhoto ? (
+                <Image
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    src={appointment?.patientPhoto}
+                    alt={`Photo of ${appointment.patientName}`}
+                    className="flex-none w-10 h-10 rounded-full"
+                />
+            ) : (
+                <Image
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    src="/header/user64.png"
+                    alt="Default profile photo"
+                    className="flex-none w-10 h-10 rounded-full"
+                />
+            )}
+
+
+            {/* <Image
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            className="w-full h-auto "
+                            src={imgSrc}
+                            alt={`Clinic Slide ${index + 1}`}
+
+                        // className="w-full h-8" // optional
+                        /> */}
             <div className="flex-auto">
                 <p className="text-gray-900">{appointment.patientName}</p>
                 <p className="mt-0.5">
@@ -155,6 +182,7 @@ export default function Example({ appointments, doctorId }) {
     };
     const [selectedHour, setSelectedHour] = useState(null);
     const [patientEmail, setPatientEmail] = useState('');
+    const [patientName, setPatientName] = useState('');
     const [showForm, setShowForm] = useState(false);
 
     const handleHourSelect = (hour) => {
@@ -168,7 +196,8 @@ export default function Example({ appointments, doctorId }) {
             const bookingData = {
                 appointmentDate: formattedDate, // Data programării în format ISO string
                 appointmentTime: selectedHour, // Ora programării ca string
-                email: patientEmail, // Adăugăm email-ul pacientului
+                email: patientEmail, // Adăugăm email-ul pacientului'
+                name: patientName,
                 // Adaugă alte câmpuri necesare conform schemei backend-ului
             };
             console.log('bookingData', bookingData)
@@ -306,13 +335,23 @@ export default function Example({ appointments, doctorId }) {
                             <div className='mb-5'>
                                 <div className='mb-[30px] gap-5'>
                                     <div>
-                                        <p className='form__label'>Email Pacient*</p>
+                                        {/* <p className='form__label'>Email Pacient*</p> */}
                                         <input
+                                            placeholder="Email Pacient"
                                             name='email'
                                             value={patientEmail}
-                                            className='form__input py-3.5'
+                                            className='form__input py-3.5 mt-[15px]'
                                             onChange={e => setPatientEmail(e.target.value)}
                                             type='email'
+                                        />
+
+                                        <input
+                                            placeholder="Nume Pacient"
+                                            name='name'
+                                            value={patientName}
+                                            className='form__input py-3.5 mt-[15px]'
+                                            onChange={e => setPatientName(e.target.value)}
+                                            type='text'
                                         />
                                     </div>
 

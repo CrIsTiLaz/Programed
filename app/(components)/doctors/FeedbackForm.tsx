@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { AiFillStar } from 'react-icons/ai'
 import HashLoader from 'react-spinners/HashLoader';
 import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 
 function FeedbackForm() {
 
@@ -11,6 +12,7 @@ function FeedbackForm() {
     const [hover, setHover] = useState(0);
     const [reviewText, setReviewText] = useState("");
     const [loading, setLoading] = useState(false)
+    const router = useRouter();
 
     const params = useParams()
     const id = params.doctorId
@@ -29,7 +31,8 @@ function FeedbackForm() {
                     text: 'Rating and reviews fields are required!',
                 })
             }
-
+            const requestBody = { rating, reviewText };
+            console.log("Request Body:", requestBody);
             const res = await fetch(`${BASE_URL}/doctors/${id}/reviews`, {
                 method: 'post',
                 headers: {
@@ -51,6 +54,7 @@ function FeedbackForm() {
                 'Your review has been submitted successfully!',
                 'success'
             )
+            router.push('/');
 
         } catch (err) {
             setLoading(false)
