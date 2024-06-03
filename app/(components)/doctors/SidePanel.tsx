@@ -15,20 +15,11 @@ export default function SidePanel({ doctorId, ticketPrice }) {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [currentToken, setCurrentToken] = useState('');
+    const [token, setToken] = useState(null);
 
     useEffect(() => {
-        // Set current token from config or 'z' if token is empty
-        // console.log('token', token)
-        // if (token === 'null') {
-        //     setCurrentToken('z');
-        //     console.log('ifff')
-        // }
-        // else {
-        //     setCurrentToken(token || 'z');
-        //     console.log('elseeeeee')
-        // }
-        setCurrentToken(token);
-        console.log('Token set in useEffect:', token);
+        const currentToken = localStorage.getItem('token');
+        setCurrentToken(currentToken);
     }, []);
 
     const handleDateSelect = (date) => {
@@ -43,26 +34,19 @@ export default function SidePanel({ doctorId, ticketPrice }) {
 
     const bookingHandler = async () => {
         try {
+            if (!currentToken) {
+                throw new Error('Token-ul nu este setat. Vă rugăm să reîncărcați pagina.');
+            }
+
             const formattedDate = selectedDate.toISOString();
             let requestUrl, bookingData;
             console.log('currentToken in bookingHandler:', currentToken);
-            console.log('currentToken', currentToken)
-            // if (currentToken && currentToken !== 'z') {
-            //     console.log('if')
-            //     requestUrl = `${BASE_URL}/bookings/checkout-session/${doctorId}`;
-            //     bookingData = {
-            //         appointmentDate: formattedDate,
-            //         appointmentTime: selectedHour,
-            //     };
-
 
             if (currentToken === 'null') {
                 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!email || !emailPattern.test(email)) {
                     throw new Error('Emailul nu este valid.');
-
                 }
-                console.log('else if (token is z)')
                 requestUrl = `${BASE_URL}/bookings/checkout-sessionWithEmail/${doctorId}`;
                 bookingData = {
                     appointmentDate: formattedDate,
@@ -70,19 +54,14 @@ export default function SidePanel({ doctorId, ticketPrice }) {
                     email,
                     name
                 };
-
-
-
-
-
             } else {
-                console.log('if')
                 requestUrl = `${BASE_URL}/bookings/checkout-session/${doctorId}`;
                 bookingData = {
                     appointmentDate: formattedDate,
                     appointmentTime: selectedHour,
                 };
             }
+
             const res = await fetch(requestUrl, {
                 method: 'POST',
                 headers: {
@@ -116,7 +95,6 @@ export default function SidePanel({ doctorId, ticketPrice }) {
         }
     };
 
-
     return (
         <div className='shadow-panelShadow p-3 lg:p-5 rounded-md'>
             <div className="flex items-center justify-between">
@@ -125,7 +103,6 @@ export default function SidePanel({ doctorId, ticketPrice }) {
                     {ticketPrice} lei
                 </span>
             </div>
-
 
             {tab !== 'date' && (
                 <div className="mt-[50px]">
@@ -167,12 +144,8 @@ export default function SidePanel({ doctorId, ticketPrice }) {
                             <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
                                 Fa programare
                             </button>
-
                         )}
-
                     </div>
-
-
                 ) : (
                     tab === 'time' &&
                     <button onClick={bookingHandler} className='btn px-2 w-full rounded-md'>
@@ -183,4 +156,3 @@ export default function SidePanel({ doctorId, ticketPrice }) {
         </div>
     );
 }
-//cristilazea18@gmail.com
