@@ -12,6 +12,7 @@ function Profile({ clinicData }) {
         email: clinicData?.email || '',
         phone: clinicData?.phone || '',
         address: clinicData?.address || '',
+        city: clinicData?.city || 'Timisoara', // Inițializat cu Timisoara
         specialization: clinicData?.specialization || '',
         description: clinicData?.description || '',
         services: clinicData?.services || [],
@@ -125,6 +126,12 @@ function Profile({ clinicData }) {
                 <div className="mb-5">
                     <label className="form__label">Address</label>
                     <input type="text" name="address" value={formData.address} onChange={handleInputChange} className="form__input" />
+                </div>
+                <div className="mb-5">
+                    <label className="form__label">City</label>
+                    <select name="city" value={formData.city} onChange={handleInputChange} className="form__input">
+                        <option value="Timisoara">Timișoara</option>
+                    </select>
                 </div>
                 <div className="mb-5">
                     <label className="form__label">Specialization</label>
