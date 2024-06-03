@@ -32,6 +32,19 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
     const availableHours = (() => {
         if (!bookings || !doctor || !selectedDate) return [];
 
+        // Verifică dacă data selectată se încadrează într-o perioadă de concediu
+        const isOnLeave = doctor.leavePeriods.some(period => {
+            const startLeave = parseISO(period.start);
+            console.log('startLeave', startLeave)
+
+            const endLeave = parseISO(period.end);
+            return selectedDate >= startLeave && selectedDate <= endLeave;
+        });
+
+        if (isOnLeave) {
+            return []; // Nu sunt ore disponibile în zilele de concediu
+        }
+
         const dayOfWeekEng = format(selectedDate, 'EEEE');
         const dayOfWeek = dayMap[dayOfWeekEng];
         const workSchedule = doctor?.workSchedule?.find(schedule => schedule.dayOfWeek === dayOfWeek);
@@ -80,6 +93,7 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
             return !isPatientBooked;
         });
     })();
+
 
 
     const handleHourClick = (hour) => {

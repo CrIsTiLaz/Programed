@@ -9,7 +9,7 @@ import Time from '@/app/(components)/clinics/Time';
 import { format } from 'date-fns';
 
 function Profile({ doctorData }) {
-
+    console.log('doctorData', doctorData)
     const [workSchedule, setWorkSchedule] = useState(doctorData.workSchedule || [
         { dayOfWeek: 'Luni', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
         { dayOfWeek: 'Marti', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
@@ -21,7 +21,8 @@ function Profile({ doctorData }) {
         // Repetă pentru fiecare zi a săptămânii
     ]);
     const [services, setServices] = useState(doctorData.services || []);
-
+    const [leavePeriods, setLeavePeriods] = useState(doctorData.leavePeriods || []);
+    console.log('doctorData.leavePeriods', doctorData.leavePeriods)
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -38,6 +39,7 @@ function Profile({ doctorData }) {
         about: '',
         photo: null,
         workSchedule: doctorData.workSchedule || [],
+        // Adăugat
         // photo: '/clinics/doctor-img01.png'
     })
     const [selectedHour, setSelectedHour] = useState(null);
@@ -59,9 +61,10 @@ function Profile({ doctorData }) {
             timeSlots: doctorData?.timeSlots,
             about: doctorData?.about,
             photo: doctorData?.photo,
+        });
+        setLeavePeriods(doctorData?.leavePeriods || []); // Populăm leavePeriods
+    }, [doctorData]);
 
-        })
-    }, [doctorData])
     useEffect(() => {
         console.log(generalConsultationDuration);
     }, [generalConsultationDuration]);
@@ -110,6 +113,7 @@ function Profile({ doctorData }) {
             services,
             workSchedule: updatedWorkSchedule,
             medicalGrade: formData.medicalGrade, // Adaugă acest rând
+            leavePeriods,
         };
         console.log("Payload being sent:", JSON.stringify(payload, null, 2));
 
@@ -275,6 +279,21 @@ function Profile({ doctorData }) {
     const deleteService = (index) => {
         const newServices = services.filter((_, i) => i !== index);
         setServices(newServices);
+    };
+
+    const addLeavePeriod = e => {
+        e.preventDefault();
+        setLeavePeriods([...leavePeriods, { start: '', end: '' }]);
+    };
+
+    const handleLeavePeriodChange = (index, field, value) => {
+        const newLeavePeriods = [...leavePeriods];
+        newLeavePeriods[index][field] = value;
+        setLeavePeriods(newLeavePeriods);
+    };
+
+    const deleteLeavePeriod = index => {
+        setLeavePeriods(leavePeriods.filter((_, i) => i !== index));
     };
 
 
@@ -689,6 +708,50 @@ function Profile({ doctorData }) {
                         Add Service
                     </button>
                 </div>
+                <div className='mb-5'>
+                    <p className='form__label'>Concedii*</p>
+                    {leavePeriods.map((period, index) => (
+                        <div key={index} className='grid grid-cols-2 gap-5 mb-[30px]'>
+                            <div>
+                                <p className='form__label'>Data început</p>
+                                <input
+                                    type="date"
+                                    name={`start-${index}`}
+                                    value={period.start.split('T')[0]} // Transformă în format yyyy-MM-dd
+                                    className='form__input py-3.5 w-full'
+                                    onChange={(e) => handleLeavePeriodChange(index, 'start', e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <p className='form__label'>Data sfârșit</p>
+                                <input
+                                    type="date"
+                                    name={`end-${index}`}
+                                    value={period.end.split('T')[0]} // Transformă în format yyyy-MM-dd
+                                    className='form__input py-3.5 w-full'
+                                    onChange={(e) => handleLeavePeriodChange(index, 'end', e.target.value)}
+                                />
+                            </div>
+                            <div className='flex items-center'>
+                                <button
+                                    type="button"
+                                    onClick={() => deleteLeavePeriod(index)}
+                                    className='bg-red-600 p-2 rounded-full text-white text-[18px] cursor-pointer flex-shrink-0'
+                                    aria-label={`Delete leave period ${index + 1}`}
+                                >
+                                    <AiOutlineDelete />
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                    <button
+                        onClick={addLeavePeriod}
+                        className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>
+                        Adaugă Concediu
+                    </button>
+                </div>
+
+
 
                 <div className="mb-5">
                     <p className='form__label'>About*</p>
