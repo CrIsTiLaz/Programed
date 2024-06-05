@@ -18,7 +18,7 @@ function Signup() {
         email: '',
         password: '',
         photo: '',
-        gender: '',
+        gender: 'other', // Default value for gender
         role: 'patient', // Default role set to 'patient'
     });
 
@@ -80,15 +80,15 @@ function Signup() {
         <section className='px-5 xl:px-0'>
             <div className='max-w-[1170px] mx-auto'>
                 <div className="grid grid-cols-1 lg:grid-cols-2">
-                    <div className='hidden lg:block bg-primaryColor rounded-l-lg'>
-                        <figure className='rounded-l-lg'>
-                            <Image src='/signup/Add User.gif' width={500} height={500} className='w-full rounded-l-lg' />
+                    <div className='hidden lg:block rounded-l-lg bg-primaryColor'>
+                        <figure className='w-full h-full'>
+                            <Image src='/signup/Add User.gif' width={400} height={400} className='w-full h-full object-cover rounded-l-lg' />
                         </figure>
                     </div>
 
                     <div className="rounded-l-lg lg:pl-16 py-10">
                         <h3 className='text-headingColor text-[22px] leading-9 font-bold mb-10'>
-                            Creeaza un <span className='text-primaryColor'>cont</span>
+                            Creează un <span className='text-primaryColor'>cont</span>
                         </h3>
 
                         <form onSubmit={submitHandler}>
@@ -100,7 +100,7 @@ function Signup() {
                                     value={formData.name}
                                     onChange={handleInputChange}
                                     className='w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor 
-                        text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
+                        text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer'
                                     required
                                 />
                             </div>
@@ -112,7 +112,7 @@ function Signup() {
                                     value={formData.email}
                                     onChange={handleInputChange}
                                     className='w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor 
-                        text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
+                        text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer'
                                     required
                                 />
                             </div>
@@ -124,21 +124,18 @@ function Signup() {
                                     value={formData.password}
                                     onChange={handleInputChange}
                                     className='w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor 
-                        text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
+                        text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer'
                                     required
                                 />
                             </div>
                             <div className="mb-5 flex items-center justify-between">
                                 <label className='text-headingColor font-bold text-[16px] leading-7'>
-                                    Esti:
+                                    Ești:
                                     <select name='role'
                                         value={formData.role}
                                         onChange={handleInputChange}
                                         className='text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none'>
                                         <option value="patient">Pacient</option>
-                                        {/* <option value="doctor">Doctor</option> */}
-                                        <option value="cabinet">Cabinet</option>
-                                        {/* <option value="superAdmin">Admin</option> */}
                                     </select>
                                 </label>
                                 <label className='text-headingColor font-bold text-[16px] leading-7'>
@@ -147,7 +144,7 @@ function Signup() {
                                         value={formData.gender}
                                         onChange={handleInputChange}
                                         className='text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none'>
-                                        <option value="">Nespecificat</option>
+                                        <option value="other">Nespecificat</option>
                                         <option value="female">Femeie</option>
                                         <option value="male">Bărbat</option>
                                     </select>
@@ -182,6 +179,12 @@ function Signup() {
                             <p className='mt-5 text-textColor text-center'>
                                 Ai deja cont? <Link href="/login" className='text-primaryColor font-medium ml-1'>Autentificare</Link>
                             </p>
+                            <p className='mt-5 text-textColor text-center'>
+                                Ești un cabinet medical și dorești să te înregistrezi? <br />
+                                <Link href="/clinic-register" className='text-primaryColor font-medium ml-1'>Înregistrează-te aici</Link>
+                            </p>
+
+
                         </form>
                     </div>
                 </div>

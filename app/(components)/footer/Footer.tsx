@@ -22,39 +22,32 @@ const socialLinks = [
 
 const quickLinks01 = [
     {
-        path: "/home",
-        display: "Home"
-    },
-    {
         path: "/",
-        display: "About Us"
+        display: "Acasă"
     },
     {
-        path: "/services",
-        display: "Services"
+        path: "/clinics",
+        display: "Cabinete"
     },
     {
-        path: "/",
-        display: "Blog"
+        path: "/contact",
+        display: "Contact"
     },
+
 ]
 
 const quickLinks02 = [
     {
-        path: "/find-a-doctor",
-        display: "Find a doctor"
+        path: "/user-register",
+        display: "Creez cont"
     },
     {
-        path: "/",
-        display: "Request an appointment"
+        path: "/clinic-register",
+        display: "Creez cont pentru clinica"
     },
     {
-        path: "/",
-        display: "Find a location"
-    },
-    {
-        path: "/",
-        display: "Get a opinion"
+        path: "/login",
+        display: "Ma conectez"
     },
 ]
 

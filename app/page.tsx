@@ -78,7 +78,7 @@ export default function Home() {
       </section>
 
       {/* <button onClick={() => signOut()}>Sign Out</button> */}
-      <div style={{ paddingLeft: '24px', backgroundColor: "#FAFAFA" }}>
+      {/* <div style={{ paddingLeft: '24px', backgroundColor: "#FAFAFA" }}>
         <div id="mapSection" className="grid grid-cols-1 md:grid-cols-8 " style={{ height: '850px' }}>
           <div className="p-3">
             <CategoryList onCategoryChange={(value) => setCategory(value)} />
@@ -102,7 +102,7 @@ export default function Home() {
 
         </div>
 
-      </div>
+      </div> */}
 
       {/* <Ben /> */}
       {/* </PageWrapper> */}

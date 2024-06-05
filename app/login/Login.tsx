@@ -20,11 +20,9 @@ function Login() {
     function navigateToOtp() {
         if (formData.email) {
             const OTP = Math.floor(Math.random() * 9000 + 1000);
-            console.log("Generated OTP:", OTP);
             setOTP(OTP);
             setEmail(formData.email); // Set email in context
 
-            console.log('formData.email', formData.email);
 
             fetch(`${BASE_URL}/auth/send_recovery_email`, {
                 method: "POST",
@@ -37,25 +35,21 @@ function Login() {
                 })
             })
                 .then((response) => {
-                    console.log('Response received:', response);
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
                     return response.json();
                 })
                 .then((data) => {
-                    console.log('Data received:', data);
-                    console.log('second');
+
                     router.push('/recover');
                 })
                 .catch((error) => {
-                    console.error("Error occurred:", error);
                     alert("Failed to send recovery email. Please try again.");
                 });
 
             return;
         }
-        console.log("Email not provided");
         return alert("Please enter your email");
     }
 
@@ -112,8 +106,9 @@ function Login() {
         <section className='px-5 lg:px-0'>
             <div className='w-full max-w-[570px] mx-auto rounded-lg shadow-md md:p-10'>
                 <h3 className='text-headingColor text-[22px] leading-9 font-bold mb-10'>
-                    Hello <span className='text-primaryColor'>Welcome</span>Back
+                    Salut <span className='text-primaryColor'>Bine ai revenit!</span>
                 </h3>
+
 
                 <form className='py-4 md:py-0' onSubmit={submitHandler}>
                     <div className='mb-5'>

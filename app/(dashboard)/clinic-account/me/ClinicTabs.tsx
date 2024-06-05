@@ -33,9 +33,7 @@ function ClinicTabs({ tab, setTab }) {
                     Overview
                 </button>
 
-                <button onClick={() => setTab('appointments')} className={`${tab === 'appointments' ? 'bg-indigo-100 text-primaryColor' : "bg-transparent text-headingColor"} w-full btn mt-0 rounded-md`}>
-                    Appointments
-                </button>
+
 
                 <button onClick={() => setTab('settings')} className={`${tab === 'settings' ? 'bg-indigo-100 text-primaryColor' : "bg-transparent text-headingColor"} w-full btn mt-0 rounded-md`}>
                     Profile

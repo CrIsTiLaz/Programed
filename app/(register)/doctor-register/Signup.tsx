@@ -25,15 +25,17 @@ function Signup() {
     const router = useRouter();
 
     // Obține lista de clinici
-    const { data: clinics, loading: clinicsLoading, error: clinicsError } = useFetchData(`${BASE_URL}/clinics`);
+    const { data: clinics, loading: clinicsLoading, error: clinicsError } = useFetchData(`${BASE_URL}/clinics/get-clinic/get-clinic-without-pagination`);
 
     useEffect(() => {
-        // Setează prima clinică din listă ca implicită după ce clinici sunt încărcate
-        if (clinics && clinics.length > 0 && !formData.clinicId) {
-            setFormData(prevFormData => ({
-                ...prevFormData,
-                clinicId: clinics[0]._id
-            }));
+        if (clinics && clinics.length > 0) {
+            console.log(clinics); // Afișează clinicile disponibile în consolă
+            if (!formData.clinicId) {
+                setFormData(prevFormData => ({
+                    ...prevFormData,
+                    clinicId: clinics[0]._id
+                }));
+            }
         }
     }, [clinics]);
 

@@ -50,8 +50,9 @@ function ClinicDashboard() {
                                         Info
                                     </span>
 
-                                    <div className='ml-3 text-sm fonst-medium'>
-                                        To get approval please complete your profile.We ll review manually and approve within 3 days                                    </div>
+                                    <div className='ml-3 text-sm font-medium'>
+                                        Pentru a obține aprobarea, vă rugăm să completați profilul dvs. Vă vom contacta si vom aproba în termen de 2 zile.
+                                    </div>
 
                                 </div>
                             )}

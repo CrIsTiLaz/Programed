@@ -43,10 +43,10 @@ function HowItWorks() {
             <section ref={containerRef}> {/* Atașați ref la secțiune */}
                 <div className='container'>
                     <div className='lg:w-[470px] mx-auto'>
-                        <h2 className='heading text-center'>Providing best medical services</h2>
-                        <p className='text__para text-center'>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt justo eget nunc dignissim lobortis.
-                        </p>
+                        <h2 className='heading text-center'>Servicii medicale de top pentru tine</h2>
+                        {/* <p className='text__para text-center whitespace-nowrap'>
+                            Găsește rapid cele mai bune opțiuni pentru sănătatea ta
+                        </p> */}
                     </div>
 
                     <motion.div variants={variants} initial='hidden' animate={isVisible ? "show" : "hidden"} className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px] mt-[30px] lg:mt-[55px]'>
@@ -65,10 +65,9 @@ function HowItWorks() {
                                 <h2 className='text-[26px] leading-9 text-headingColor font-[700] text-center'>
                                     Gaseste un cabinet
                                 </h2>
-                                <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Sed tincidunt justo eget nunc dignissim lobortis.</p>
+                                <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'> Explorează rețeaua noastră vastă de cabinete medicale și clinici, accesibilă doar prin câteva clicuri</p>
                                 <motion.div whileHover={{ scale: 1.1 }}>
-                                    <Link href="/schimbat" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
+                                    <Link href="/clinics" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
 
                                         <BiRightArrowAlt className='group-hover:text-white w-6 h-5' />
 
@@ -82,7 +81,7 @@ function HowItWorks() {
                             <div className='flex items-center justify-center'>
 
                                 <Image
-                                    src="/howItWorks/Paper map-amico.svg"
+                                    src="/howItWorks/Account-amico.svg"
                                     alt=""
                                     width={400}
                                     height={400}
@@ -93,12 +92,11 @@ function HowItWorks() {
 
                             <div className='mt-[30px]'>
                                 <h2 className='text-[26px] leading-9 text-headingColor font-[700] text-center'>
-                                    Exploreaza cabinetele din zona
+                                    Creează cont
                                 </h2>
-                                <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Sed tincidunt justo eget nunc dignissim lobortis.</p>
+                                <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'> Alătură-te comunității noastre și beneficiezi de acces rapid la servicii medicale de top</p>
                                 <motion.div whileHover={{ scale: 1.1 }}>
-                                    <Link href="/schimbat" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
+                                    <Link href="/user-register" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
                                         <BiRightArrowAlt className='group-hover:text-white w-6 h-5' />
                                     </Link>
                                 </motion.div>
@@ -110,23 +108,23 @@ function HowItWorks() {
                             <div className='flex items-center justify-center'>
 
                                 <Image
-                                    src="/howItWorks/Calendar-bro.svg"
+                                    src="/howItWorks/Medical prescription-bro.svg"
                                     alt=""
                                     width={400}
                                     height={400}
 
                                 />
-
                             </div>
 
                             <div className='mt-[30px]'>
                                 <h2 className='text-[26px] leading-9 text-headingColor font-[700] text-center'>
-                                    Fa o programare
+                                    Înregistrează-ți cabinetul
                                 </h2>
-                                <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                    Sed tincidunt justo eget nunc dignissim lobortis.</p>
+                                <p className='text-[16px] leading-7 text-textColor font-[400] mt-4 text-center'> Înregistrează-ți cabinetul pe platforma noastră pentru a beneficia de un sistem de programări modern.
+
+                                </p>
                                 <motion.div whileHover={{ scale: 1.1 }}>
-                                    <Link href="/schimbat" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
+                                    <Link href="/clinic-register" className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto flex items-center justify-center group hover:bg-primaryColor hover:border-none">
                                         <BiRightArrowAlt className='group-hover:text-white w-6 h-5' />
                                     </Link>
                                 </motion.div>

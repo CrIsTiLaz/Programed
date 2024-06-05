@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import { motion, AnimatePresence } from "framer-motion"
 import PageWrapper from '@/app/pageWrapper';
+import Link from 'next/link';
 
 function Hero() {
 
@@ -32,7 +33,7 @@ function Hero() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setStartAnimation(true);
-        }, 100); // Puteți ajusta această întârziere dacă este necesar
+        }, 90); // Puteți ajusta această întârziere dacă este necesar
 
         return () => clearTimeout(timer);
     }, []);
@@ -43,17 +44,19 @@ function Hero() {
                 <section className='hero__section pt-[60px] 2xl:h-[800px]'>
                     <div className='container'>
                         <div className='flex flex-col lg:flex-row gap-[90px] items-center justify-between'>
-
                             <div>
                                 <div className='lg:w-[570px] '>
-                                    <h1 className='text-[36px] leading-[46px] text-headingColor font-[800] md:text-[60px] md:leading-[70px]'>
-                                        Ajutăm pacienții să trăiască o viață lungă și sănătoasă
+                                    <h1 className='text-[36px] leading-[46px] text-headingColor font-[800] md:text-[50px] md:leading-[60px]'>
+                                        Sănătatea ta, <br /> prioritatea noastră!
                                     </h1>
-                                    <p className='text__para'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt justo eget nunc dignissim lobortis. Nulla facilisi. Mauris consectetur nisl sit amet arcu condimentum, id tincidunt urna facilisis. Suspendisse potenti. Fusce in consequat justo. Ut vel neque sed lectus condimentum finibus vel nec purus. .</p>
+                                    <p className='text__para'>Facem legătura între tine și cei mai buni medici. Verifică recenziile, află prețurile și rezervă-ți consultația în câteva minute. Simplu, rapid și eficient – pentru o viață sănătoasă și fără stres.</p>
                                     {/* <motion.div whileHover={{ scale: 1.1 }}> */}
-                                    <button className='btn margin-left: auto;'>
-                                        Solicita o programare
-                                    </button>
+                                    <Link href="/clinics" >
+
+                                        <button className='btn margin-left: auto lg:mt-[80px]'>
+                                            Solicita o programare
+                                        </button>
+                                    </Link>
                                     {/* </motion.div> */}
                                 </div>
                                 <div className='mt-[30px] lg:mt-[70px] flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-[100px] '>
@@ -66,14 +69,14 @@ function Hero() {
                                     <p>Ani de experienta</p>
                                 </div> */}
 
-                                    <div>
+                                    {/* <div>
                                         <h2 className='text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700] text-headingColor'>
                                             15+
                                         </h2>
                                         <span className='w-[100px] h-2 bg-purpleColor rounded-full block mt-[-14px]' />
 
                                         <p>Cabinete</p>
-                                    </div>
+                                    </div> */}
 
                                     <div>
                                         <h2 className='text-[36px] leading-[56px] lg:text-[44px] lg:leading-[54px] font-[700] text-headingColor'>

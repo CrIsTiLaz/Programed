@@ -12,13 +12,10 @@ import { BASE_URL } from '@/app/config';
 import { FaBars, FaTimes } from "react-icons/fa";
 
 function Header() {
-    const { data: session } = useSession();
     const headerRef = useRef(null);
     const menuRef = useRef(null); // corectat aici
     const router = useRouter();
     const pathname = usePathname();
-    const { data: userData } = useFetchData(`${BASE_URL}/users/profile/me`);
-
     const { user, role, token } = useContext(authContext);
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -60,7 +57,10 @@ function Header() {
         <header className='header flex items-center sticky__header' ref={headerRef}>
             <div className='container'>
                 <div className='flex items-center justify-between'>
-                    <Image src="/header/logo-removebg-preview.png" alt="Logo" width={90} height={90} />
+                    <Link href="/" >
+                        <Image src="/header/logo-removebg-preview.png" alt="Logo" width={90} height={90} />
+                    </Link>
+
                     <div className={`navigation ${menuOpen ? 'show__menu' : ''}`} ref={menuRef}>
 
                         <div className='menu flex flex-col lg:flex-row items-center gap-[2.7rem] relative'>
