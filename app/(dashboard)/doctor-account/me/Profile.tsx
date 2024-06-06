@@ -8,6 +8,42 @@ import Swal from 'sweetalert2';
 import Time from '@/app/(components)/clinics/Time';
 import { format } from 'date-fns';
 
+const specializations = [
+    "Anestezie și Terapie Intensivă",
+    "Cardiologie",
+    "Chirurgie Cardiovasculară",
+    "Chirurgie Generală",
+    "Chirurgie Pediatrică",
+    "Chirurgie Plastică și Reconstructivă",
+    "Chirurgie Toracică",
+    "Chirurgie Vasculară",
+    "Dermatologie",
+    "Endocrinologie",
+    "Gastroenterologie",
+    "Ginecologie și Obstetrică",
+    "Hematologie",
+    "Medicină de Familie",
+    "Medicină Generală",
+    "Medicină Internă",
+    "Medicină Nucleară",
+    "Medicină de Laborator",
+    "Nefrologie",
+    "Neurologie",
+    "Oftalmologie",
+    "Oncologie",
+    "Ortopedie și Traumatologie",
+    "Otorinolaringologie (ORL)",
+    "Patologie",
+    "Pediatrie",
+    "Pneumologie",
+    "Psihiatrie",
+    "Radiologie și Imagistică Medicală",
+    "Reumatologie",
+    "Stomatologie",
+    "Urologie"
+];
+
+
 function Profile({ doctorData }) {
     console.log('doctorData', doctorData)
     const [workSchedule, setWorkSchedule] = useState(doctorData.workSchedule || [
@@ -27,15 +63,12 @@ function Profile({ doctorData }) {
         name: '',
         email: '',
         password: '',
-        phone: '',
         bio: '',
         gender: '',
         specialization: '',
         medicalGrade: '',
         ticketPrice: 0,
         qualifications: [],
-        experiences: [],
-        timeSlots: [],
         about: '',
         photo: null,
         workSchedule: doctorData.workSchedule || [],
@@ -44,21 +77,18 @@ function Profile({ doctorData }) {
     })
     const [selectedHour, setSelectedHour] = useState(null);
     const currentDate = format(new Date(), 'yyyy-MM-dd');
-    const [generalConsultationDuration, setGeneralConsultationDuration] = useState(30);
+    const [generalConsultationDuration, setGeneralConsultationDuration] = useState(doctorData?.workSchedule?.[0]?.consultationDuration || 30);
     // console.log('doctorData', doctorData)
     useEffect(() => {
         setFormData({
             name: doctorData?.name,
             email: doctorData?.email,
-            phone: doctorData?.phone,
             bio: doctorData?.bio,
             gender: doctorData?.gender,
             specialization: doctorData?.specialization,
             medicalGrade: doctorData?.medicalGrade,
             ticketPrice: doctorData?.ticketPrice,
-            qualifications: doctorData?.qualification || [],
-            experiences: doctorData?.experiences,
-            timeSlots: doctorData?.timeSlots,
+            qualifications: doctorData?.qualifications || [],
             about: doctorData?.about,
             photo: doctorData?.photo,
         });
@@ -135,7 +165,7 @@ function Profile({ doctorData }) {
             //sweet alert de succes
             Swal.fire({
                 title: 'Success!',
-                text: 'Your profile has been updated successfully.',
+                text: 'Profilul tău a fost actualizat cu succes',
                 icon: 'success',
                 confirmButtonText: 'Ok',
             });
@@ -154,9 +184,15 @@ function Profile({ doctorData }) {
 
 
     //reusable function for adding item
+    //reusable function for adding item
     const addItem = (key: string, item: { startingDate?: string; endingDate?: string; degree?: string; university?: string; position?: string; hospital?: string; day?: string; startingTime?: string; endingTime?: string; }) => {
-        setFormData(prevFormData => ({ ...prevFormData, [key]: [...prevFormData[key], item] }))
-    }
+        setFormData(prevFormData => {
+            // Ensure that prevFormData[key] is an array
+            const updatedKeyArray = Array.isArray(prevFormData[key]) ? prevFormData[key] : [];
+            return { ...prevFormData, [key]: [...updatedKeyArray, item] };
+        });
+    };
+
 
     // reusable input change function
     const handleReusableInputChangeFunc = (key: string, index: any, event: { target: { name: any; value: any; }; }) => {
@@ -196,50 +232,22 @@ function Profile({ doctorData }) {
         deleteItem('qualifications', index)
     }
 
-    const addExperience = (e: { preventDefault: () => void; }) => {
-        e.preventDefault();
-
-        addItem('experiences', {
-            startingDate: '', endingDate: '', position: 'Senior Surgeon', hospital: 'Judeten'
-        })
-    }
-
-    const handleExperienceChange = (event: { target: { name: any; value: any; }; }, index: any) => {
-        handleReusableInputChangeFunc('experiences', index, event)
-    }
-
-    const deleteExperience = (e: { preventDefault: () => void; }, index: any) => {
-        e.preventDefault()
-        deleteItem('experiences', index)
-    }
-
-    const addTimeSlot = (e) => {
-        e.preventDefault();
-
-        // Inițializează 'day' cu ziua curentă
-        const newSlot = {
-            day: currentDate, // Folosește variabila definită anterior
-            time: '' // Aici presupunem că 'time' va fi setat mai târziu de utilizator
-        };
-
-        addItem('timeSlots', newSlot);
-    };
 
 
 
-    const handleTimeSlotChange = (event: { target: { name: any; value: any; }; }, index: any) => {
-        handleReusableInputChangeFunc('timeSlots', index, event)
-    }
+
+
+
+
+
+
 
     const handleHourSelect = (hour) => {
         setSelectedHour(hour);
         console.log(`Data selectată: ${selectedDate}, Ora selectată: ${hour}:00`);
     };
 
-    const deleteTimeSlot = (e: { preventDefault: () => void; }, index: any) => {
-        e.preventDefault()
-        deleteItem('timeSlots', index)
-    }
+
     // console.log('formData.photo', formData.photo)
 
     const handleWorkScheduleChange = (dayOfWeek, field, value) => {
@@ -307,12 +315,12 @@ function Profile({ doctorData }) {
     return (
         <div>
             <h2 className='text-headingColor font-bold text-[24px] leading-9 mb-10'>
-                Profile Information
+                Informații profil
             </h2>
 
             <form>
                 <div className="mb-5">
-                    <p className="form__label">Name*</p>
+                    <p className="form__label">Nume complet</p>
                     <input
                         type='text'
                         name='name'
@@ -324,7 +332,7 @@ function Profile({ doctorData }) {
                 </div>
 
                 <div className="mb-5">
-                    <p className="form__label">Email*</p>
+                    <p className="form__label">Email</p>
                     <input
                         type='email'
                         name='email'
@@ -339,7 +347,7 @@ function Profile({ doctorData }) {
                 </div>
 
                 <div className='mb-5'>
-                    <p className="form__label">Parola*</p>
+                    <p className="form__label">Parolă</p>
                     <input
                         type='password'
                         placeholder='Parola'
@@ -350,20 +358,10 @@ function Profile({ doctorData }) {
                     />
                 </div>
 
-                <div className="mb-5">
-                    <p className="form__label">Phone*</p>
-                    <input
-                        type='number'
-                        name='phone'
-                        value={formData.phone}
-                        onChange={handleInputChange}
-                        placeholder='Phone number'
-                        className='form__input'
-                    />
-                </div>
+
 
                 <div className="mb-5">
-                    <p className="form__label">Bio*</p>
+                    <p className="form__label">Bio</p>
                     <input
                         type='text'
                         name='bio'
@@ -379,14 +377,14 @@ function Profile({ doctorData }) {
                     <div className="grid grid-cols-3 gap-5 mb-[30px]">
                         <div>
                             <p className='form__label'>
-                                Gender*
+                                Gen
                             </p>
                             <select name='gender' value={formData.gender} onChange={handleInputChange}
                                 className='form__input py-3.5'>
-                                <option value=''>Select</option>
-                                <option value='male'>Male</option>
-                                <option value='female'>Female</option>
-                                <option value='other'>Other</option>
+                                <option value=''>Selectați</option>
+                                <option value='male'>Bărbat</option>
+                                <option value='female'>Femeie</option>
+                                <option value='other'>Altul</option>
 
 
 
@@ -394,24 +392,24 @@ function Profile({ doctorData }) {
                         </div>
 
                         <div>
-                            <p className='form__label'>
-                                Specialization*
-                            </p>
-                            <select name='specialization' value={formData.specialization} onChange={handleInputChange}
-                                className='form__input py-3.5'>
-                                <option value=''>Select</option>
-                                <option value='surgeon'>Surgeon</option>
-                                <option value='neurologist'>Neurologist</option>
-                                <option value='dermatologist'>Dermatologist</option>
-                                <option value='dentist'>Dentist</option>
-
-
-
+                            <p className='form__label'>Specializare</p>
+                            <select
+                                name='specialization'
+                                value={formData.specialization}
+                                onChange={handleInputChange}
+                                className='form__input py-3.5'
+                            >
+                                <option value=''>Selectează specializarea</option>
+                                {specializations.map((specialization) => (
+                                    <option key={specialization} value={specialization}>
+                                        {specialization}
+                                    </option>
+                                ))}
                             </select>
                         </div>
 
                         <div>
-                            <p className='form__label'>Grad medical*</p>
+                            <p className='form__label'>Grad medical</p>
                             <select
                                 name='medicalGrade'
                                 value={formData.medicalGrade}
@@ -424,7 +422,7 @@ function Profile({ doctorData }) {
                         </div>
 
                         <div>
-                            <p className='form__label'>Ticket price *</p>
+                            <p className='form__label'>Preț consultație</p>
                             <input
                                 type='number'
                                 placeholder='100'
@@ -437,13 +435,13 @@ function Profile({ doctorData }) {
                 </div>
 
                 <div className='mb-5'>
-                    <p className='form__label'>Qualifications*</p>
+                    <p className='form__label'>Calificări</p>
                     {formData.qualifications?.map((item, index) => (
                         <div key={index}>
                             <div>
                                 <div className='grid grid-cols-2 gap-5'>
                                     <div>
-                                        <p className='form__label'>Starting Date*</p>
+                                        <p className='form__label'>Dată de început</p>
                                         <input
                                             type="date"
                                             name='startingDate'
@@ -454,7 +452,7 @@ function Profile({ doctorData }) {
                                     </div>
 
                                     <div>
-                                        <p className='form__label'>Ending Date*</p>
+                                        <p className='form__label'>Dată de sfârșit</p>
                                         <input
                                             type="date"
                                             name='endingDate'
@@ -467,18 +465,26 @@ function Profile({ doctorData }) {
 
                                 <div className='grid grid-cols-2 gap-5 mt-5'>
                                     <div>
-                                        <p className='form__label'>Degree*</p>
-                                        <input
-                                            type="text"
+                                        <p className='form__label'>Diplomă</p>
+                                        <select
                                             name='degree'
                                             value={item.degree}
                                             className='form__input'
                                             onChange={e => handleQualificationChange(e, index)}
-                                        />
+                                        >
+                                            <option value=''>Selectează</option>
+                                            <option value='Diplomă de Licență'>Diplomă de Licență</option>
+                                            <option value='Diplomă de Master'>Diplomă de Master</option>
+                                            <option value='Diplomă de Doctor'>Diplomă de Doctor</option>
+                                            <option value='Diplomă de Studii Postuniversitare'>Diplomă de Studii Postuniversitare</option>
+                                            <option value='Certificat de Absolvire a unui Curs Postuniversitar'>Certificat de Absolvire a unui Curs Postuniversitar</option>
+                                            <option value='Diplomă de Studii Aprofundate'>Diplomă de Studii Aprofundate</option>
+                                        </select>
                                     </div>
 
+
                                     <div>
-                                        <p className='form__label'>University*</p>
+                                        <p className='form__label'>Universitate</p>
                                         <input
                                             type="text"
                                             name='university'
@@ -497,119 +503,12 @@ function Profile({ doctorData }) {
                         </div>
                     ))}
 
-                    <button onClick={addQualification} className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>Add Qualification</button>
+                    <button onClick={addQualification} className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>Adaugă calificare</button>
                 </div>
 
-                <div className='mb-5'>
-                    <p className='form__label'>Experiences*</p>
-                    {formData.experiences?.map((item, index) => (
-                        <div key={index}>
-                            <div>
-                                <div className='grid grid-cols-2 gap-5'>
-                                    <div>
-                                        <p className='form__label'>Starting Date*</p>
-                                        <input
-                                            type="date"
-                                            name='startingDate'
-                                            value={item.startingDate}
-                                            className='form__input'
-                                            onChange={e => handleExperienceChange(e, index)}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <p className='form__label'>Ending Date*</p>
-                                        <input
-                                            type="date"
-                                            name='endingDate'
-                                            value={item.endingDate}
-                                            className='form__input'
-                                            onChange={e => handleExperienceChange(e, index)}
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className='grid grid-cols-2 gap-5 mt-5'>
-                                    <div>
-                                        <p className='form__label'>Position*</p>
-                                        <input
-                                            type="text"
-                                            name='position'
-                                            value={item.position || ''}
-                                            className='form__input'
-                                            onChange={e => handleExperienceChange(e, index)}
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <p className='form__label'>Hospital*</p>
-                                        <input
-                                            type="text"
-                                            name='hospital'
-                                            value={item.hospital || ''}
-                                            className='form__input'
-                                            onChange={e => handleExperienceChange(e, index)}
-                                        />
-                                    </div>
-                                </div>
 
 
-                                <button onClick={e => deleteExperience(e, index)} className='btn bg-red-600 p-2 rounded-full text-white text-[18px] mt-2 mb-[30px] cursor-pointer'>
-                                    <AiOutlineDelete />
-                                </button>
-                            </div>
-                        </div>
-                    ))}
 
-                    <button onClick={addExperience} className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>Add Experience</button>
-                </div>
-
-                <div className='mb-5'>
-                    <p className='form__label'>Time Slots*</p>
-                    {formData.timeSlots?.map((item, index) => (
-                        <div key={index} className='grid grid-cols-2 md:grid-cols-4 mb-[30px] gap-5'>
-                            <div>
-                                <p className='form__label'>Day*</p>
-                                <input
-                                    name='day'
-                                    value={item.day}
-                                    className='form__input py-3.5'
-                                    onChange={e => handleTimeSlotChange(e, index)}
-                                    type='date'
-                                />
-                            </div>
-
-                            <div>
-                                <p className='form__label'>Time*</p>
-                                {/* Verifică dacă slotul are o oră setată */}
-                                {item.time ? (
-                                    <input
-                                        name='time'
-                                        value={item.time}
-                                        className='form__input py-3.5'
-                                        readOnly
-                                    />
-                                ) : (
-                                    // Dacă nu, afișează componenta Time pentru a selecta o oră
-                                    <Time
-                                        selectedDate={new Date(item.day)}
-                                        doctorId={doctorData._id}
-                                        onHourSelect={(hour) => handleTimeSlotChange(
-                                            { target: { name: 'time', value: `${hour}` } }, index
-                                        )}
-                                    />
-                                )}
-                            </div>
-
-                            <div onClick={e => deleteTimeSlot(e, index)} className='flex items-center justify-center'>
-                                <button className='btn bg-red-600 p-2 rounded-full text-white text-[18px] cursor-pointer'>
-                                    <AiOutlineDelete />
-                                </button>
-                            </div>
-                        </div>
-                    ))}
-                    <button onClick={addTimeSlot} className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'>Add Time Slot</button>
-                </div>
 
                 <div className="mb-5">
                     <h3>Orar de lucru</h3>
@@ -672,7 +571,7 @@ function Profile({ doctorData }) {
                 </div>
 
                 <div className="mb-5">
-                    <p className='form__label'>Services*</p>
+                    <p className='form__label'>Servicii</p>
                     {services.map((service, index) => (
                         <div key={index} className='grid grid-cols-2 gap-5 mb-[30px]'>
                             <input
@@ -705,11 +604,11 @@ function Profile({ doctorData }) {
                         onClick={addService}
                         className='btn bg-[#000] py-2 px-5 rounded text-white h-fit cursor-pointer'
                     >
-                        Add Service
+                        Adaugă Serviciu
                     </button>
                 </div>
                 <div className='mb-5'>
-                    <p className='form__label'>Concedii*</p>
+                    <p className='form__label'>Concedii</p>
                     {leavePeriods.map((period, index) => (
                         <div key={index} className='grid grid-cols-2 gap-5 mb-[30px]'>
                             <div>
@@ -754,13 +653,13 @@ function Profile({ doctorData }) {
 
 
                 <div className="mb-5">
-                    <p className='form__label'>About*</p>
+                    <p className='form__label'>Despre</p>
 
                     <textarea
                         name="about"
                         rows={5}
                         value={formData.about}
-                        placeholder='Write about you'
+                        placeholder='Scrie despre tine'
                         onChange={handleInputChange}
                         className='form__input'></textarea>
                 </div>
@@ -784,14 +683,14 @@ function Profile({ doctorData }) {
                         <label htmlFor='customFile' className='absolute top-0 left-0 w-50 h-full flex items-center px-[0.75rem] 
                                 py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg
                                 truncate cursor-pointer'>
-                            Incarca poza profil
+                            Încarcă poza profil
                         </label>
                     </div>
                 </div>
 
                 <div className="mt-7">
                     <button type='submit' onClick={updateProfileHandler} className='bg-primaryColor text-white text-[18px] leading-[30px] w-full py-3 px-4 rounded-lg'>
-                        Update profile
+                        Actualizează profilul
                     </button>
                 </div>
             </form>
