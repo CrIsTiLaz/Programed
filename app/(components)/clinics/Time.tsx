@@ -17,12 +17,12 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
     // Mapare zile din engleză în română
     const dayMap = {
         Monday: 'Luni',
-        Tuesday: 'Marti',
+        Tuesday: 'Marți',
         Wednesday: 'Miercuri',
         Thursday: 'Joi',
         Friday: 'Vineri',
-        Saturday: 'Sambata',
-        Sunday: 'Duminica',
+        Saturday: 'Sâmbătă',
+        Sunday: 'Duminică',
     };
 
     useEffect(() => {
@@ -33,12 +33,11 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
         if (!bookings || !doctor || !selectedDate) return [];
 
         // Verifică dacă data selectată se încadrează într-o perioadă de concediu
-        const isOnLeave = doctor.leavePeriods.some(period => {
+        const isOnLeave = doctor.leavePeriods?.some(period => {
             const startLeave = parseISO(period.start);
-            console.log('startLeave', startLeave)
-
             const endLeave = parseISO(period.end);
-            return selectedDate >= startLeave && selectedDate <= endLeave;
+            const selectedDateString = format(selectedDate, 'yyyy-MM-dd');
+            return selectedDateString >= format(startLeave, 'yyyy-MM-dd') && selectedDateString <= format(endLeave, 'yyyy-MM-dd');
         });
 
         if (isOnLeave) {
@@ -62,21 +61,10 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
             startTime = addMinutes(startTime, consultationDuration);
         }
 
-        // Extrage sloturile rezervate de doctor pentru ziua selectată
-        const doctorReservedSlots = doctor.timeSlots.filter(slot =>
-            format(parseISO(slot.day), 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')
-        ).map(slot => slot.time);
-
-        // Filtrare ore bazate pe programări existente și sloturi rezervate de doctor
+        // Filtrare ore bazate pe programări existente
         return hours.filter(hour => {
             const hourDateTimeString = `${format(selectedDate, 'yyyy-MM-dd')}T${hour}`;
             const hourDateTime = new Date(hourDateTimeString);
-
-            // Verifică dacă ora este rezervată de doctor
-            const isDoctorReserved = doctorReservedSlots.includes(hour);
-            if (isDoctorReserved) {
-                return false; // Ora este rezervată de doctor și nu este disponibilă
-            }
 
             // Verifică dacă ora este rezervată de pacienți
             const isPatientBooked = bookings.some(booking => {
@@ -93,8 +81,6 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
             return !isPatientBooked;
         });
     })();
-
-
 
     const handleHourClick = (hour) => {
         setSelectedHour(hour);

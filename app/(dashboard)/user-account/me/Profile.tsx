@@ -37,7 +37,6 @@ function Profile({ user }) {
         password: '',
         photo: null,
         gender: '',
-        bloodType: '',
     })
 
     const router = useRouter();

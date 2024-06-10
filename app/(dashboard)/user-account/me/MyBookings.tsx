@@ -73,7 +73,7 @@ function MyBookings() {
                                 className={currentPage === 1 ? 'opacity-60  text-white' : ''}
                             >
                                 <motion.div whileHover={{ scale: 1.1 }}>
-                                    <AiOutlineArrowLeft className="inline-block mr-2" /> Previous
+                                    <AiOutlineArrowLeft className="inline-block mr-2" /> Înapoi
                                 </motion.div>
                             </button>
                             {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
@@ -91,7 +91,7 @@ function MyBookings() {
                                 className={currentPage === totalPages ? 'opacity-60  text-white' : ''}
                             >
                                 <motion.div whileHover={{ scale: 1.1 }}>
-                                    Next <AiOutlineArrowRight className="inline-block ml-2" />
+                                    Înainte <AiOutlineArrowRight className="inline-block ml-2" />
                                 </motion.div>
                             </button>
                         </div>

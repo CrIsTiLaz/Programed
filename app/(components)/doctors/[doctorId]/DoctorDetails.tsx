@@ -44,7 +44,6 @@ function DoctorDetails() {
     const {
         name = '',
         qualifications = [],
-        timeSlots = [],
         reviews = [],
         bio = '',
         about = '',

@@ -2,7 +2,7 @@ import { BASE_URL, token } from '@/app/config';
 import { useParams } from 'next/navigation';
 import React, { useState } from 'react'
 import { AiFillStar } from 'react-icons/ai'
-import HashLoader from 'react-spinners/HashLoader';
+import ClipLoader from 'react-spinners/ClipLoader';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
 
@@ -34,7 +34,6 @@ function FeedbackForm() {
 
             }
             const requestBody = { rating, reviewText };
-            console.log("Request Body:", requestBody);
             const res = await fetch(`${BASE_URL}/doctors/${id}/reviews`, {
                 method: 'post',
                 headers: {
@@ -119,7 +118,7 @@ function FeedbackForm() {
             </div>
 
             <button type='submit' onClick={handleSubmitReview} className='btn'>
-                {loading ? <HashLoader size={25} color='#fff' /> : 'Trimite feedback'}
+                {loading ? <ClipLoader size={25} color='#fff' /> : 'Trimite feedback'}
             </button>
 
         </form>

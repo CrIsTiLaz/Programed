@@ -67,7 +67,7 @@ function Clinics() {
                                     >
                                         <motion.div whileHover={{ scale: 1.1 }}>
 
-                                            <AiOutlineArrowLeft className="inline-block mr-2" /> Previous
+                                            <AiOutlineArrowLeft className="inline-block mr-2" /> Înapoi
                                         </motion.div>
 
 
@@ -87,7 +87,7 @@ function Clinics() {
                                         className={currentPage === totalPages ? 'opacity-60  text-white' : ''}
                                     >
                                         <motion.div whileHover={{ scale: 1.1 }}>
-                                            Next
+                                            Înainte
 
                                             <AiOutlineArrowRight className="inline-block ml-2" />
                                         </motion.div>

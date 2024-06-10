@@ -82,23 +82,23 @@ function DoctorCard({ doctor, appointmentDate, appointmentTime, isExpired, appoi
                 </p>
             )}
 
-            <div className="mt-2 lg:mt-4 flex items-center justify-between">
-                <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-2 lg:py-2 lg:px-6 text-[15px] leading-4
-                 lg:text-[15px] lg:leading-7 font-semibold rounded'>
-                    {specialization}
-                </span>
-
+            <div className="mt-2 lg:mt-4">
                 <div className='flex items-center gap-[6px]'>
                     <span className='flex items-center gap-[6px] text-[14px] lg:text-[16px] leading-7 font-semibold text-headingColor'>
                         <Image src='/clinics/Star.png' alt='' width={20} height={20} />
                         {averageRating.toFixed(1)}
                     </span>
-
-                    <span className='text-[14px]  lg:text-[16px] leading-7 font-[400] text-textColor'>
+                    <span className='text-[14px] lg:text-[16px] leading-7 font-[400] text-textColor'>
                         ({totalRating})
                     </span>
                 </div>
+                <div className='mt-2'>
+                    <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-2 lg:py-2  text-[15px] leading-4 lg:text-[15px] lg:leading-7 font-semibold rounded'>
+                        {specialization}
+                    </span>
+                </div>
             </div>
+
 
             <div className='mt-[18px] lg:mt-5 flex items-center justify-between'>
                 <div className='flex justify-start flex-grow'>

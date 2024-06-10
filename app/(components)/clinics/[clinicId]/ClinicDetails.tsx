@@ -113,24 +113,27 @@ function ClinicDetails() {
                         </div>
 
                         {/* Tab buttons */}
-                        <div className="mt-4 border-b border-solid border-[#0066ff34]">
+                        {/* Tab buttons */}
+                        {/* Tab buttons */}
+                        <div className="mt-4 border-b border-solid border-[#0066ff34] flex flex-nowrap overflow-auto">
                             <button
                                 onClick={() => setTab('servicii')}
-                                className={`py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold ${tab === 'servicii' && 'border-b border-solid border-primaryColor'}`}>
+                                className={`py-2 px-3 sm:px-5 mr-2 sm:mr-5 text-[14px] sm:text-[16px] leading-7 text-headingColor font-semibold ${tab === 'servicii' && 'border-b border-solid border-primaryColor'}`}>
                                 Servicii
                             </button>
                             <button
                                 onClick={() => setTab('despre')}
-                                className={`py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold ${tab === 'despre' && 'border-b border-solid border-primaryColor'}`}>
+                                className={`py-2 px-3 sm:px-5 mr-2 sm:mr-5 text-[14px] sm:text-[16px] leading-7 text-headingColor font-semibold ${tab === 'despre' && 'border-b border-solid border-primaryColor'}`}>
                                 Despre
                             </button>
                             <button
                                 onClick={() => setTab('feedback')}
-                                className={`py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold ${tab === 'feedback' && 'border-b border-solid border-primaryColor'}`}>
-                                Feedback
+                                className={`py-2 px-3 sm:px-5 mr-2 sm:mr-5 text-[14px] sm:text-[16px] leading-7 text-headingColor font-semibold ${tab === 'feedback' && 'border-b border-solid border-primaryColor'}`}>
+                                Recenzii
                             </button>
-
                         </div>
+
+
 
                         {/* Content based on selected tab */}
                         <div className='mt-3'>

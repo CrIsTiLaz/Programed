@@ -150,7 +150,6 @@ export default function Example({ appointments, doctorId }) {
     const currentDate = format(new Date(), 'yyyy-MM-dd');
 
     const [formData, setFormData] = useState({
-        timeSlots: []
     });
 
     const addItem = (key, item) => {
@@ -166,20 +165,10 @@ export default function Example({ appointments, doctorId }) {
     };
 
 
-    const handleTimeSlotChange = (e, index) => {
-        const { name, value } = e.target;
-        const updatedTimeSlots = formData.timeSlots.map((slot, i) =>
-            i === index ? { ...slot, [name]: value } : slot
-        );
-        setFormData({ ...formData, timeSlots: updatedTimeSlots });
-    };
 
 
-    const deleteTimeSlot = (e, index) => {
-        e.preventDefault();
-        const updatedTimeSlots = formData.timeSlots.filter((_, i) => i !== index);
-        setFormData({ ...formData, timeSlots: updatedTimeSlots });
-    };
+
+
     const [selectedHour, setSelectedHour] = useState(null);
     const [patientEmail, setPatientEmail] = useState('');
     const [patientName, setPatientName] = useState('');
