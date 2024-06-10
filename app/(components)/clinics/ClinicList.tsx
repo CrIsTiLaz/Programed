@@ -16,21 +16,24 @@ function ClinicList({ query, currentPage, perPage, setTotalPages }) {
             try {
                 const response = await fetch(`${BASE_URL}/clinics?query=${query}&page=${currentPage}&perPage=${perPage}`);
                 const data = await response.json();
+                console.log('data', data)
                 if (!response.ok) {
                     throw new Error(data.message || 'Something went wrong');
                 }
                 setClinics(data.data);
                 setTotalPages(data.totalPages);
+                console.log('data', data)
+
             } catch (error) {
                 setError(error.message);
             } finally {
                 setLoading(false);
             }
+
         };
 
         fetchData();
     }, [query, currentPage, perPage, setTotalPages]);
-
     if (loading) return <Loading />;
     if (error) return <Error errMessage={'erroareeeeeeeeee'} />;
 

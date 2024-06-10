@@ -17,8 +17,7 @@ function ClinicDashboard() {
     // console.log('`${BASE_URL}/clinics/profile/me`', `${BASE_URL}/clinics/profile/me`)
     console.log('data', data)
     const [tab, setTab] = useState('overview')
-    console.log('data?.adress', data?.adress)
-    console.log('data?.name', data?.name)
+
 
     return (
         <section>
@@ -77,7 +76,7 @@ function ClinicDashboard() {
                                                     {data.name}
                                                 </h3>
 
-                                                <div className='flex item-center gap-[6px]'>
+                                                {/* <div className='flex item-center gap-[6px]'>
                                                     <span className='flex items-center gap-[6px] text-headingColor text-[14px] 
                                                     leading-5 lg:text-[16px] lg:leading-6 font-semibold'>
                                                         <Image src='/clinics/Star.png' alt='' width={20} height={20} />
@@ -89,18 +88,18 @@ function ClinicDashboard() {
 
                                                         ({data.totalRating})
                                                     </span>
-                                                </div>
+                                                </div> */}
 
-
+                                                <ClinicsAbout
+                                                    name={data.name}
+                                                    description={data?.description}
+                                                    address={data?.address}
+                                                    experience={data.experience}
+                                                    openingHours={data?.openingHours} />
                                             </div>
                                         </div>
-                                        <ClinicsAbout
-                                            name={data.name}
-                                            description={data?.description}
-                                            address={data?.address}
-                                            experience={data.experience} />
+
                                     </div>)}
-                                {tab === 'appointments' && <Appointments appointments={data.appointments} />}
                                 {tab === 'settings' && <ClinicProfile clinicData={data} />}
                             </div>
                         </div>

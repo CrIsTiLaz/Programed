@@ -40,7 +40,6 @@ export default function SidePanel({ doctorId, ticketPrice }) {
 
             const formattedDate = selectedDate.toISOString();
             let requestUrl, bookingData;
-            console.log('currentToken in bookingHandler:', currentToken);
 
             if (currentToken === 'null') {
                 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

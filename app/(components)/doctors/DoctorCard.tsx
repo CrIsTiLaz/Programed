@@ -13,7 +13,6 @@ function DoctorCard({ doctor, appointmentDate, appointmentTime, isExpired, appoi
     if (isExpired == true) {
         console.log('isExpired', isExpired)
     }
-    console.log('appointmentId', appointmentId)
 
     const handleDelete = async (id) => {
         const result = await Swal.fire({

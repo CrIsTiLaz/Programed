@@ -14,6 +14,13 @@ function Profile({ user }) {
 
     const [selectedFile, setSelectedFile] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [currentToken, setCurrentToken] = useState('');
+
+    useEffect(() => {
+        const currentToken = localStorage.getItem('token');
+        setCurrentToken(currentToken);
+    }, []);
+
 
     const showAlert = () => {
         Swal.fire({
@@ -36,7 +43,7 @@ function Profile({ user }) {
     const router = useRouter();
 
     useEffect(() => {
-        setFormData({ name: user.name, email: user.email, photo: user.photo, gender: user.gender, bloodType: user.bloodType })
+        setFormData({ name: user.name, email: user.email, photo: user.photo, gender: user.gender })
     }, [user])
 
     const handleInputChange = e => {
@@ -63,7 +70,7 @@ function Profile({ user }) {
                 method: 'put',
                 headers: {
                     "Content-Type": 'application/json',
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${currentToken}`
                 },
                 body: JSON.stringify(formData)
             });
@@ -138,7 +145,7 @@ function Profile({ user }) {
                     />
                 </div>
 
-                <div className='mb-5'>
+                {/* <div className='mb-5'>
                     <input
                         type='text'
                         placeholder='Blood Type'
@@ -148,7 +155,7 @@ function Profile({ user }) {
                         className='w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor 
                         text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer'
                     />
-                </div>
+                </div> */}
 
                 <div className="mb-5 flex items-center justify-between">
 
@@ -158,9 +165,9 @@ function Profile({ user }) {
                             value={formData.gender}
                             onChange={handleInputChange}
                             className='text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none'>
-                            <option value="">Select</option>
+                            <option value="">Selectează</option>
                             <option value="female">Femeie</option>
-                            <option value="male">Barbat</option>
+                            <option value="male">Bărbat</option>
                         </select>
                     </label>
                 </div>
@@ -190,7 +197,7 @@ function Profile({ user }) {
 
                 <div className='mt-7'>
                     <button disabled={loading} type='submit' className='w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3'>
-                        {loading ? <HashLoader size={25} color='#ffffff' /> : 'Update'}
+                        {loading ? <HashLoader size={25} color='#ffffff' /> : 'Actualizează profilul'}
                     </button>
                 </div>
 

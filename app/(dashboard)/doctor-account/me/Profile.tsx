@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
-
+import specializations from '@/Shared/specializations';
 import Image from 'next/image';
 import uploadImageToCloudinary from '@/app/utils/uploadCloudinary';
 import { BASE_URL, token } from '@/app/config';
@@ -8,40 +8,7 @@ import Swal from 'sweetalert2';
 import Time from '@/app/(components)/clinics/Time';
 import { format } from 'date-fns';
 
-const specializations = [
-    "Anestezie și Terapie Intensivă",
-    "Cardiologie",
-    "Chirurgie Cardiovasculară",
-    "Chirurgie Generală",
-    "Chirurgie Pediatrică",
-    "Chirurgie Plastică și Reconstructivă",
-    "Chirurgie Toracică",
-    "Chirurgie Vasculară",
-    "Dermatologie",
-    "Endocrinologie",
-    "Gastroenterologie",
-    "Ginecologie și Obstetrică",
-    "Hematologie",
-    "Medicină de Familie",
-    "Medicină Generală",
-    "Medicină Internă",
-    "Medicină Nucleară",
-    "Medicină de Laborator",
-    "Nefrologie",
-    "Neurologie",
-    "Oftalmologie",
-    "Oncologie",
-    "Ortopedie și Traumatologie",
-    "Otorinolaringologie (ORL)",
-    "Patologie",
-    "Pediatrie",
-    "Pneumologie",
-    "Psihiatrie",
-    "Radiologie și Imagistică Medicală",
-    "Reumatologie",
-    "Stomatologie",
-    "Urologie"
-];
+
 
 
 function Profile({ doctorData }) {
@@ -58,7 +25,15 @@ function Profile({ doctorData }) {
     ]);
     const [services, setServices] = useState(doctorData.services || []);
     const [leavePeriods, setLeavePeriods] = useState(doctorData.leavePeriods || []);
-    console.log('doctorData.leavePeriods', doctorData.leavePeriods)
+
+    const [currentToken, setCurrentToken] = useState('');
+
+    useEffect(() => {
+        const currentToken = localStorage.getItem('token');
+        setCurrentToken(currentToken);
+    }, []);
+
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -152,7 +127,7 @@ function Profile({ doctorData }) {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${currentToken}`
                 },
                 body: JSON.stringify(payload),
             });
@@ -481,7 +456,6 @@ function Profile({ doctorData }) {
                                             <option value='Diplomă de Studii Aprofundate'>Diplomă de Studii Aprofundate</option>
                                         </select>
                                     </div>
-
 
                                     <div>
                                         <p className='form__label'>Universitate</p>

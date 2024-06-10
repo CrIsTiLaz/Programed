@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { authContext } from "../context/AuthContext";
 import HashLoader from 'react-spinners/HashLoader';
 import { RecoveryContext } from '../context/RecoveryContext';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function Login() {
     const { setEmail, setPage, email, setOTP } = useContext(RecoveryContext);
@@ -36,21 +37,39 @@ function Login() {
             })
                 .then((response) => {
                     if (!response.ok) {
+                        Swal.fire({
+                            title: 'Eroare',
+                            text: 'Răspunsul rețelei nu a fost ok. Vă rugăm să încercați din nou.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
                         throw new Error('Network response was not ok');
                     }
                     return response.json();
                 })
+
                 .then((data) => {
 
                     router.push('/recover');
                 })
                 .catch((error) => {
-                    alert("Failed to send recovery email. Please try again.");
+                    Swal.fire({
+                        title: 'Eroare',
+                        text: 'Trimiterea emailului de recuperare a eșuat. Vă rugăm să încercați din nou.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 });
+
 
             return;
         }
-        return alert("Please enter your email");
+        Swal.fire({
+            title: 'Avertizare',
+            text: 'Vă rugăm să introduceți adresa de email.',
+            icon: 'warning',
+            confirmButtonText: 'OK'
+        });
     }
 
 
@@ -136,7 +155,7 @@ function Login() {
                     </div>
                     <div className='mt-7'>
                         <button type='submit' className='w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3'>
-                            {loading ? <HashLoader size={25} color='#fff' /> : 'Login'}
+                            {loading ? <ClipLoader size={25} color='#fff' /> : 'Login'}
                         </button>
                     </div>
                     <p className='mt-5 text-textColor text-center'>
