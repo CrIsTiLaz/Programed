@@ -79,20 +79,19 @@ export default function Example({ onDateSelect, doctorId }) {
         }
 
         const dayString = format(day, 'yyyy-MM-dd');
-        const doctorReservedTimes = doctor?.timeSlots?.filter(slot => format(parseISO(slot.day), 'yyyy-MM-dd') === dayString).map(slot => slot.time);
 
-        // Verifică dacă data selectată se încadrează într-o perioadă de concediu
+        // Verifică dacă data selectată se încadrează într-o perioadă de concediu (comparând doar datele, ignorând timpul)
         const isOnLeave = doctor?.leavePeriods?.some(period => {
             const startLeave = parseISO(period.start);
             const endLeave = parseISO(period.end);
-            return day >= startLeave && day <= endLeave;
+            return format(day, 'yyyy-MM-dd') >= format(startLeave, 'yyyy-MM-dd') && format(day, 'yyyy-MM-dd') <= format(endLeave, 'yyyy-MM-dd');
         });
 
         if (isOnLeave) {
             return false; // Ziua este în concediu, deci nu sunt ore disponibile
         }
 
-        // Verifică fiecare slot pentru a vedea dacă este ocupat de rezervările pacienților sau de medic
+        // Verifică fiecare slot pentru a vedea dacă este ocupat de rezervările pacienților
         const isAnySlotAvailable = slots.some(slotTime => {
             const isBooked = bookings.some(booking => {
                 const bookingDateStr = format(parseISO(booking.appointmentDate), 'yyyy-MM-dd');
@@ -100,13 +99,13 @@ export default function Example({ onDateSelect, doctorId }) {
                 return dayString === bookingDateStr && slotTime === bookingTime;
             });
 
-            const isDoctorReserved = doctorReservedTimes.includes(slotTime);
-
-            return !isBooked && !isDoctorReserved;
+            return !isBooked;
         });
 
         return isAnySlotAvailable;
     };
+
+
 
 
 

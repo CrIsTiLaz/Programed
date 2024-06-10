@@ -34,7 +34,6 @@ function ClinicDetails() {
                 return acc.concat(doctor.reviews || []);
             }, []);
             setAllReviews(reviews);
-            console.log('Toate review-urile:', reviews);  // Afișăm la consolă pentru verificare
         }
     }, [clinic]);
 

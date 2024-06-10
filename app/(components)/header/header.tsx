@@ -18,7 +18,6 @@ function Header() {
     const pathname = usePathname();
     const { user, role, token } = useContext(authContext);
     const [menuOpen, setMenuOpen] = useState(false);
-
     const navigateToProfile = () => {
         let profilePath = '/user-account/me'; // Implicit pentru pacienți
         if (role === 'doctor') {
@@ -93,7 +92,7 @@ function Header() {
                             <BiMenu />
                         </button>
                         {token && user ? (
-                            <div className={`${(pathname === "/doctor-account/me" || pathname === "/clinic-account/me " || pathname === "/admin") ? "border-2 border-black" : ""} w-[35px] h-[35px] rounded-full cursor-pointer`} onClick={navigateToProfile}>
+                            <div className={`${(pathname === "/doctor-account/me" || pathname === "/clinic-account/me " || pathname === "/admin" || pathname === "/user-account/me ") ? "border-2 border-black" : ""} w-[35px] h-[35px] rounded-full cursor-pointer`} onClick={navigateToProfile}>
                                 {user.photo ? (
                                     <Image className='w-full rounded-full' src={user.photo} width={40} height={40} alt="User profile photo" />
                                 ) : (

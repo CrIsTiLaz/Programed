@@ -6,14 +6,14 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { blue } from '@mui/material/colors';
 import useFetchData from '@/app/hooks/useFetchData';
-import { BASE_URL, token } from '@/app/config';
+import { BASE_URL } from '@/app/config';
 import { addMinutes, format, parseISO } from 'date-fns';
 
 function Time({ selectedDate, onHourSelect, doctorId }) {
     const [selectedHour, setSelectedHour] = useState(null);
     const { data: bookings } = useFetchData(`${BASE_URL}/bookings/bookings`);
     const { data: doctor } = useFetchData(`${BASE_URL}/doctors/${doctorId}`);
-    // console.log('token', token)
+
     // Mapare zile din engleză în română
     const dayMap = {
         Monday: 'Luni',
@@ -33,10 +33,11 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
         if (!bookings || !doctor || !selectedDate) return [];
 
         // Verifică dacă data selectată se încadrează într-o perioadă de concediu
-        const isOnLeave = doctor.leavePeriods?.some(period => {
+        const isOnLeave = doctor?.leavePeriods?.some(period => {
             const startLeave = parseISO(period.start);
             const endLeave = parseISO(period.end);
-            return selectedDate >= startLeave && selectedDate <= endLeave;
+            const selectedDateString = format(selectedDate, 'yyyy-MM-dd');
+            return selectedDateString >= format(startLeave, 'yyyy-MM-dd') && selectedDateString <= format(endLeave, 'yyyy-MM-dd');
         });
 
         if (isOnLeave) {
@@ -60,21 +61,10 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
             startTime = addMinutes(startTime, consultationDuration);
         }
 
-        // Extrage sloturile rezervate de doctor pentru ziua selectată
-        const doctorReservedSlots = doctor.timeSlots.filter(slot =>
-            format(parseISO(slot.day), 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')
-        ).map(slot => slot.time);
-
-        // Filtrare ore bazate pe programări existente și sloturi rezervate de doctor
+        // Filtrare ore bazate pe programări existente
         return hours.filter(hour => {
             const hourDateTimeString = `${format(selectedDate, 'yyyy-MM-dd')}T${hour}`;
             const hourDateTime = new Date(hourDateTimeString);
-
-            // Verifică dacă ora este rezervată de doctor
-            const isDoctorReserved = doctorReservedSlots.includes(hour);
-            if (isDoctorReserved) {
-                return false; // Ora este rezervată de doctor și nu este disponibilă
-            }
 
             // Verifică dacă ora este rezervată de pacienți
             const isPatientBooked = bookings.some(booking => {
@@ -85,13 +75,12 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
 
                 const bookingEndDateTime = addMinutes(bookingDateTime, consultationDuration);
 
-                return booking?.doctor?._id.toString() === doctorId.toString() && hourDateTime >= bookingDateTime && hourDateTime < bookingEndDateTime;
+                return booking.doctor?._id.toString() === doctorId.toString() && hourDateTime >= bookingDateTime && hourDateTime < bookingEndDateTime;
             });
 
             return !isPatientBooked;
         });
     })();
-
 
     const handleHourClick = (hour) => {
         setSelectedHour(hour);
@@ -99,9 +88,6 @@ function Time({ selectedDate, onHourSelect, doctorId }) {
             onHourSelect(hour);
         }
     };
-
-
-
 
     if (!selectedDate) {
         return (

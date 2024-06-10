@@ -18,7 +18,12 @@ function Feedback({ reviews, totalReviews }) {
                 (<div key={index} className="flex justify-between gap-10 mb-[30px]">
                     <div className='flex gap-3'>
                         <div className='rounded-full'>
-                            <Image src={review?.user?.photo} alt='' width={40} height={40} />
+                            {review?.user?.photo ? (
+                                <Image src={review?.user?.photo} alt='' width={40} height={40} />
+                            ) : (
+                                <Image src="/header/user64.png" alt="Default profile photo" width={40} height={40} />
+
+                            )}
                         </div>
 
                         <div>

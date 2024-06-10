@@ -28,8 +28,10 @@ function FeedbackForm() {
                 return Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'Rating and reviews fields are required!',
-                })
+                    text: 'Câmpurile pentru evaluare și recenzii sunt obligatorii!',
+                    confirmButtonText: 'OK'
+                });
+
             }
             const requestBody = { rating, reviewText };
             console.log("Request Body:", requestBody);
@@ -50,10 +52,11 @@ function FeedbackForm() {
 
             setLoading(false)
             Swal.fire(
-                'Good job!',
-                'Your review has been submitted successfully!',
+                'Felicitări!',
+                'Recenzia dumneavoastră a fost trimisă cu succes!',
                 'success'
-            )
+            );
+
             router.push('/');
 
         } catch (err) {
