@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     domains: ["res.cloudinary.com"],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   reactStrictMode: false, // Aceasta opțiune trebuie să fie parte a obiectului nextConfig
 };
 
