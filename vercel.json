@@ -1,5 +1,5 @@
 {
-    "build": {
-      "command": "npm install --legacy-peer-deps && vercel build"
-    }
+  "build": {
+    "command": "npm install --legacy-peer-deps && vercel build"
   }
+}
