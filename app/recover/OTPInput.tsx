@@ -89,10 +89,10 @@ export default function OTPInput() {
                 <div className="mx-auto flex w-full max-w-md flex-col space-y-16">
                     <div className="flex flex-col items-center justify-center text-center space-y-2">
                         <div className="font-semibold text-3xl">
-                            <p>Email Verification</p>
+                            <p>Verificare email</p>
                         </div>
                         <div className="flex flex-row text-sm font-medium text-gray-400">
-                            <p>We have sent a code to your email {email}</p>
+                            <p>Ti-am trimis un cod pe email {email}</p>
                         </div>
                     </div>
 
@@ -176,12 +176,12 @@ export default function OTPInput() {
                                             onClick={() => verfiyOTP()}
                                             className="flex flex-row cursor-pointer items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-blue-700 border-none text-white text-sm shadow-sm"
                                         >
-                                            Verify Account
+                                            Verifica cont
                                         </a>
                                     </div>
 
                                     <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
-                                        <p>Didn't recieve code?</p>{" "}
+                                        <p>Nu ai primit codul?</p>{" "}
                                         <a
                                             className="flex flex-row items-center"
                                             style={{
