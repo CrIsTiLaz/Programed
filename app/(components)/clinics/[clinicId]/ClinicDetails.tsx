@@ -44,7 +44,6 @@ function ClinicDetails() {
             const averageRating = parseFloat(doctor.averageRating);
             const totalRating = parseInt(doctor.totalRating, 10); // Convertim și totalRating, pentru siguranță
 
-            console.log(`Doctor: ${doctor.name}, Average Rating: ${averageRating}, Total Ratings: ${totalRating}`);
             totalRatingsSum += totalRating;
             totalAverageRatingSum += averageRating;  // Adăugăm avgRating ca număr
             doctorCount++;

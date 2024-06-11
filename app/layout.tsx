@@ -41,7 +41,6 @@ export default function RootLayout({
   }, [])
   const getUserLocation = () => {
     navigator.geolocation.getCurrentPosition(function (pos) {
-      console.log(pos)
       setUserLocation({
         lat: pos.coords.latitude,
         lng: pos.coords.longitude

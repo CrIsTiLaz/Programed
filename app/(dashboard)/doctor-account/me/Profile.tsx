@@ -12,7 +12,6 @@ import { format } from 'date-fns';
 
 
 function Profile({ doctorData }) {
-    console.log('doctorData', doctorData)
     const [workSchedule, setWorkSchedule] = useState(doctorData.workSchedule || [
         { dayOfWeek: 'Luni', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
         { dayOfWeek: 'Marti', startTime: '', endTime: '', consultationDuration: 30 }, // durata implicită poate varia
@@ -53,7 +52,6 @@ function Profile({ doctorData }) {
     const [selectedHour, setSelectedHour] = useState(null);
     const currentDate = format(new Date(), 'yyyy-MM-dd');
     const [generalConsultationDuration, setGeneralConsultationDuration] = useState(doctorData?.workSchedule?.[0]?.consultationDuration || 30);
-    // console.log('doctorData', doctorData)
     useEffect(() => {
         setFormData({
             name: doctorData?.name,
@@ -70,9 +68,7 @@ function Profile({ doctorData }) {
         setLeavePeriods(doctorData?.leavePeriods || []); // Populăm leavePeriods
     }, [doctorData]);
 
-    useEffect(() => {
-        console.log(generalConsultationDuration);
-    }, [generalConsultationDuration]);
+
     const handleInputChange = e => {
 
         setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -83,7 +79,6 @@ function Profile({ doctorData }) {
         const file = event.target.files[0]
         const data = await uploadImageToCloudinary(file);
 
-        // console.log('data', data)
         setFormData({ ...formData, photo: data?.url })
 
     }
@@ -120,7 +115,6 @@ function Profile({ doctorData }) {
             medicalGrade: formData.medicalGrade, // Adaugă acest rând
             leavePeriods,
         };
-        console.log("Payload being sent:", JSON.stringify(payload, null, 2));
 
         try {
             const response = await fetch(`${BASE_URL}/doctors/${doctorData._id}`, {
@@ -219,11 +213,9 @@ function Profile({ doctorData }) {
 
     const handleHourSelect = (hour) => {
         setSelectedHour(hour);
-        console.log(`Data selectată: ${selectedDate}, Ora selectată: ${hour}:00`);
     };
 
 
-    // console.log('formData.photo', formData.photo)
 
     const handleWorkScheduleChange = (dayOfWeek, field, value) => {
         // Găsirea indexului elementului pe baza zilei săptămânii

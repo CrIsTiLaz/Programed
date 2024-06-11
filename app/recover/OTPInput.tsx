@@ -14,7 +14,6 @@ export default function OTPInput() {
     const [disable, setDisable] = useState(true);
     const router = useRouter();
 
-    // console.log('OTPInput')
 
     function resendOTP() {
         if (disable) return;

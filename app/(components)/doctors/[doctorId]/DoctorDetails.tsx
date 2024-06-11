@@ -33,13 +33,7 @@ function DoctorDetails() {
     // const id = usePathId();
     const params = useParams()
     const id = params.doctorId
-    // console.log('id', id)
-    // console.log('ID:', id);
-
-    const { data: doctor, loading, error } = useFetchData(`${BASE_URL}/doctors/${id}`);
-    console.log('doctors', doctor)
-    // console.log('url: )', (`${BASE_URL}/doctors/${id}`))
-    // console.log('data', doctor)
+    const { data: doctor, loading, error } = useFetchData(id ? `${BASE_URL}/doctors/${id}` : null);
 
     const {
         name = '',
@@ -58,7 +52,6 @@ function DoctorDetails() {
     if (loading) {
         return <Loading />;
     }
-    console.log('reviews', reviews)
     return (
         <section>
             <div className='max-w-[1170px] px-5 mx-auto'>
@@ -90,13 +83,13 @@ function DoctorDetails() {
                                         <Image src='/clinics/Star.png' alt='' width={20} height={20} /> {averageRating.toFixed(1)}
                                     </span>
                                     <span className='text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-[400] text-textColor'>
-                                        ({totalRating} reviews)
+                                        ({totalRating} recenzii)
                                     </span>
                                 </div>
 
                                 {/* Specializarea */}
                                 <div className="my-3">
-                                    <span className='bg-[#CCF0F3] text-irisBlueColor mt-3 py-1 px-6 lg:py-2 lg:px:6 text-[12px] leading-4
+                                    <span className='bg-[#CCF0F3] text-irisBlueColor mt-3 py-1 px-3 lg:py-2 lg:px:6 text-[13px] leading-4
             lg:text-[16px] lg:leading-7 font-semibold rounded'>
                                         {specialization}
                                     </span>
@@ -104,7 +97,7 @@ function DoctorDetails() {
 
                                 {/* Gradul medical */}
                                 <div className='mt-5'>
-                                    <span className='bg-[#fff9ea]   text-yellowColor py-1 px-6 lg:py-2 lg:px:6 text-[12px] leading-4
+                                    <span className='bg-[#fff9ea]   text-yellowColor py-1 px-6 lg:py-2 lg:px:6 text-[13px] leading-4
             lg:text-[16px] lg:leading-7 font-semibold rounded'>
                                         Medic {medicalGrade}
                                     </span>
@@ -116,25 +109,24 @@ function DoctorDetails() {
                                 </p>
                             </div>
                         </div>
-                        <div className="mt-[50px] border-b border-solid border-[#0066ff34]">
+                        <div className="mt-4 border-b border-solid border-[#0066ff34] flex flex-nowrap overflow-auto">
                             <button
                                 onClick={() => setTab('despre')}
-                                className={`  ${tab === 'despre' && 'border-b border-solid border-primaryColor'} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
+                                className={`py-2 px-3 sm:px-5 mr-2 sm:mr-5 text-[14px] sm:text-[16px] leading-7 text-headingColor font-semibold ${tab === 'despre' && 'border-b border-solid border-primaryColor'}`}>
                                 Despre
                             </button>
                             <button
                                 onClick={() => setTab('servicii')}
-                                className={`  ${tab === 'servicii' && 'border-b border-solid border-primaryColor'} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
+                                className={`py-2 px-3 sm:px-5 mr-2 sm:mr-5 text-[14px] sm:text-[16px] leading-7 text-headingColor font-semibold ${tab === 'servicii' && 'border-b border-solid border-primaryColor'}`}>
                                 Servicii
                             </button>
                             <button
                                 onClick={() => setTab('feedback')}
-                                className={`  ${tab === 'feedback' && 'border-b border-solid border-primaryColor'} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
+                                className={`py-2 px-3 sm:px-5 mr-2 sm:mr-5 text-[14px] sm:text-[16px] leading-7 text-headingColor font-semibold ${tab === 'feedback' && 'border-b border-solid border-primaryColor'}`}>
                                 Feedback
                             </button>
-
-
                         </div>
+
                         <div className='mt-[50px]'>
                             {
                                 tab === 'despre' && <ClinicsAbout name={name} about={about} qualifications={qualifications} />

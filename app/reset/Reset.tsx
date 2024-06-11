@@ -7,7 +7,6 @@ import { BASE_URL } from "../config";
 
 export default function Reset() {
     const { email, setPage } = useContext(RecoveryContext);
-    console.log('email', email)
     const router = useRouter();
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');

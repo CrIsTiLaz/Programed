@@ -6,7 +6,6 @@ import Example from './AppointmentsCalendar';
 import Ex from './Ex';
 
 function Appointments({ appointments, doctorId }) {
-    console.log('appointments', appointments);
 
     // Sortează programările în funcție de data și ora programării, de la cele mai apropiate la cele mai îndepărtate
     const sortedAppointments = appointments?.sort((a, b) => {

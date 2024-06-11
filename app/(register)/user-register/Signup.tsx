@@ -48,7 +48,6 @@ function Signup() {
                 },
                 body: JSON.stringify(formData)
             });
-            console.log('body', res)
 
             const data = await res.json();
 

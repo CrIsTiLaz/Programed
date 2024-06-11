@@ -41,7 +41,6 @@ function MyBookings() {
         fetchData();
     }, [currentPage, perPage]);
 
-    // console.log('appointments', appointments);
 
     const handlePageChange = (newPage) => {
         if (newPage > 0 && newPage <= totalPages) {

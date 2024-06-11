@@ -37,7 +37,6 @@ export default function Home() {
 
   const getGooglePlace = () => {
     GlobalApi.getGooglePlace(category, radius, userLocation.lat, userLocation.lng).then(resp => {
-      // console.log(resp.data);
       setBusinessList(resp.data.product.results)
     })
 

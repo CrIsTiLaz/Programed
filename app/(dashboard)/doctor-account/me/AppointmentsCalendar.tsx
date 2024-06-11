@@ -121,8 +121,7 @@ function classNames(...classes) {
 }
 
 export default function Example({ appointments, doctorId }) {
-    console.log('appointments', appointments)
-    console.log('doctorId', doctorId)
+
     let today = startOfToday()
     let [selectedDay, setSelectedDay] = useState(today)
     let [currentMonth, setCurrentMonth] = useState(format(today, 'MMM-yyyy'))
@@ -176,7 +175,6 @@ export default function Example({ appointments, doctorId }) {
 
     const handleHourSelect = (hour) => {
         setSelectedHour(hour);
-        console.log(`Data selectată: ${selectedDay}, Ora selectată: ${hour}:00, Email: ${patientEmail}`);
     };
 
     const bookingHandler = async () => {
@@ -189,7 +187,6 @@ export default function Example({ appointments, doctorId }) {
                 name: patientName,
                 // Adaugă alte câmpuri necesare conform schemei backend-ului
             };
-            console.log('bookingData', bookingData)
             const requestUrl = `${BASE_URL}/bookings/checkout-sessionWithEmail/${doctorId}`;
 
             const res = await fetch(requestUrl, {

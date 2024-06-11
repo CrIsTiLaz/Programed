@@ -56,7 +56,6 @@ function Profile({ user }) {
 
         setSelectedFile(data.url)
         setFormData({ ...formData, photo: data.url })
-        // console.log(file)
 
     }
 

@@ -48,7 +48,6 @@ function Profile({ clinicData }) {
             ...formData,
             openingHours: openingHours
         };
-        // console.log("Sending payload to server:", payload);
 
         try {
             const response = await fetch(`${BASE_URL}/clinics/${clinicData._id}`, {

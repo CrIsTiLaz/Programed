@@ -31,7 +31,6 @@ export default function Example({ onDateSelect, doctorId }) {
     let firstDayCurrentMonth = parse(currentMonth, 'MMM-yyyy', new Date());
     const { data: doctor } = useFetchData(`${BASE_URL}/doctors/${doctorId}`);
     const { data: bookings } = useFetchData(`${BASE_URL}/bookings/bookings`);
-    console.log('doctorIddddddddddddddddddd', doctorId)
     let days = eachDayOfInterval({
         start: firstDayCurrentMonth,
         end: endOfMonth(firstDayCurrentMonth),

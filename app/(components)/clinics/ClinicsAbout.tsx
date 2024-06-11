@@ -2,16 +2,7 @@ import React from 'react'
 import { FaLocationDot } from 'react-icons/fa6';
 
 function ClinicsAbout({ name, address, email, services, description, openingHours }) {
-    console.log('openingHours', openingHours)
-    // const openingHours = {
-    //     Luni: "08:00 - 16:00",
-    //     Marti: "08:00 - 16:00",
-    //     Miercuri: "08:00 - 16:00",
-    //     Joi: "08:00 - 16:00",
-    //     Vineri: "08:00 - 14:00",
-    //     Sambata: "Inchis",
-    //     Duminica: "Inchis"
-    // };
+
 
     const formatHours = (isoString) => {
         const date = new Date(isoString);

@@ -29,7 +29,6 @@ function Signup() {
 
     useEffect(() => {
         if (clinics && clinics.length > 0) {
-            console.log(clinics); // Afișează clinicile disponibile în consolă
             if (!formData.clinicId) {
                 setFormData(prevFormData => ({
                     ...prevFormData,

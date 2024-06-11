@@ -14,8 +14,6 @@ import ClinicProfile from './ClinicProfile'
 function ClinicDashboard() {
 
     const { data, loading, error } = useGetProfile(`${BASE_URL}/clinics/profile/me`)
-    // console.log('`${BASE_URL}/clinics/profile/me`', `${BASE_URL}/clinics/profile/me`)
-    console.log('data', data)
     const [tab, setTab] = useState('overview')
 
 

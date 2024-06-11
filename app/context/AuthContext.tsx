@@ -12,10 +12,8 @@ export const authContext = createContext(initialState);
 
 // Reducer pentru gestionarea autentificării
 const authReducer = (state, action) => {
-  console.log("Reducer action received:", action); // Debugging pentru a vedea acțiunea primită
   switch (action.type) {
     case "LOGIN_SUCCESS":
-      console.log("Login success payload:", action.payload); // Debugging pentru payload-ul de la login
       return {
         ...state,
         user: action.payload.user,
@@ -40,8 +38,7 @@ export const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     // Debugging pentru a verifica valorile din localStorage
-    console.log("Debug localStorage - Rol:", localStorage.getItem('role'));
-    console.log("Debug state - Rol:", state.role); // Debugging pentru a verifica starea curentă a rolului
+    // Debugging pentru a verifica starea curentă a rolului
     localStorage.setItem('user', JSON.stringify(state.user));
     localStorage.setItem('token', state.token);
     localStorage.setItem('role', state.role);

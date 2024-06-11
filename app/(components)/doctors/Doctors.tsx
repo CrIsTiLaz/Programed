@@ -12,9 +12,7 @@ import Error from '@/app/error/Error';
 import DoctorList from './DoctorList';
 import DoctorCard from './DoctorCard';
 function Doctors({ clinicId }) {
-    // console.log('clinicId', clinicId)
     const { data: doctors, loading, error } = useFetchData(`${BASE_URL}/doctors?clinicId=${clinicId}`);
-    // console.log('doctors', doctors)
     if (loading) return <Loading />;
     if (error) return <Error errMessage={error} />;
 

@@ -26,7 +26,6 @@ function ClinicCard({ clinic }) {
             const averageRating = parseFloat(doctor.averageRating);
             const totalRating = parseInt(doctor.totalRating, 10); // Convertim și totalRating, pentru siguranță
 
-            console.log(`Doctor: ${doctor.name}, Average Rating: ${averageRating}, Total Ratings: ${totalRating}`);
             totalRatingsSum += totalRating;
             totalAverageRatingSum += averageRating;  // Adăugăm avgRating ca număr
             doctorCount++;
@@ -36,8 +35,7 @@ function ClinicCard({ clinic }) {
     // Calculul mediei averageRating, asigurându-ne că doctorCount nu este 0
     const averageRating = doctorCount > 0 ? (totalAverageRatingSum / doctorCount).toFixed(1) : "N/A";
 
-    console.log(`Suma totală a ratingurilor pentru toți medicii este: ${totalRatingsSum}`);
-    console.log(`Media ratingurilor medii pentru toți medicii este: ${averageRating}`);
+
     SwiperCore.use([Autoplay])
     // Array cu imagini predefinite
     const images = [
@@ -87,17 +85,19 @@ function ClinicCard({ clinic }) {
                     <div className='flex items-center gap-[6px] '> {/* Adjust the margin-top value as needed */}
                         <Image src='/clinics/Star.png' alt='' width={20} height={20} />
                         <span className='text-headingColor font-semibold'>{averageRating}</span>
-                        <span className='text-rating'>({totalRatingsSum})</span>  {/* Afișarea sumei totale a ratingurilor */}                    </div>
+                        <span className='text-rating'>({totalRatingsSum})</span>  {/* Afișarea sumei totale a ratingurilor */}
+                    </div>
 
 
 
                 </div>
                 <div className='flex items-center justify-between mt-2'>
-                    <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-2 text-[12px] lg:text-[16px] font-semibold rounded'>
+                    <span className='bg-[#CCF0F3] text-irisBlueColor py-1 px-2 text-[13px] lg:text-[20px] font-semibold rounded'>
                         {specialization}
                     </span>
                     {/* Alte elemente dacă există */}
                 </div>
+
             </div>
         </Link>
     );
