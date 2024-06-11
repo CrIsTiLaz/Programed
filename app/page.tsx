@@ -6,15 +6,12 @@ import Image from 'next/image';
 
 import { useRouter } from "next/navigation";
 
-import CategoryList from "./(components)/(homepage)/map/CategoryList";
-import RangeSelect from "./(components)/(homepage)/map/RangeSelect";
 
-import GoogleMapView from "./(components)/(homepage)/map/GoogleMapView";
+
 import GlobalApi from "@/Shared/GlobalApi";
 import { useContext, useState } from "react";
 import { UserLocationContext } from "./context/UserLocationContext";
-import BusinessList from "./(components)/(homepage)/map/BusinessList";
-import SkeltonLoading from "./(components)/(homepage)/map/SkeltonLoading";
+
 import Hero from "./(components)/(homepage)/hero/Hero";
 import PageWrapper from "./pageWrapper";
 import HowItWorks from "./(components)/(homepage)/howItWorks/HowItWorks";
@@ -27,19 +24,11 @@ export default function Home() {
   const [category, setCategory] = React.useState();
   const [radius, setRadius] = React.useState(2500);
   const [businessList, setBusinessList] = React.useState([]);
-  const { userLocation, setUserLocation } = useContext(UserLocationContext);
   const [loading, setLoading] = useState(false);
 
-  React.useEffect(() => {
-    getGooglePlace();
-  }, [category, radius])
 
-  const getGooglePlace = () => {
-    GlobalApi.getGooglePlace(category, radius, userLocation.lat, userLocation.lng).then(resp => {
-      setBusinessList(resp.data.product.results)
-    })
 
-  }
+
 
   return (
     <div>

@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 import { AppProps } from 'next/app';
 
-function FaqItem({ item }: AppProps) {
+function FaqItem({ item }) {
 
     const [isOpen, setIsOpen] = useState(false);
     const toggleAccordition = () => {

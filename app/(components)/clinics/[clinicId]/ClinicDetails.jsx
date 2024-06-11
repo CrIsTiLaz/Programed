@@ -3,13 +3,11 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 // import ClinicsAbout from '../DoctorsAbout';
 import Feedback from '../Feedback';
-import SidePanel from '../SidePanel';
 import { BASE_URL } from '@/app/config';
 import useFetchData from '@/app/hooks/useFetchData';
 import Loading from '@/app/loading';
 import Error from '@/app/error/Error';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import Services from '../Services';
 import ClinicsAbout from '../ClinicsAbout';
 import Page from '../Swipe';
 import ClinicCarousel from '../ClinicCarousel';
