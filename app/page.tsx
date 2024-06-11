@@ -15,7 +15,6 @@ import { useContext, useState } from "react";
 import { UserLocationContext } from "./context/UserLocationContext";
 import BusinessList from "./(components)/(homepage)/map/BusinessList";
 import SkeltonLoading from "./(components)/(homepage)/map/SkeltonLoading";
-import "./page.module.css"
 import Hero from "./(components)/(homepage)/hero/Hero";
 import PageWrapper from "./pageWrapper";
 import HowItWorks from "./(components)/(homepage)/howItWorks/HowItWorks";
