@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import React, { useState } from 'react'
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import { AppProps } from 'next/app';
 
-function FaqItem({ item }) {
+function FaqItem({ item }: AppProps) {
 
     const [isOpen, setIsOpen] = useState(false);
     const toggleAccordition = () => {
