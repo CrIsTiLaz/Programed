@@ -66,7 +66,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section>
+      {/* <section>
         <div className="container">
           <div className="xl:w-[470px] mx-auto">
             <h2 className="heading text-center">Ce zic utlizatorii nostri</h2>
@@ -74,7 +74,7 @@ export default function Home() {
           </div>
           <Testimonial />
         </div>
-      </section>
+      </section> */}
 
       {/* <button onClick={() => signOut()}>Sign Out</button> */}
       {/* <div style={{ paddingLeft: '24px', backgroundColor: "#FAFAFA" }}>

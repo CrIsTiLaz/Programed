@@ -36,6 +36,7 @@ export default function Example({ onDateSelect, doctorId }) {
         end: endOfMonth(firstDayCurrentMonth),
     });
 
+
     function previousMonth() {
         let firstDayNextMonth = add(firstDayCurrentMonth, { months: -1 })
         setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'))
@@ -47,11 +48,15 @@ export default function Example({ onDateSelect, doctorId }) {
     }
 
     const handleDaySelect = (day) => {
+        if (day < today) {
+            return; // Nu permite selectarea unei date din trecut
+        }
         setSelectedDay(day);
         if (onDateSelect) {
             onDateSelect(day); // Trimite direct obiectul Date către funcția callback
         }
     };
+
     const dayMap = {
         Monday: 'Luni',
         Tuesday: 'Marti',
@@ -157,6 +162,7 @@ export default function Example({ onDateSelect, doctorId }) {
                                     <button
                                         type="button"
                                         onClick={() => handleDaySelect(day)}
+                                        disabled={day < today} // Dezactivează butonul pentru zilele din trecut
                                         className={classNames(
                                             isEqual(day, selectedDay) && 'text-white',
                                             !isEqual(day, selectedDay) && isToday(day) && 'text-primaryColor',
@@ -166,11 +172,13 @@ export default function Example({ onDateSelect, doctorId }) {
                                             isEqual(day, selectedDay) && !isToday(day) && 'bg-gray-900',
                                             !isEqual(day, selectedDay) && 'hover:bg-gray-200',
                                             (isEqual(day, selectedDay) || isToday(day)) && 'font-semibold',
-                                            'mx-auto flex h-8 w-8 items-center justify-center rounded-full'
+                                            'mx-auto flex h-8 w-8 items-center justify-center rounded-full',
+                                            day < today && 'opacity-50 cursor-not-allowed' // Stilizare pentru zilele din trecut
                                         )}
                                     >
                                         <time dateTime={format(day, 'yyyy-MM-dd')}>{format(day, 'd')}</time>
                                     </button>
+
                                     {/* Verifică dacă ar trebui afișată bulina verde sau roșie */}
                                     <span className={`absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-2 h-2 rounded-full ${shouldShowGreenDot(day) ? 'bg-green-500' : 'bg-red-500'}`}></span>
                                 </div>
