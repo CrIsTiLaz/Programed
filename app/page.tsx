@@ -18,6 +18,10 @@ import HowItWorks from "./(components)/(homepage)/howItWorks/HowItWorks";
 import FaqList from "./(components)/(homepage)/faq/FaqList";
 import Testimonial from "./(components)/(homepage)/testimonial/Testimonial";
 
+export const metadata = {
+  title: ""
+}
+
 export default function Home() {
   const { data: session } = useSession();
   const router = useRouter()
