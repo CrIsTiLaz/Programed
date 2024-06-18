@@ -20,36 +20,6 @@ import { RecoveryContext } from "./context/RecoveryContext";
 
 const raleway = Raleway({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
-const SEO = () => (
-  <>
-    <NextSeo
-      description="Islem Maboud Portfolio"
-      openGraph={{
-        images: [
-          {
-            url: "http://islemmaboud.com/static/home-image-preview.jpg",
-            width: 1200,
-            height: 638,
-            alt: "Islem Maboud Blog",
-            type: "image/jpg",
-            secureUrl: "https://islemmaboud.com/static/home-image-preview.jpg",
-          },
-        ],
-      }}
-    />
-    <SocialProfileJsonLd
-      type="Person"
-      name="Islem Maboud"
-      url="https://islemmaboud.com"
-      sameAs={[
-        "https://twitter.com/@Ipenywis",
-        "https://instagram.com/islem.coderone",
-        "https://www.linkedin.com/in/islem-maboud",
-        "https://github.com/Ipenywis",
-      ]}
-    />
-  </>
-);
 
 export default function RootLayout({ children }) {
   const [page, setPage] = useState("login");

@@ -1,34 +1,27 @@
-'use client'
 
-import { SessionProvider, signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import * as React from "react";
 import Image from 'next/image';
-
 import { useRouter } from "next/navigation";
-
-
-
-import GlobalApi from "@/Shared/GlobalApi";
-import { useContext, useState } from "react";
-import { UserLocationContext } from "./context/UserLocationContext";
-
 import Hero from "./(components)/(homepage)/hero/Hero";
-import PageWrapper from "./pageWrapper";
 import HowItWorks from "./(components)/(homepage)/howItWorks/HowItWorks";
 import FaqList from "./(components)/(homepage)/faq/FaqList";
-import Testimonial from "./(components)/(homepage)/testimonial/Testimonial";
 
 export const metadata = {
-  title: ""
+  title: "Programed",
+  description: "Programează-te rapid și ușor la cei mai buni medici",
+  alternates: {
+    canonical: `https://progra-med.ro`
+  },
+  robots: {
+    index: false,
+    follow: true,
+    nocache: true
+  }
 }
 
 export default function Home() {
-  const { data: session } = useSession();
-  const router = useRouter()
-  const [category, setCategory] = React.useState();
-  const [radius, setRadius] = React.useState(2500);
-  const [businessList, setBusinessList] = React.useState([]);
-  const [loading, setLoading] = useState(false);
+
 
 
 
