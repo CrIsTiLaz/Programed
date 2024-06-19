@@ -30,14 +30,16 @@ export default function RootLayout({ children }) {
             >
               <Header />
               {children}
-              <Footer />
-              <ToastContainer
-                theme="dark"
-                position="top-right"
-                autoClose={3000}
-                closeOnClick
-                pauseOnHover={false}
+              <hr
+                style={{
+                  border: "none",
+                  borderTop: "1px solid #e0e0e0",
+                  margin: 0,
+                  padding: 0,
+                }}
               />
+
+              <Footer />
             </RecoveryContext.Provider>
           </AuthContextProvider>
         </Provider>
