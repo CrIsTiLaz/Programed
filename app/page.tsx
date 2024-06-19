@@ -20,7 +20,7 @@ export const metadata = {
     images: [
       {
         url: 'https://progra-med.ro/og/og1.jpg', // Must be an absolute URL
-        width: 800,
+        width: 600,
         height: 600,
       },
       // {
