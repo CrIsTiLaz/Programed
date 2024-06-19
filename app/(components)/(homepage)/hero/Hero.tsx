@@ -7,6 +7,17 @@ import Link from 'next/link';
 
 function Hero() {
 
+    const [startAnimation, setStartAnimation] = useState(false);
+    const variants = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1
+            }
+        }
+    }
+
     const images = {
         hidden: {
             opacity: 0,
@@ -20,13 +31,13 @@ function Hero() {
             }
         }
     }
-    // useEffect(() => {
-    //     const timer = setTimeout(() => {
-    //         setStartAnimation(true);
-    //     }, 90); // Puteți ajusta această întârziere dacă este necesar
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setStartAnimation(true);
+        }, 90); // Puteți ajusta această întârziere dacă este necesar
 
-    //     return () => clearTimeout(timer);
-    // }, []);
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <>
@@ -79,7 +90,7 @@ function Hero() {
                             </div>
                         </div>
 
-                        <div className='flex gap-[30px] justify-end'>
+                        <motion.div variants={variants} initial="hidden" animate="show" className='flex gap-[30px] justify-end'>
 
                             {/* D:\learn\nextJS\qb\query-builder-beta\public\hero\ */}
                             <motion.img src="/hero/undraw_doctors_p6aq (1).svg" alt="" width={400} height={400} variants={images} />
@@ -89,7 +100,7 @@ function Hero() {
                                 <Image src="/hero/hero-img01.png" alt="" className='w-full mb-[30px]' width={200} height={200} />
                                 <Image src="/hero/hero-img01.png" alt="" className='w-full ' width={100} height={100} />
                             </div> */}
-                        </div>
+                        </motion.div>
 
                     </div>
 
