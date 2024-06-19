@@ -6,23 +6,17 @@ import { useRouter } from "next/navigation";
 import Hero from "./(components)/(homepage)/hero/Hero";
 import HowItWorks from "./(components)/(homepage)/howItWorks/HowItWorks";
 import FaqList from "./(components)/(homepage)/faq/FaqList";
-
+import { useEffect } from "react";
 export const metadata = {
   title: "Programed",
   description: "Programează-te rapid și ușor la cei mai buni medici",
   alternates: {
     canonical: `https://progra-med.ro`
   },
-  robots: {
-    index: false,
-    follow: true,
-    nocache: true
-  }
+
 }
 
 export default function Home() {
-
-
 
 
 

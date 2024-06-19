@@ -1,14 +1,8 @@
 "use client";
 import { Inter, Raleway } from "next/font/google";
-import { getServerSession } from "next-auth";
-import Link from "next/link";
-import Logout from "./logout";
 import "../styles/global.css";
 import Provider from "./Provider";
-import HeaderPage from "./(components)/header/page";
-import { Suspense, useEffect, useState } from "react";
-import { UserLocationContext } from "./context/UserLocationContext";
-import { SelectedBusinessContext } from "./context/SelectedBusinessContext";
+import { useState } from "react";
 import Footer from "./(components)/footer/Footer";
 import "../styles/global.css";
 import "../styles/global.css"; // Asumând că globals.css se află în directorul styles
