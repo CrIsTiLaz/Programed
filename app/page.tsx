@@ -23,12 +23,12 @@ export const metadata = {
         width: 800,
         height: 600,
       },
-      {
-        url: 'https://progra-med.ro/og/og1.jpg', // Must be an absolute URL
-        width: 1800,
-        height: 1600,
-        alt: 'My custom alt',
-      },
+      // {
+      //   url: 'https://progra-med.ro/og/og1.jpg', // Must be an absolute URL
+      //   width: 1800,
+      //   height: 1600,
+      //   alt: 'My custom alt',
+      // },
     ],
   },
 }
