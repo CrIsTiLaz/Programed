@@ -13,9 +13,25 @@ export const metadata = {
   alternates: {
     canonical: `https://progra-med.ro`
   },
-
+  openGraph: {
+    title: 'Programed',
+    description: 'Programează-te rapid și ușor la cei mai buni medici',
+    url: 'https://progra-med.ro',
+    images: [
+      {
+        url: 'https://progra-med.ro/og/og1.jpg', // Must be an absolute URL
+        width: 800,
+        height: 600,
+      },
+      {
+        url: 'https://progra-med.ro/og/og1.jpg', // Must be an absolute URL
+        width: 1800,
+        height: 1600,
+        alt: 'My custom alt',
+      },
+    ],
+  },
 }
-
 export default function Home() {
 
 
