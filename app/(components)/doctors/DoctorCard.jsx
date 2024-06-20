@@ -73,8 +73,8 @@ function DoctorCard({
     >
       <div className="aspect-w-16 aspect-h-9">
         <Image
-          width={200}
-          height={200}
+          width={250}
+          height={250}
           sizes="100vw"
           className="h-auto rounded-lg"
           src={photo ? photo : "/header/user (4).png"}

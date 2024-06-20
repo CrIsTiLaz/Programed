@@ -72,8 +72,8 @@ function DoctorDetails() {
                           image.classList.remove("opacity-0")
                         }
                         src={photo}
-                        width={120}
-                        height={120}
+                        width={130}
+                        height={130}
                         alt="User profile photo"
                       />
                     ) : (
