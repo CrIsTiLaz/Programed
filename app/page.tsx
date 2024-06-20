@@ -7,6 +7,7 @@ import Hero from "./(components)/(homepage)/hero/Hero";
 import HowItWorks from "./(components)/(homepage)/howItWorks/HowItWorks";
 import FaqList from "./(components)/(homepage)/faq/FaqList";
 import { useEffect } from "react";
+import Script from "next/script";
 export const metadata = {
   title: "Programed",
   description: "Programează-te rapid și ușor la cei mai buni medici",
@@ -44,6 +45,22 @@ export default function Home() {
       {/* <div style={{ paddingLeft: '24px', paddingRight: '24px' }}>
         <hr style={{ width: '100%', border: 'none', height: '1px', backgroundColor: '#ccc', margin: '0' }} />
       </div> */}
+      <Script
+        strategy="lazyOnload"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS}`}
+      />
+
+      <Script id="ga-script" strategy="lazyOnload">
+        {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '${process.env.GOOGLE_ANALYTICS}', {
+      page_path: window.location.pathname,
+    });
+        `}
+      </Script>
+
       <Hero />
       <HowItWorks />
       <section>
