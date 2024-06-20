@@ -63,17 +63,17 @@ function DoctorDetails() {
           <div className="grid md:grid-cols-3 gap-[50px]">
             <div className="md:col-span-2">
               <div className="flex items-center gap-5">
-                <div className="max-w-[200px] max-h-[200px]">
+                <div>
                   <div>
                     {photo ? (
                       <Image
-                        className="w-full rounded-lg transition-opacity opacity-0 duration-[2s]"
+                        className="w-full rounded-lg "
                         onLoadingComplete={(image) =>
                           image.classList.remove("opacity-0")
                         }
                         src={photo}
-                        width={200}
-                        height={200}
+                        width={120}
+                        height={120}
                         alt="User profile photo"
                       />
                     ) : (
