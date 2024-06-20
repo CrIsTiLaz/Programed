@@ -63,30 +63,26 @@ function DoctorDetails() {
           <div className="grid md:grid-cols-3 gap-[50px]">
             <div className="md:col-span-2">
               <div className="flex items-center gap-5">
-                <div>
-                  <div>
-                    {photo ? (
-                      <Image
-                        className="w-full rounded-lg "
-                        onLoadingComplete={(image) =>
-                          image.classList.remove("opacity-0")
-                        }
-                        src={photo}
-                        width={130}
-                        height={130}
-                        alt="User profile photo"
-                      />
-                    ) : (
-                      <Image
-                        className="w-full rounded-lg"
-                        src="/header/user (4).png"
-                        width={200}
-                        height={200}
-                        alt="Default profile photo"
-                      />
-                    )}
-                  </div>
+                <div className="relative w-40 h-40 lg:w-60 lg:h-60">
+                  {photo ? (
+                    <Image
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-lg"
+                      src={photo}
+                      alt="User profile photo"
+                    />
+                  ) : (
+                    <Image
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-lg"
+                      src="/header/user (4).png"
+                      alt="Default profile photo"
+                    />
+                  )}
                 </div>
+
                 <div>
                   {/* Numele medicului */}
                   <h3 className="text-headingColor text-[22px] leading-9 mt-3 font-bold">
