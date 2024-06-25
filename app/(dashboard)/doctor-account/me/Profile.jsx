@@ -190,7 +190,7 @@ function Profile({ doctorData }) {
 
   //reusable function for adding item
   //reusable function for adding item
-  const addItem = () => {
+  const addItem = (key, item) => {
     setFormData((prevFormData) => {
       // Ensure that prevFormData[key] is an array
       const updatedKeyArray = Array.isArray(prevFormData[key])
@@ -201,7 +201,7 @@ function Profile({ doctorData }) {
   };
 
   // reusable input change function
-  const handleReusableInputChangeFunc = () => {
+  const handleReusableInputChangeFunc = (key, index, event) => {
     const { name, value } = event.target;
 
     setFormData((prevFormData) => {
@@ -217,10 +217,10 @@ function Profile({ doctorData }) {
   };
 
   //reusable function for deleting items
-  const deleteItem = () => {
+  const deleteItem = (key, index) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
-      [key]: prevFormData[key].filter(() => i !== index),
+      [key]: prevFormData[key].filter((_, i) => i !== index),
     }));
   };
 
@@ -235,11 +235,11 @@ function Profile({ doctorData }) {
     });
   };
 
-  const handleQualificationChange = () => {
+  const handleQualificationChange = (event, index) => {
     handleReusableInputChangeFunc("qualifications", index, event);
   };
 
-  const deleteQualification = () => {
+  const deleteQualification = (e, index) => {
     e.preventDefault();
     deleteItem("qualifications", index);
   };
@@ -370,7 +370,7 @@ function Profile({ doctorData }) {
         </div>
 
         <div className="mb-5">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-[30px]">
+          <div className="grid grid-cols-3 gap-5 mb-[30px]">
             <div>
               <p className="form__label">Gen</p>
               <select
