@@ -11,6 +11,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContextProvider } from "./context/AuthContext";
 import { RecoveryContext } from "./context/RecoveryContext";
+import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const raleway = Raleway({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
@@ -44,6 +46,7 @@ export default function RootLayout({ children }) {
           </AuthContextProvider>
         </Provider>
       </body>
+      <GoogleAnalytics gaId="G-HCTMWZ9HJS" />
     </html>
   );
 }
