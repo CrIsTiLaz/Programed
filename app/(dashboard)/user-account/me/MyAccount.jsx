@@ -112,9 +112,9 @@ function MyAccount() {
                       <Image
                         src={userData?.photo}
                         alt=""
-                        width={50}
-                        height={50}
-                        className="w-full h-full rounded-full"
+                        width={100}
+                        height={100}
+                        className="w-[100px] h-[100px] rounded-full object-cover object-center"
                       />
                     ) : (
                       <Image

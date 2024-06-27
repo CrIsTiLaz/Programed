@@ -16,14 +16,14 @@ function FeedbackForm() {
   const params = useParams();
   const id = params.doctorId;
 
-  const handleSubmitReview = async () => {
+  const handleSubmitReview = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       if (!rating || !reviewText) {
         setLoading(false);
-        //sweet alert pentru eroare: Rating and reviews Fields are required
+        // Sweet alert pentru eroare: Rating and reviews Fields are required
         return Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -33,7 +33,7 @@ function FeedbackForm() {
       }
       const requestBody = { rating, reviewText };
       const res = await fetch(`${BASE_URL}/doctors/${id}/reviews`, {
-        method: "post",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -63,14 +63,13 @@ function FeedbackForm() {
         text: err.message,
       });
     }
-    //to do
   };
 
   return (
-    <form action="">
+    <form action="" onSubmit={handleSubmitReview}>
       <div>
         <h3 className="text-headingColor text-[16px] leading-6 font-semibold mb-4 mt-0">
-          Cum ai evalua experienta?
+          Cum ai evalua experiența?
         </h3>
 
         <div>
@@ -105,22 +104,22 @@ function FeedbackForm() {
 
       <div className="mt-[30px]">
         <h3 className="text-headingColor text-[16px] leading-6 font-semibold mb-4 mt-0">
-          Lasa un feedback si o sugestie
+          Lasă un feedback și o sugestie
         </h3>
 
         <textarea
           className="border border-solid border-[#0066ff34] focus:outline outline-primaryColor w-full px-4 py-3 rounded-md"
           rows="5"
-          placeholder="Scrie mesajul tau"
+          placeholder="Scrie mesajul tău"
           onChange={(e) => setReviewText(e.target.value)}
         ></textarea>
       </div>
 
-      <button type="submit" onClick={handleSubmitReview} className="btn">
+      <button type="submit" className="btn">
         {loading ? <ClipLoader size={25} color="#fff" /> : "Trimite feedback"}
       </button>
     </form>
   );
 }
-//39
+
 export default FeedbackForm;
