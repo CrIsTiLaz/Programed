@@ -1,6 +1,6 @@
 import { BASE_URL, token } from "@/app/config";
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiFillStar } from "react-icons/ai";
 import ClipLoader from "react-spinners/ClipLoader";
 import Swal from "sweetalert2";
