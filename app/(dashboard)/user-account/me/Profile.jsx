@@ -52,12 +52,18 @@ function Profile({ user }) {
   };
 
   const handleFileInputChange = async (event) => {
+    setLoading(true); // Start loader
     const file = event.target.files[0];
 
-    const data = await uploadImageToCloudinary(file);
-
-    setSelectedFile(data.url);
-    setFormData({ ...formData, photo: data.url });
+    try {
+      const data = await uploadImageToCloudinary(file);
+      setSelectedFile(data.url);
+      setFormData({ ...formData, photo: data.url });
+    } catch (error) {
+      toast.error("Eroare la încărcarea imaginii");
+    } finally {
+      setLoading(false); // Stop loader
+    }
   };
 
   const submitHandler = async (event) => {
@@ -173,16 +179,22 @@ function Profile({ user }) {
         </div>
 
         <div className="mb-5 flex items-center gap-3">
-          {formData.photo && (
-            <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
-              <Image
-                src={formData.photo}
-                alt={""}
-                width={50}
-                height={50}
-                className="w-full rounded-full"
-              ></Image>
-            </figure>
+          {loading ? (
+            <div className="w-[60px] h-[60px] flex items-center justify-center">
+              <ClipLoader size={50} color="#0066ff" />
+            </div>
+          ) : (
+            formData.photo && (
+              <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
+                <Image
+                  src={formData.photo}
+                  alt={""}
+                  width={50}
+                  height={50}
+                  className="w-full h-full rounded-full object-cover"
+                />
+              </figure>
+            )
           )}
           <div className="relative w-[130px] h-[50px]">
             <input
@@ -193,17 +205,15 @@ function Profile({ user }) {
               accept=".jpg, .png"
               className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
             />
-
             <label
               htmlFor="customFile"
-              className="absolute top-0 left-0 w-50 h-full flex items-center px-[0.75rem] 
-                                py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg
-                                truncate cursor-pointer z-10"
+              className="absolute top-0 left-0 w-full h-full flex items-center px-[0.75rem] py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg truncate cursor-pointer z-10"
             >
-              {selectedFile ? selectedFile.name : "Incarca poza"}
+              {selectedFile ? "Poza incarcată" : "Încarcă poză"}
             </label>
           </div>
         </div>
+
         <div className="mt-7">
           <button
             disabled={loading}

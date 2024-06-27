@@ -7,6 +7,7 @@ import { BASE_URL, token } from "@/app/config";
 import Swal from "sweetalert2";
 import Time from "@/app/(components)/clinics/Time";
 import { format } from "date-fns";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function Profile({ doctorData }) {
   const [workSchedule, setWorkSchedule] = useState(
@@ -62,6 +63,7 @@ function Profile({ doctorData }) {
   );
 
   const [currentToken, setCurrentToken] = useState("");
+  const [loading, setLoading] = useState(false); // Starea pentru loader
 
   useEffect(() => {
     const currentToken = localStorage.getItem("token");
@@ -110,9 +112,21 @@ function Profile({ doctorData }) {
 
   const handleFileInputChange = async (event) => {
     const file = event.target.files[0];
-    const data = await uploadImageToCloudinary(file);
+    setLoading(true); // Start loader
 
-    setFormData({ ...formData, photo: data?.url });
+    try {
+      const data = await uploadImageToCloudinary(file);
+      setFormData({ ...formData, photo: data?.url });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Eroare la încărcarea imaginii",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    } finally {
+      setLoading(false); // Stop loader
+    }
   };
 
   const updateProfileHandler = async (e) => {
@@ -717,10 +731,13 @@ function Profile({ doctorData }) {
         </div>
 
         <div className="mb-5 flex items-center gap-3">
-          {formData.photo && (
-            <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
-              {/* <Image src={formData.photo} alt={''} width={50} height={50} className='w-full rounded-full'></Image> */}
-              {formData.photo ? (
+          {loading ? (
+            <div className="w-[60px] h-[60px] flex items-center justify-center">
+              <ClipLoader size={50} color="#0066ff" />
+            </div>
+          ) : (
+            formData.photo && (
+              <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
                 <Image
                   src={formData.photo}
                   alt=""
@@ -728,8 +745,8 @@ function Profile({ doctorData }) {
                   height={50}
                   layout="responsive"
                 />
-              ) : null}
-            </figure>
+              </figure>
+            )
           )}
           <div className="relative w-[130px] h-[50px]">
             <input
@@ -740,14 +757,13 @@ function Profile({ doctorData }) {
               accept=".jpg, .png"
               className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
             />
-
             <label
               htmlFor="customFile"
               className="absolute top-0 left-0 w-50 h-full flex items-center px-[0.75rem] 
-                                py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg
-                                truncate cursor-pointer"
+                            py-[0.375rem] text-[15px] leading-6 overflow-hidden bg-[#0066ff46] text-headingColor font-semibold rounded-lg
+                            truncate cursor-pointer"
             >
-              Încarcă poza profil
+              {formData.photo ? "Încarcă poza" : "Încarcă poza"}
             </label>
           </div>
         </div>
