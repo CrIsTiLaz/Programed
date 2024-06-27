@@ -77,7 +77,13 @@ function ClinicDetails() {
             {/* Detalii clinica și carusel imagini */}
             {/* <div className='grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1'> */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-5 ">
-              <ClinicCarousel photos={clinic.photos} />
+              {/* <ClinicCarousel photos={clinic.photos} /> */}
+              <div className="block lg:hidden">
+                <ClinicCarousel photos={clinic.photos} height="200px" />
+              </div>
+              <div className="hidden lg:block">
+                <ClinicCarousel photos={clinic.photos} height="350px" />
+              </div>
 
               <div className="">
                 {" "}
