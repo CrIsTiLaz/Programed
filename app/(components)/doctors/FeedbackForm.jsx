@@ -12,7 +12,12 @@ function FeedbackForm() {
   const [reviewText, setReviewText] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const [currentToken, setCurrentToken] = useState("");
 
+  useEffect(() => {
+    const currentToken = localStorage.getItem("token");
+    setCurrentToken(currentToken);
+  }, []);
   const params = useParams();
   const id = params.doctorId;
 
@@ -36,7 +41,7 @@ function FeedbackForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${currentToken}`,
         },
         body: JSON.stringify({ rating, reviewText }),
       });
