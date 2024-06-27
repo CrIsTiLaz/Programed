@@ -54,7 +54,11 @@ function MyAccount() {
             <header>
               <nav
                 ref={navRef}
-                className={`lg:hidden ${menuOpen ? "showNavbar z-50" : ""}`}
+                className={`lg:hidden ${menuOpen ? "showNavbar z-[100]" : ""}`}
+                style={{
+                  position: "fixed",
+                  zIndex: 100,
+                }}
               >
                 <button
                   onClick={() => handleLinkClick("bookings")}

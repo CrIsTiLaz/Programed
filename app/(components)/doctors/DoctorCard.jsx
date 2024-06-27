@@ -71,7 +71,7 @@ function DoctorCard({
     <div
       className={`p-2 sm:p-3 lg:p-5 max-w-sm mx-auto bg-white rounded-lg shadow-md`}
     >
-      <div className="relative w-60 h-60 ml-3 z-10">
+      <div className="relative w-60 h-60 ml-3 z-[10]">
         <Image
           layout="fill"
           objectFit="cover"
