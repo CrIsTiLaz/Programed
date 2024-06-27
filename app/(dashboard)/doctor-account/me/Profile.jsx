@@ -384,7 +384,7 @@ function Profile({ doctorData }) {
         </div>
 
         <div className="mb-5">
-          <div className="grid grid-cols-3 gap-5 mb-[30px]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-[30px]">
             <div>
               <p className="form__label">Gen</p>
               <select
