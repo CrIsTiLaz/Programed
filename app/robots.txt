@@ -1,5 +1,5 @@
 User-Agent: *
 Allow: /
-Disallow: /private/
+Disallow: /private
 
 Sitemap: https://progra-med.ro/sitemap.xml
