@@ -3,15 +3,11 @@ import { Inter, Raleway } from "next/font/google";
 import "../styles/global.css";
 import Provider from "./Provider";
 import { useState } from "react";
-import Footer from "./(components)/footer/Footer";
-import "../styles/global.css";
-import "../styles/global.css"; // Asumând că globals.css se află în directorul styles
+import Footer from "./(components)/footer/Footer"; // Asumând că globals.css se află în directorul styles
 import Header from "./(components)/header/header";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContextProvider } from "./context/AuthContext";
 import { RecoveryContext } from "./context/RecoveryContext";
-import { GoogleTagManager } from "@next/third-parties/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 const raleway = Raleway({ subsets: ["latin"] });
