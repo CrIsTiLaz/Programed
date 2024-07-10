@@ -21,7 +21,7 @@ function Dashboard() {
     <section>
       <div className="max-w-[1170px] px-5 mx-auto">
         {loading && !error && <Loading />}
-        {error && !loading && <Error errMessage={"errrrrrrrrrrr"} />}
+        {error && !loading && <Error errMessage={"Eroare"} />}
 
         {!loading && !error && (
           <div className="grid lg:grid-cols-3 gap-[30px] lg:gap-[50px]">
@@ -34,7 +34,7 @@ function Dashboard() {
                       <figure
                         className="items-center justify-center block lg:hidden"
                         style={{
-                          width: "60%",
+                          width: "40%",
                           height: "150px",
                           position: "relative",
                         }}
