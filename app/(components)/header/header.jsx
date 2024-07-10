@@ -63,10 +63,11 @@ function Header() {
               width={90}
               height={90}
             />
-            <h1 className="text-[10px] leading-[14px] text-headingColor font-[800] ml-2 md:text-[20px] md:leading-[26px]">
+            <h1 className="hidden sm:block text-[14px] leading-[18px] text-headingColor font-[800] ml-2 sm:text-[16px] sm:leading-[20px] md:text-[20px] md:leading-[26px]">
               Programed
             </h1>
           </Link>
+
           <div
             className={`navigation ${menuOpen ? "show__menu" : ""}`}
             ref={menuRef}
