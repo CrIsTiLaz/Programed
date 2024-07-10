@@ -56,13 +56,16 @@ function Header() {
     <header className="header flex items-center sticky__header" ref={headerRef}>
       <div className="container">
         <div className="flex items-center justify-between">
-          <Link href="/">
+          <Link href="/" className="flex items-center">
             <Image
               src="/header/logo-removebg-preview.png"
               alt="Logo"
               width={90}
               height={90}
             />
+            <h1 className="text-[10px] leading-[14px] text-headingColor font-[800] ml-2 md:text-[20px] md:leading-[26px]">
+              Programed
+            </h1>
           </Link>
 
           <div
