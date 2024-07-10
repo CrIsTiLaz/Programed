@@ -49,7 +49,7 @@ function Hero() {
                                 <h1 className='text-[36px] leading-[46px] text-headingColor font-[800] md:text-[50px] md:leading-[60px]'>
                                     Sănătatea ta, <br /> prioritatea noastră!
                                 </h1>
-                                <p className='text__para'>Facem legătura între tine și cei mai buni medici. Verifică recenziile, află prețurile și rezervă-ți consultația în câteva minute. Simplu, rapid și eficient – pentru o viață sănătoasă și fără stres.</p>
+                                <p className='text__para'>Programed - Facem legătura între tine și cei mai buni medici. Verifică recenziile, află prețurile și rezervă-ți consultația în câteva minute. Simplu, rapid și eficient – pentru o viață sănătoasă și fără stres.</p>
                                 {/* <motion.div whileHover={{ scale: 1.1 }}> */}
                                 <Link href="/clinics" >
 
