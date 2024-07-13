@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { AuthContextProvider } from "./context/AuthContext";
 import { RecoveryContext } from "./context/RecoveryContext";
 import { GoogleAnalytics } from "@next/third-parties/google";
-
+import BetaMessage from "./utils/BetaMessage";
 const raleway = Raleway({ subsets: ["latin"] });
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +27,7 @@ export default function RootLayout({ children }) {
               value={{ page, setPage, otp, setOTP, setEmail, email }}
             >
               <Header />
+              <BetaMessage />
               {children}
               <hr
                 style={{
