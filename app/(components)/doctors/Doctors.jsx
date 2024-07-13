@@ -11,6 +11,7 @@ import Loading from "@/app/loading";
 import Error from "@/app/error/Error";
 import DoctorList from "./DoctorList";
 import DoctorCard from "./DoctorCard";
+
 function Doctors({ clinicId }) {
   const {
     data: doctors,
@@ -19,10 +20,9 @@ function Doctors({ clinicId }) {
   } = useFetchData(`${BASE_URL}/doctors?clinicId=${clinicId}`);
   if (loading) return <Loading />;
   if (error) return <Error errMessage={error} />;
-
   return (
     <section>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
         {doctors.map((doctor) => (
           <DoctorCard
             key={doctor.id}
