@@ -36,13 +36,13 @@ function Clinics() {
   return (
     <>
       <section>
-        <div className="container text-center">
+        <div className="container text-center mt-[-30px]">
           <h2 className="heading">Gaseste un cabinet</h2>
 
-          <div className="max-w-[570px] mt-[30px] mx-auto bg-[#0066ff2c] flex items-center justify-between rounded-[50px] relative">
+          <div className="max-w-[570px] mt-[10px] mx-auto bg-[#0066ff2c] flex items-center justify-center rounded-[50px] relative">
             <input
               type="search"
-              className="py-4 pl-12 pr-2 bg-transparent w-full focus:outline-none cursor-pointer placeholder:text-textColor"
+              className="py-4 pl-12 pr-2 bg-transparent w-full focus:outline-none cursor-pointer placeholder:text-textColor rounded-l-[50px]"
               placeholder="Cauta dupa nume / specializare"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -105,6 +105,9 @@ function Clinics() {
                     </motion.div>
                   </button>
                 </div>
+              </div>
+              <div className="spinner-container mt-[-50px]">
+                {/* Spinner Component */}
               </div>
             </div>
           </section>
