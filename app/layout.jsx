@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
               value={{ page, setPage, otp, setOTP, setEmail, email }}
             >
               <Header />
-              <BetaMessage />
+              {/* <BetaMessage /> */}
               {children}
               <hr
                 style={{
